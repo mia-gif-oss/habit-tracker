@@ -1,541 +1,204 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="習慣トラッカー">
+<meta name="apple-mobile-web-app-title" content="Habitual">
 <meta name="theme-color" content="#ffffff">
-<title>習慣トラッカー</title>
+<title>Habitual</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg: #ffffff;
-  --bg2: #f5f5f5;
-  --bg3: #efefef;
-  --text: #111111;
-  --text2: #555555;
-  --text3: #999999;
-  --border: rgba(0,0,0,0.1);
-  --border2: rgba(0,0,0,0.18);
-  --nav-h: 64px;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --amber: #BA7517;
-  --amber-bg: #FAEEDA;
-  --amber-dark: #633806;
-  --green: #1D9E75;
-  --green-bg: #E1F5EE;
-  --green-dark: #085041;
-  --blue: #378ADD;
-  --blue-bg: #E6F1FB;
-  --blue-dark: #0C447C;
-  --red: #D85A30;
-  --red-bg: #FAECE7;
-  --red-dark: #712B13;
-  --radius: 10px;
-  --radius-lg: 14px;
-  --radius-pill: 999px;
+  --bg: #ffffff; --bg2: #f5f5f5; --bg3: #efefef;
+  --text: #111111; --text2: #555555; --text3: #999999;
+  --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
+  --nav-h: 60px; --safe-b: env(safe-area-inset-bottom, 0px);
+  --amber: #BA7517; --amber-bg: #FAEEDA; --amber-dk: #633806;
+  --green: #1D9E75; --green-bg: #E1F5EE; --green-dk: #085041;
+  --blue: #378ADD; --blue-bg: #E6F1FB; --blue-dk: #0C447C;
+  --red: #D85A30; --red-bg: #FAECE7; --red-dk: #712B13;
+  --r: 10px; --rl: 14px; --pill: 999px;
 }
-
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #111111;
-    --bg2: #1c1c1e;
-    --bg3: #2c2c2e;
-    --text: #f5f5f5;
-    --text2: #aaaaaa;
-    --text3: #666666;
-    --border: rgba(255,255,255,0.1);
-    --border2: rgba(255,255,255,0.18);
-    --amber-bg: #2d2000;
-    --amber-dark: #FAC775;
-    --green-bg: #001f14;
-    --green-dark: #5DCAA5;
-    --blue-bg: #001830;
-    --blue-dark: #85B7EB;
-    --red-bg: #2d0f00;
-    --red-dark: #F0997B;
+    --bg:#111111; --bg2:#1c1c1e; --bg3:#2c2c2e;
+    --text:#f5f5f5; --text2:#aaaaaa; --text3:#666666;
+    --border:rgba(255,255,255,0.09); --border2:rgba(255,255,255,0.16);
+    --amber-bg:#2d2000; --amber-dk:#FAC775;
+    --green-bg:#001f14; --green-dk:#5DCAA5;
+    --blue-bg:#001830; --blue-dk:#85B7EB;
+    --red-bg:#2d0f00; --red-dk:#F0997B;
   }
 }
-
-html, body {
-  height: 100%;
-  font-family: -apple-system, 'Helvetica Neue', sans-serif;
-  background: var(--bg3);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  overscroll-behavior: none;
-}
-
-#app {
-  max-width: 430px;
-  margin: 0 auto;
-  height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  background: var(--bg3);
-  overflow: hidden;
-  position: relative;
-}
+html,body { height:100%; font-family:-apple-system,'Helvetica Neue',sans-serif; background:var(--bg3); color:var(--text); -webkit-font-smoothing:antialiased; overscroll-behavior:none; }
+#app { max-width:430px; margin:0 auto; height:100dvh; display:flex; flex-direction:column; background:var(--bg3); overflow:hidden; position:relative; }
 
 /* TOPBAR */
-.topbar {
-  flex-shrink: 0;
-  background: var(--bg);
-  border-bottom: 0.5px solid var(--border);
-  padding: 52px 20px 12px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-}
-.topbar-left .eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text3);
-  margin-bottom: 2px;
-}
-.topbar-left .title {
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.3px;
-}
-.xp-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--amber-bg);
-  border-radius: var(--radius-pill);
-  padding: 6px 12px;
-}
-.xp-pill i { font-size: 15px; color: var(--amber); }
-.xp-val { font-size: 13px; font-weight: 600; color: var(--amber-dark); }
-.xp-lv { font-size: 11px; color: var(--amber); margin-top: 1px; }
+.topbar { flex-shrink:0; background:var(--bg); border-bottom:0.5px solid var(--border); padding:calc(env(safe-area-inset-top,0px) + 10px) 18px 10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.tb-left { flex:1; min-width:0; }
+.tb-app { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text3); margin-bottom:1px; }
+.tb-title { font-size:19px; font-weight:600; color:var(--text); letter-spacing:-0.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tb-right { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex-shrink:0; }
+.exp-pill { display:flex; align-items:center; gap:5px; background:var(--amber-bg); border-radius:var(--pill); padding:4px 10px; }
+.exp-pill i { font-size:13px; color:var(--amber); }
+.exp-val { font-size:12px; font-weight:600; color:var(--amber-dk); }
+.rank-tag { font-size:10px; font-weight:600; color:var(--text3); letter-spacing:0.04em; text-align:right; }
 
-/* CONTENT */
-.content {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* NAV */
-.nav {
-  flex-shrink: 0;
-  height: calc(var(--nav-h) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
-  display: flex;
-  background: var(--bg);
-  border-top: 0.5px solid var(--border);
-}
-.nav-btn {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--text3);
-  font-size: 10px;
-  letter-spacing: 0.03em;
-  font-family: inherit;
-  transition: color 0.15s;
-  padding: 0;
-}
-.nav-btn i { font-size: 22px; }
-.nav-btn.active { color: var(--text); }
-.nav-dot {
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--text);
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-.nav-btn.active .nav-dot { opacity: 1; }
+/* CONTENT / NAV */
+.content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.nav { flex-shrink:0; height:calc(var(--nav-h) + var(--safe-b)); padding-bottom:var(--safe-b); display:flex; background:var(--bg); border-top:0.5px solid var(--border); }
+.nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; cursor:pointer; color:var(--text3); font-size:10px; letter-spacing:0.03em; font-family:inherit; transition:color .15s; padding:0; }
+.nav-btn i { font-size:21px; }
+.nav-btn.active { color:var(--text); }
+.nav-dot { width:4px; height:4px; border-radius:50%; background:var(--text); opacity:0; transition:opacity .15s; }
+.nav-btn.active .nav-dot { opacity:1; }
 
 /* SCREENS */
-.screen { display: none; }
-.screen.active { display: block; animation: fadeUp 0.18s ease; }
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: none; }
-}
+.screen { display:none; }
+.screen.active { display:block; animation:fadeUp .16s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(3px)} to{opacity:1;transform:none} }
 
-/* SECTION LABEL */
-.sec-label {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text3);
-  padding: 18px 20px 8px;
-}
+.sec-label { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text3); padding:16px 18px 8px; }
 
 /* LEVEL CARD */
-.level-card {
-  margin: 14px 16px 0;
-  background: var(--bg);
-  border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 16px 18px;
-}
-.lv-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-.lv-info { display: flex; align-items: center; gap: 12px; }
-.lv-badge {
-  width: 42px; height: 42px;
-  border-radius: var(--radius);
-  background: var(--amber-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--amber-dark);
-}
-.lv-name { font-size: 15px; font-weight: 600; color: var(--text); }
-.lv-sub  { font-size: 12px; color: var(--text3); margin-top: 2px; }
-.lv-pct  { font-size: 13px; font-weight: 600; color: var(--text2); }
-.lv-bar  { height: 6px; background: var(--bg3); border-radius: 3px; overflow: hidden; }
-.lv-fill { height: 100%; border-radius: 3px; background: var(--amber); transition: width 0.7s cubic-bezier(.25,.8,.25,1); }
+.level-card { margin:12px 14px 0; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:14px 16px; }
+.lv-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:9px; }
+.lv-info { display:flex; align-items:center; gap:11px; }
+.lv-badge { width:40px; height:40px; border-radius:var(--r); background:var(--amber-bg); display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:700; color:var(--amber-dk); }
+.lv-name { font-size:14px; font-weight:600; color:var(--text); }
+.lv-sub  { font-size:11px; color:var(--text3); margin-top:2px; }
+.lv-pct  { font-size:12px; font-weight:600; color:var(--text2); }
+.lv-bar  { height:5px; background:var(--bg3); border-radius:3px; overflow:hidden; }
+.lv-fill { height:100%; border-radius:3px; background:var(--amber); transition:width .7s cubic-bezier(.25,.8,.25,1); }
 
-/* STREAK ROW */
-.streak-row {
-  display: flex;
-  gap: 10px;
-  padding: 10px 16px 0;
-}
-.streak-box {
-  flex: 1;
-  background: var(--bg);
-  border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.streak-val { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; }
-.streak-lbl { font-size: 11px; color: var(--text3); margin-top: 3px; }
+/* STREAK */
+.streak-row { display:flex; gap:8px; padding:8px 14px 0; }
+.streak-box { flex:1; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:12px 14px; display:flex; align-items:center; justify-content:space-between; }
+.streak-val { font-size:24px; font-weight:600; color:var(--text); line-height:1; }
+.streak-lbl { font-size:11px; color:var(--text3); margin-top:3px; }
 
-/* AI COMMENT */
-.ai-card {
-  margin: 10px 16px 0;
-  background: var(--bg);
-  border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 14px 16px;
-}
-.ai-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-.ai-tag { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); }
-.ai-refresh {
-  background: none; border: none; cursor: pointer;
-  color: var(--text3); font-size: 16px; padding: 2px;
-  transition: color 0.15s;
-}
-.ai-refresh:hover { color: var(--text); }
-.ai-body { font-size: 14px; color: var(--text2); line-height: 1.65; }
-.ai-body.loading { color: var(--text3); font-style: italic; }
+/* QUOTE */
+.quote-card { margin:8px 14px 0; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:12px 14px; }
+.quote-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+.quote-tag { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); }
+.quote-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:15px; padding:2px; }
+.quote-txt { font-size:13px; color:var(--text2); line-height:1.6; }
 
 /* GOAL ROWS */
-.goal-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 20px;
-  background: var(--bg);
-  border-bottom: 0.5px solid var(--border);
-}
-.goal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.goal-body { flex: 1; min-width: 0; }
-.goal-name { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
-.goal-sub  { font-size: 12px; color: var(--text3); }
-.goal-track {
-  height: 2px; background: var(--bg3);
-  border-radius: 1px; margin-top: 8px; overflow: hidden;
-}
-.goal-fill {
-  height: 100%; border-radius: 1px;
-  transition: width 0.5s cubic-bezier(.25,.8,.25,1);
-}
-.rec-pill {
-  font-size: 12px; font-weight: 500;
-  border: 0.5px solid var(--border2);
-  border-radius: var(--radius-pill);
-  padding: 6px 14px;
-  background: none; color: var(--text);
-  cursor: pointer; white-space: nowrap;
-  font-family: inherit;
-  transition: background 0.1s, color 0.1s;
-}
-.rec-pill.done {
-  background: var(--text); color: var(--bg);
-  border-color: var(--text);
-}
-.add-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 20px;
-  cursor: pointer; color: var(--text3); font-size: 14px;
-}
-.add-row:hover { color: var(--text2); }
+.goal-row { display:flex; align-items:center; gap:11px; padding:12px 18px; background:var(--bg); border-bottom:0.5px solid var(--border); }
+.goal-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.goal-body { flex:1; min-width:0; }
+.goal-name { font-size:15px; font-weight:500; color:var(--text); margin-bottom:1px; }
+.goal-sub  { font-size:12px; color:var(--text3); }
+.goal-track { height:2px; background:var(--bg3); border-radius:1px; margin-top:7px; overflow:hidden; }
+.goal-fill  { height:100%; border-radius:1px; transition:width .5s cubic-bezier(.25,.8,.25,1); }
+.rec-pill { font-size:12px; font-weight:500; border:0.5px solid var(--border2); border-radius:var(--pill); padding:5px 13px; background:none; color:var(--text); cursor:pointer; white-space:nowrap; font-family:inherit; }
+.rec-pill.done { background:var(--text); color:var(--bg); border-color:var(--text); }
+.add-row { display:flex; align-items:center; gap:10px; padding:13px 18px; cursor:pointer; color:var(--text3); font-size:14px; }
 
-/* BADGES */
-.badges-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 0 16px;
-}
-.badge-card {
-  background: var(--bg);
-  border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: opacity 0.2s;
-}
-.badge-card.locked { opacity: 0.38; }
-.badge-icon {
-  width: 38px; height: 38px;
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
-}
-.badge-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
-.badge-cond { font-size: 11px; color: var(--text3); }
+/* MISSIONS */
+.mission-card { margin:0 14px 10px; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:14px 16px; display:flex; align-items:center; gap:12px; }
+.mission-card.done { opacity:.55; }
+.mission-icon { width:36px; height:36px; border-radius:var(--r); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
+.mission-body { flex:1; min-width:0; }
+.mission-name { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
+.mission-cond { font-size:12px; color:var(--text3); }
+.mission-xp { font-size:12px; font-weight:600; color:var(--amber-dk); background:var(--amber-bg); border-radius:var(--pill); padding:3px 9px; white-space:nowrap; flex-shrink:0; }
+.mission-done-badge { font-size:11px; font-weight:600; color:var(--green-dk); background:var(--green-bg); border-radius:var(--pill); padding:3px 9px; white-space:nowrap; flex-shrink:0; }
 
 /* CALENDAR */
-.cal-nav-row {
-  display: flex; align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px;
-}
-.cal-month { font-size: 17px; font-weight: 600; color: var(--text); }
-.cal-arr {
-  background: none; border: none;
-  cursor: pointer; color: var(--text2);
-  font-size: 22px; padding: 4px; line-height: 1;
-}
-.cal-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  padding: 0 12px;
-}
-.cal-dow {
-  text-align: center; font-size: 11px;
-  color: var(--text3); padding: 6px 0;
-  letter-spacing: 0.04em;
-}
-.cal-day {
-  aspect-ratio: 1;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  border-radius: var(--radius);
-  font-size: 13px; color: var(--text2);
-  gap: 3px; cursor: pointer;
-}
-.cal-day.today {
-  background: var(--text); color: var(--bg);
-  font-weight: 600;
-}
-.pip {
-  width: 3px; height: 3px;
-  border-radius: 50%; background: var(--text3); display: none;
-}
-.cal-day.has-log .pip { display: block; }
-.cal-day.today .pip { background: rgba(255,255,255,0.5); }
+.cal-nav-row { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; }
+.cal-month { font-size:17px; font-weight:600; color:var(--text); }
+.cal-arr { background:none; border:none; cursor:pointer; color:var(--text2); font-size:22px; padding:4px; line-height:1; }
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; padding:0 10px; }
+.cal-dow { text-align:center; font-size:11px; color:var(--text3); padding:5px 0; letter-spacing:.04em; }
+.cal-day { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:var(--r); font-size:13px; color:var(--text2); gap:3px; cursor:pointer; transition:background .1s; }
+.cal-day:hover { background:var(--bg2); }
+.cal-day.today { background:var(--text); color:var(--bg); font-weight:600; }
+.cal-day.selected:not(.today) { background:var(--bg2); border:1px solid var(--border2); }
+.pip { width:3px; height:3px; border-radius:50%; background:var(--text3); display:none; }
+.cal-day.has-log .pip { display:block; }
+.cal-day.today .pip { background:rgba(255,255,255,.5); }
 
-/* CHART */
-.chart-card {
-  margin: 14px 16px;
-  background: var(--bg); border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg); padding: 16px;
-}
-.chart-lbl {
-  font-size: 11px; letter-spacing: 0.07em;
-  text-transform: uppercase; color: var(--text3); margin-bottom: 14px;
-}
-.bars { display: flex; align-items: flex-end; gap: 5px; height: 64px; }
-.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
-.bar-b { width: 100%; border-radius: 3px 3px 0 0; background: var(--bg3); min-height: 2px; }
-.bar-b.filled { background: var(--text); }
-.bar-d { font-size: 10px; color: var(--text3); }
+/* DAY LOG */
+.day-log-header { padding:14px 18px 8px; display:flex; align-items:center; justify-content:space-between; }
+.day-log-date { font-size:13px; font-weight:600; color:var(--text); }
+.day-log-empty { padding:16px 18px; font-size:13px; color:var(--text3); }
+.day-log-row { display:flex; align-items:flex-start; gap:10px; padding:10px 18px; background:var(--bg); border-bottom:0.5px solid var(--border); }
+.day-log-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.day-log-body { flex:1; }
+.day-log-name { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
+.day-log-val  { font-size:12px; color:var(--text3); }
 
 /* REPORT */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px; padding: 0 16px; margin-top: 14px;
-}
-.stat-box {
-  background: var(--bg); border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg); padding: 14px;
-}
-.stat-l { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 5px; }
-.stat-v { font-size: 28px; font-weight: 600; color: var(--text); }
-.ai-trigger {
-  display: flex; align-items: center; justify-content: center;
-  gap: 8px; margin: 12px 16px 0;
-  background: var(--text); color: var(--bg);
-  border: none; border-radius: var(--radius);
-  padding: 15px; font-size: 15px; font-weight: 600;
-  cursor: pointer; width: calc(100% - 32px);
-  font-family: inherit; transition: opacity 0.15s;
-}
-.ai-trigger:active { opacity: 0.75; }
-.loading-txt {
-  text-align: center; padding: 20px;
-  font-size: 13px; color: var(--text3); display: none;
-}
-.report-card {
-  margin: 12px 16px;
-  background: var(--bg); border: 0.5px solid var(--border);
-  border-radius: var(--radius-lg); padding: 20px;
-}
-.report-period { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
-.grade-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
-.grade-char { font-size: 56px; font-weight: 700; color: var(--text); line-height: 1; }
-.grade-desc { font-size: 13px; color: var(--text2); }
-.report-div { height: 0.5px; background: var(--border); margin: 14px 0; }
-.report-body { font-size: 14px; color: var(--text2); line-height: 1.75; }
+.stats-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; padding:0 14px; margin-top:14px; }
+.stat-box { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:13px; }
+.stat-l { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); margin-bottom:4px; }
+.stat-v { font-size:26px; font-weight:600; color:var(--text); }
+.week-report { margin:12px 14px; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:18px; }
+.wr-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; }
+.wr-title { font-size:13px; font-weight:600; color:var(--text); }
+.wr-period { font-size:11px; color:var(--text3); }
+.wr-bars { display:flex; align-items:flex-end; gap:4px; height:60px; margin-bottom:6px; }
+.wr-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.wr-bar { width:100%; border-radius:3px 3px 0 0; background:var(--bg3); min-height:2px; transition:height .4s; }
+.wr-bar.on { background:var(--text); }
+.wr-dl { font-size:10px; color:var(--text3); }
+.goal-report-card { margin:0 14px 10px; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:14px 16px; }
+.gr-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.gr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.gr-name { font-size:13px; font-weight:600; color:var(--text); }
+.gr-days { font-size:11px; color:var(--text3); margin-left:auto; }
+.gr-track { height:4px; background:var(--bg3); border-radius:2px; overflow:hidden; }
+.gr-fill  { height:100%; border-radius:2px; }
 
-/* SETTINGS */
-.settings-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 13px 20px; background: var(--bg);
-  border-bottom: 0.5px solid var(--border);
-}
-
-/* OVERLAY / SHEET */
-.overlay {
-  display: none;
-  position: fixed; inset: 0;
-  background: rgba(0,0,0,0.35);
-  z-index: 100;
-  align-items: flex-end;
-  justify-content: center;
-}
-.overlay.open { display: flex; }
-.sheet {
-  background: var(--bg);
-  border-radius: 20px 20px 0 0;
-  width: 100%; max-width: 430px;
-  padding-bottom: calc(24px + var(--safe-bottom));
-  max-height: 90dvh;
-  overflow-y: auto;
-  animation: slideUp 0.25s cubic-bezier(.32,1.1,.6,1);
-}
-@keyframes slideUp {
-  from { transform: translateY(100%); }
-  to   { transform: none; }
-}
-.sh-handle {
-  width: 36px; height: 3px;
-  background: var(--border2); border-radius: 2px;
-  margin: 12px auto 16px;
-}
-.sh-head {
-  padding: 0 22px 14px;
-  border-bottom: 0.5px solid var(--border);
-}
-.sh-title { font-size: 17px; font-weight: 600; color: var(--text); }
-.sh-sub   { font-size: 13px; color: var(--text3); margin-top: 2px; }
-.sh-body  { padding: 18px 22px 0; }
-.fl { font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
-.fi {
-  width: 100%; padding: 11px 14px;
-  border: 0.5px solid var(--border2);
-  border-radius: var(--radius);
-  background: var(--bg2); color: var(--text);
-  font-size: 15px; font-family: inherit;
-  margin-bottom: 18px; outline: none;
-  transition: border-color 0.15s;
-}
-.fi:focus { border-color: var(--text); }
-.chip-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
-.chip {
-  padding: 6px 16px; border-radius: var(--radius-pill);
-  border: 0.5px solid var(--border2);
-  font-size: 13px; color: var(--text2);
-  background: none; cursor: pointer; font-family: inherit;
-  transition: all 0.1s;
-}
-.chip.on { background: var(--text); color: var(--bg); border-color: var(--text); }
-.swatch-row { display: flex; gap: 10px; margin-bottom: 18px; }
-.swatch {
-  width: 28px; height: 28px; border-radius: 50%;
-  cursor: pointer; border: 2px solid transparent;
-  transition: outline 0.1s;
-}
-.swatch.on { outline: 2.5px solid var(--text); outline-offset: 2px; }
-.sh-actions { display: flex; gap: 10px; padding: 18px 22px 0; }
-.btn-main {
-  flex: 1; background: var(--text); color: var(--bg);
-  border: none; border-radius: var(--radius);
-  padding: 13px; font-size: 15px; font-weight: 600;
-  cursor: pointer; font-family: inherit;
-}
-.btn-ghost {
-  flex: 1; background: none;
-  border: 0.5px solid var(--border2);
-  border-radius: var(--radius);
-  padding: 13px; font-size: 15px;
-  color: var(--text); cursor: pointer; font-family: inherit;
-}
+/* SHEET / OVERLAY */
+.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:100; align-items:flex-end; justify-content:center; }
+.overlay.open { display:flex; }
+.sheet { background:var(--bg); border-radius:20px 20px 0 0; width:100%; max-width:430px; padding-bottom:calc(24px + var(--safe-b)); max-height:90dvh; overflow-y:auto; animation:slideUp .25s cubic-bezier(.32,1.1,.6,1); }
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:none} }
+.sh-handle { width:36px; height:3px; background:var(--border2); border-radius:2px; margin:12px auto 14px; }
+.sh-head { padding:0 20px 12px; border-bottom:0.5px solid var(--border); }
+.sh-title { font-size:17px; font-weight:600; color:var(--text); }
+.sh-sub   { font-size:13px; color:var(--text3); margin-top:2px; }
+.sh-body  { padding:16px 20px 0; }
+.fl { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); margin-bottom:7px; }
+.fi { width:100%; padding:10px 12px; border:0.5px solid var(--border2); border-radius:var(--r); background:var(--bg2); color:var(--text); font-size:15px; font-family:inherit; margin-bottom:16px; outline:none; transition:border-color .15s; }
+.fi:focus { border-color:var(--text); }
+.chip-row { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+.chip { padding:6px 15px; border-radius:var(--pill); border:0.5px solid var(--border2); font-size:13px; color:var(--text2); background:none; cursor:pointer; font-family:inherit; }
+.chip.on { background:var(--text); color:var(--bg); border-color:var(--text); }
+.swatch-row { display:flex; gap:9px; margin-bottom:16px; }
+.swatch { width:27px; height:27px; border-radius:50%; cursor:pointer; border:2px solid transparent; }
+.swatch.on { outline:2.5px solid var(--text); outline-offset:2px; }
+.sh-actions { display:flex; gap:10px; padding:16px 20px 0; }
+.btn-main  { flex:1; background:var(--text); color:var(--bg); border:none; border-radius:var(--r); padding:13px; font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; }
+.btn-ghost { flex:1; background:none; border:0.5px solid var(--border2); border-radius:var(--r); padding:13px; font-size:15px; color:var(--text); cursor:pointer; font-family:inherit; }
 
 /* TOAST */
-.toast {
-  position: fixed;
-  top: 60px; left: 50%;
-  transform: translateX(-50%) translateY(-6px);
-  background: var(--text); color: var(--bg);
-  border-radius: var(--radius-pill);
-  padding: 9px 20px; font-size: 13px; font-weight: 600;
-  white-space: nowrap; opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
-  pointer-events: none; z-index: 200;
-  max-width: calc(100% - 40px);
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast { position:fixed; top:56px; left:50%; transform:translateX(-50%) translateY(-6px); background:var(--text); color:var(--bg); border-radius:var(--pill); padding:8px 18px; font-size:13px; font-weight:600; white-space:nowrap; opacity:0; transition:opacity .2s,transform .2s; pointer-events:none; z-index:200; max-width:calc(100% - 32px); }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
-
 <div id="app">
-  <!-- TOPBAR -->
   <div class="topbar">
-    <div class="topbar-left">
-      <div class="eyebrow" id="tb-eye">習慣トラッカー</div>
-      <div class="title" id="tb-title">今日</div>
+    <div class="tb-left">
+      <div class="tb-app">Habitual</div>
+      <div class="tb-title" id="tb-title">Today</div>
     </div>
-    <div class="xp-pill">
-      <i class="ti ti-bolt"></i>
-      <div>
-        <div class="xp-val" id="xp-disp">0 XP</div>
-        <div class="xp-lv" id="lv-disp">Lv.1</div>
+    <div class="tb-right">
+      <div class="exp-pill">
+        <i class="ti ti-bolt"></i>
+        <span class="exp-val" id="exp-disp">0 EXP</span>
       </div>
+      <div class="rank-tag" id="rank-tag">Lv.1 · 下忍</div>
     </div>
   </div>
 
-  <!-- CONTENT -->
   <div class="content" id="content">
 
     <!-- TODAY -->
@@ -545,8 +208,8 @@ html, body {
           <div class="lv-info">
             <div class="lv-badge" id="lv-badge">1</div>
             <div>
-              <div class="lv-name" id="lv-name-txt">Beginner</div>
-              <div class="lv-sub" id="lv-sub-txt">次のレベルまであと少し</div>
+              <div class="lv-name" id="lv-name-txt">下忍</div>
+              <div class="lv-sub" id="lv-sub-txt">Next level in — EXP</div>
             </div>
           </div>
           <div class="lv-pct" id="lv-pct-txt">0%</div>
@@ -556,43 +219,37 @@ html, body {
 
       <div class="streak-row">
         <div class="streak-box">
-          <div>
-            <div class="streak-val" id="streak-val">0</div>
-            <div class="streak-lbl">日連続</div>
-          </div>
-          <i class="ti ti-flame" style="font-size:24px;color:var(--red);"></i>
+          <div><div class="streak-val" id="streak-val">0</div><div class="streak-lbl">Day streak</div></div>
+          <i class="ti ti-flame" style="font-size:22px;color:var(--red);"></i>
         </div>
         <div class="streak-box">
-          <div>
-            <div class="streak-val" id="total-val">0</div>
-            <div class="streak-lbl">総記録数</div>
-          </div>
-          <i class="ti ti-check" style="font-size:24px;color:var(--green);"></i>
+          <div><div class="streak-val" id="total-val">0</div><div class="streak-lbl">Total logs</div></div>
+          <i class="ti ti-check" style="font-size:22px;color:var(--green);"></i>
         </div>
       </div>
 
-      <div class="ai-card">
-        <div class="ai-card-head">
-          <span class="ai-tag">今日のコーチより</span>
-          <button class="ai-refresh" onclick="fetchDailyComment()" aria-label="更新">
-            <i class="ti ti-refresh"></i>
-          </button>
+      <div class="quote-card">
+        <div class="quote-head">
+          <span class="quote-tag">Daily Quote</span>
+          <button class="quote-btn" onclick="nextQuote()"><i class="ti ti-refresh"></i></button>
         </div>
-        <div class="ai-body loading" id="ai-daily-txt">読み込み中...</div>
+        <div class="quote-txt" id="quote-txt"></div>
       </div>
 
-      <div class="sec-label">今日の目標</div>
+      <div class="sec-label">Goals</div>
       <div id="goal-list"></div>
       <div class="add-row" onclick="openAddGoal()">
-        <i class="ti ti-plus"></i><span>目標を追加</span>
+        <i class="ti ti-plus"></i><span>Add goal</span>
       </div>
       <div style="height:16px;"></div>
     </div>
 
-    <!-- BADGES -->
-    <div id="s-badges" class="screen">
-      <div class="sec-label">実績・バッジ</div>
-      <div class="badges-grid" id="badges-grid"></div>
+    <!-- MISSIONS -->
+    <div id="s-missions" class="screen">
+      <div class="sec-label">Active Missions</div>
+      <div id="missions-active"></div>
+      <div class="sec-label">Completed</div>
+      <div id="missions-done"></div>
       <div style="height:20px;"></div>
     </div>
 
@@ -604,55 +261,51 @@ html, body {
         <button class="cal-arr" onclick="chM(1)"><i class="ti ti-chevron-right"></i></button>
       </div>
       <div class="cal-grid" id="cal-grid"></div>
-      <div class="chart-card">
-        <div class="chart-lbl">過去7日の記録数</div>
-        <div class="bars" id="bar-chart"></div>
-      </div>
+      <div id="day-log-section"></div>
       <div style="height:16px;"></div>
     </div>
 
     <!-- REPORT -->
     <div id="s-report" class="screen">
       <div class="stats-grid">
-        <div class="stat-box"><div class="stat-l">達成日数</div><div class="stat-v" id="st-days">—</div></div>
-        <div class="stat-box"><div class="stat-l">平均達成率</div><div class="stat-v" id="st-rate">—</div></div>
+        <div class="stat-box"><div class="stat-l">Streak</div><div class="stat-v" id="st-streak">—</div></div>
+        <div class="stat-box"><div class="stat-l">This week</div><div class="stat-v" id="st-days">—</div></div>
+        <div class="stat-box"><div class="stat-l">Avg rate</div><div class="stat-v" id="st-rate">—</div></div>
+        <div class="stat-box"><div class="stat-l">Total EXP</div><div class="stat-v" id="st-exp">—</div></div>
       </div>
-      <button class="ai-trigger" onclick="genReport()">
-        <i class="ti ti-sparkles"></i> AIレポートを生成
-      </button>
-      <div class="loading-txt" id="ai-load">AIが分析中です...</div>
-      <div id="report-out"></div>
+      <div class="week-report" id="week-report"></div>
+      <div class="sec-label">Goal Progress</div>
+      <div id="goal-reports"></div>
       <div style="height:20px;"></div>
     </div>
 
     <!-- SETTINGS -->
     <div id="s-settings" class="screen">
-      <div class="sec-label">目標一覧</div>
+      <div class="sec-label">Goals</div>
       <div id="goals-mgr"></div>
       <div class="add-row" onclick="openAddGoal()">
-        <i class="ti ti-plus"></i><span>目標を追加</span>
+        <i class="ti ti-plus"></i><span>Add goal</span>
       </div>
       <div style="height:20px;"></div>
     </div>
 
   </div>
 
-  <!-- NAV -->
   <nav class="nav">
     <button class="nav-btn active" onclick="sw('today',this)">
-      <i class="ti ti-home"></i><span>今日</span><span class="nav-dot"></span>
+      <i class="ti ti-home"></i><span>Today</span><span class="nav-dot"></span>
     </button>
-    <button class="nav-btn" onclick="sw('badges',this)">
-      <i class="ti ti-award"></i><span>実績</span><span class="nav-dot"></span>
+    <button class="nav-btn" onclick="sw('missions',this)">
+      <i class="ti ti-sword"></i><span>Missions</span><span class="nav-dot"></span>
     </button>
     <button class="nav-btn" onclick="sw('calendar',this)">
-      <i class="ti ti-calendar"></i><span>記録</span><span class="nav-dot"></span>
+      <i class="ti ti-calendar"></i><span>Log</span><span class="nav-dot"></span>
     </button>
     <button class="nav-btn" onclick="sw('report',this)">
-      <i class="ti ti-chart-bar"></i><span>レポート</span><span class="nav-dot"></span>
+      <i class="ti ti-chart-bar"></i><span>Report</span><span class="nav-dot"></span>
     </button>
     <button class="nav-btn" onclick="sw('settings',this)">
-      <i class="ti ti-sliders"></i><span>設定</span><span class="nav-dot"></span>
+      <i class="ti ti-sliders"></i><span>Settings</span><span class="nav-dot"></span>
     </button>
   </nav>
 </div>
@@ -661,14 +314,11 @@ html, body {
 <div class="overlay" id="log-ov">
   <div class="sheet">
     <div class="sh-handle"></div>
-    <div class="sh-head">
-      <div class="sh-title" id="log-title"></div>
-      <div class="sh-sub" id="log-sub"></div>
-    </div>
+    <div class="sh-head"><div class="sh-title" id="log-title"></div><div class="sh-sub" id="log-sub"></div></div>
     <div class="sh-body" id="log-body"></div>
     <div class="sh-actions">
-      <button class="btn-ghost" onclick="closeOv('log-ov')">キャンセル</button>
-      <button class="btn-main" onclick="saveLog()">保存 +20 XP</button>
+      <button class="btn-ghost" onclick="closeOv('log-ov')">Cancel</button>
+      <button class="btn-main" onclick="saveLog()">Save  +20 EXP</button>
     </div>
   </div>
 </div>
@@ -677,27 +327,24 @@ html, body {
 <div class="overlay" id="add-ov">
   <div class="sheet">
     <div class="sh-handle"></div>
-    <div class="sh-head">
-      <div class="sh-title">目標を追加</div>
-      <div class="sh-sub">毎日続けたいことを設定します</div>
-    </div>
+    <div class="sh-head"><div class="sh-title">Add Goal</div><div class="sh-sub">Set a daily habit to track</div></div>
     <div class="sh-body">
-      <div class="fl">目標名</div>
-      <input class="fi" id="g-name" placeholder="例：ランニング" />
-      <div class="fl">記録の種類</div>
+      <div class="fl">Goal name</div>
+      <input class="fi" id="g-name" placeholder="e.g. Running" />
+      <div class="fl">Type</div>
       <div class="chip-row" id="type-chips">
-        <button class="chip on" onclick="selType(this,'numeric')">数値</button>
-        <button class="chip" onclick="selType(this,'boolean')">達成 / 未達成</button>
-        <button class="chip" onclick="selType(this,'text')">メモ</button>
+        <button class="chip on" onclick="selType(this,'numeric')">Numeric</button>
+        <button class="chip" onclick="selType(this,'boolean')">Done / Not done</button>
+        <button class="chip" onclick="selType(this,'text')">Memo</button>
       </div>
       <div id="num-opt">
-        <div class="fl">目標値と単位</div>
-        <div style="display:flex;gap:8px;margin-bottom:18px;">
+        <div class="fl">Target &amp; Unit</div>
+        <div style="display:flex;gap:8px;margin-bottom:16px;">
           <input class="fi" id="g-target" type="number" placeholder="30" style="margin:0;flex:1;" />
-          <input class="fi" id="g-unit" placeholder="分" style="margin:0;flex:1;" />
+          <input class="fi" id="g-unit" placeholder="min" style="margin:0;flex:1;" />
         </div>
       </div>
-      <div class="fl">カラー</div>
+      <div class="fl">Color</div>
       <div class="swatch-row">
         <div class="swatch on" style="background:#111;" onclick="selCol(this,'#111')"></div>
         <div class="swatch" style="background:#378ADD;" onclick="selCol(this,'#378ADD')"></div>
@@ -707,8 +354,8 @@ html, body {
       </div>
     </div>
     <div class="sh-actions">
-      <button class="btn-ghost" onclick="closeOv('add-ov')">キャンセル</button>
-      <button class="btn-main" onclick="saveGoal()">追加</button>
+      <button class="btn-ghost" onclick="closeOv('add-ov')">Cancel</button>
+      <button class="btn-main" onclick="saveGoal()">Add</button>
     </div>
   </div>
 </div>
@@ -716,73 +363,100 @@ html, body {
 <div class="toast" id="toast"></div>
 
 <script>
-const LEVELS = [
-  {lv:1, name:'Beginner',   xpNeeded:0,    xpNext:100},
-  {lv:2, name:'Starter',    xpNeeded:100,  xpNext:250},
-  {lv:3, name:'Steady',     xpNeeded:250,  xpNext:500},
-  {lv:4, name:'Focused',    xpNeeded:500,  xpNext:900},
-  {lv:5, name:'Committed',  xpNeeded:900,  xpNext:1400},
-  {lv:6, name:'Dedicated',  xpNeeded:1400, xpNext:2000},
-  {lv:7, name:'Expert',     xpNeeded:2000, xpNext:2800},
-  {lv:8, name:'Master',     xpNeeded:2800, xpNext:9999},
+// ── RANKS (anime-inspired) ──────────────────────────────────────
+const RANKS = [
+  {lv:1,  name:'下忍',        sub:'Naruto · 修行を始めたばかり',    expNext:100},
+  {lv:2,  name:'海賊見習い',  sub:'One Piece · 海に出たばかり',     expNext:250},
+  {lv:3,  name:'中忍',        sub:'Naruto · 実力を認められた',       expNext:500},
+  {lv:4,  name:'剣士見習い',  sub:'鬼滅 · 鱗滝の弟子',             expNext:900},
+  {lv:5,  name:'上忍',        sub:'Naruto · エリートへの道',         expNext:1400},
+  {lv:6,  name:'一航士',      sub:'One Piece · 船を任される強さ',   expNext:2000},
+  {lv:7,  name:'水柱',        sub:'鬼滅 · 柱の称号を持つ者',        expNext:2800},
+  {lv:8,  name:'七武海',      sub:'One Piece · 世界が認めた実力者', expNext:3800},
+  {lv:9,  name:'火影',        sub:'Naruto · 里を守る最強の忍',      expNext:5000},
+  {lv:10, name:'海賊王',      sub:'One Piece · 最強の称号',         expNext:99999},
 ];
 
-const BADGE_DEFS = [
-  {id:'first_log', icon:'ti-check',  bg:'var(--green-bg)', col:'var(--green-dark)', name:'初記録',   cond:'初めて記録する',     check: s => s.totalLogs >= 1},
-  {id:'streak3',   icon:'ti-flame',  bg:'var(--red-bg)',   col:'var(--red-dark)',   name:'3日連続',  cond:'3日連続で記録',      check: s => s.streak >= 3},
-  {id:'streak7',   icon:'ti-flame',  bg:'var(--red-bg)',   col:'var(--red-dark)',   name:'7日連続',  cond:'7日連続で記録',      check: s => s.streak >= 7},
-  {id:'streak30',  icon:'ti-flame',  bg:'var(--red-bg)',   col:'var(--red-dark)',   name:'30日連続', cond:'30日連続で記録',     check: s => s.streak >= 30},
-  {id:'logs10',    icon:'ti-star',   bg:'var(--amber-bg)', col:'var(--amber-dark)', name:'10記録',   cond:'合計10回記録する',   check: s => s.totalLogs >= 10},
-  {id:'logs50',    icon:'ti-star',   bg:'var(--amber-bg)', col:'var(--amber-dark)', name:'50記録',   cond:'合計50回記録する',   check: s => s.totalLogs >= 50},
-  {id:'lv3',       icon:'ti-bolt',   bg:'var(--blue-bg)',  col:'var(--blue-dark)',  name:'Lv.3到達', cond:'レベル3に到達する',  check: s => s.level >= 3},
-  {id:'lv5',       icon:'ti-bolt',   bg:'var(--blue-bg)',  col:'var(--blue-dark)',  name:'Lv.5到達', cond:'レベル5に到達する',  check: s => s.level >= 5},
+// ── MISSIONS ───────────────────────────────────────────────────
+const MISSIONS = [
+  {id:'first',    icon:'ti-flag',    bg:'var(--green-bg)', col:'var(--green-dk)', name:'First Step',      desc:'初めて記録する',        exp:30,  check:s=>s.totalLogs>=1},
+  {id:'s3',       icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red-dk)',   name:'On Fire',         desc:'3日連続で記録',         exp:50,  check:s=>s.streak>=3},
+  {id:'s7',       icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red-dk)',   name:'Week Warrior',    desc:'7日連続で記録',         exp:100, check:s=>s.streak>=7},
+  {id:'s30',      icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red-dk)',   name:'Unstoppable',     desc:'30日連続で記録',        exp:500, check:s=>s.streak>=30},
+  {id:'l10',      icon:'ti-star',    bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Getting Serious', desc:'合計10回記録する',      exp:80,  check:s=>s.totalLogs>=10},
+  {id:'l50',      icon:'ti-star',    bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Dedicated',       desc:'合計50回記録する',      exp:200, check:s=>s.totalLogs>=50},
+  {id:'l100',     icon:'ti-star',    bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Century',         desc:'合計100回記録する',     exp:500, check:s=>s.totalLogs>=100},
+  {id:'lv3',      icon:'ti-bolt',    bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'Rising Star',     desc:'レベル3に到達する',     exp:100, check:s=>s.level>=3},
+  {id:'lv5',      icon:'ti-bolt',    bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'Mid Boss',        desc:'レベル5に到達する',     exp:200, check:s=>s.level>=5},
+  {id:'lv8',      icon:'ti-crown',   bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Elite Class',     desc:'レベル8に到達する',     exp:500, check:s=>s.level>=8},
+  {id:'exp500',   icon:'ti-trophy',  bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'EXP Hunter',      desc:'累計500 EXP獲得',      exp:100, check:s=>s.exp>=500},
+  {id:'exp2000',  icon:'ti-trophy',  bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'Power Grinder',   desc:'累計2000 EXP獲得',     exp:300, check:s=>s.exp>=2000},
 ];
 
-let goals = JSON.parse(localStorage.getItem('ht_goals') || 'null') || [
-  {id:1, name:'ランニング', type:'numeric', target:30, unit:'分',  color:'#378ADD'},
-  {id:2, name:'読書',       type:'numeric', target:20, unit:'分',  color:'#1D9E75'},
-  {id:3, name:'瞑想',       type:'boolean',                        color:'#111111'},
+const QUOTES = [
+  '小さな一歩の積み重ねが、やがて大きな変化になる。',
+  '今日できることを、今日やる。それだけでいい。',
+  '完璧を目指すより、続けることを目指そう。',
+  '昨日の自分より少しだけ前に進めばいい。',
+  '記録することは、自分を知ること。',
+  'モチベーションは波がある。だから習慣にする。',
+  '結果は後からついてくる。今日もただ続けよう。',
+  '三日坊主でもいい。また始めればいい。',
+  '小さな習慣が、人生を静かに変えていく。',
+  '今日記録したことは、未来の自分への贈り物。',
+  '継続は力なり。でも、休むことも力なり。',
+  '千里の道も一歩から。',
 ];
-let logs  = JSON.parse(localStorage.getItem('ht_logs')  || '{}');
-let stats = JSON.parse(localStorage.getItem('ht_stats') || '{"xp":0,"level":1,"streak":0,"totalLogs":0,"lastLogDate":"","earnedBadges":[]}');
 
-let calY, calM, activeId = null, gType = 'numeric', gCol = '#111111', boolV = true;
+let goals = JSON.parse(localStorage.getItem('hb_goals')||'null') || [
+  {id:1, name:'Running',   type:'numeric', target:30, unit:'min', color:'#378ADD'},
+  {id:2, name:'Reading',   type:'numeric', target:20, unit:'min', color:'#1D9E75'},
+  {id:3, name:'Meditation',type:'boolean',                        color:'#111111'},
+];
+let logs  = JSON.parse(localStorage.getItem('hb_logs') ||'{}');
+let stats = JSON.parse(localStorage.getItem('hb_stats')||'{"exp":0,"level":1,"streak":0,"totalLogs":0,"earnedMissions":[]}');
 
-const saveG = () => localStorage.setItem('ht_goals',  JSON.stringify(goals));
-const saveL = () => localStorage.setItem('ht_logs',   JSON.stringify(logs));
-const saveS = () => localStorage.setItem('ht_stats',  JSON.stringify(stats));
-const todayK = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; };
+let calY, calM, selDay = null, activeId = null, gType = 'numeric', gCol = '#111111', boolV = true;
+let quoteIdx = Math.floor(Math.random() * QUOTES.length);
 
-function getLevelInfo(xp) {
-  let cur = LEVELS[0];
-  for (const l of LEVELS) { if (xp >= l.xpNeeded) cur = l; }
-  return cur;
-}
+const saveG = () => localStorage.setItem('hb_goals',  JSON.stringify(goals));
+const saveL = () => localStorage.setItem('hb_logs',   JSON.stringify(logs));
+const saveS = () => localStorage.setItem('hb_stats',  JSON.stringify(stats));
+const todayK = () => { const d=new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; };
+const fmtKey = (y,m,d) => `${y}-${m+1}-${d}`;
 
-function addXP(amount) {
-  const before = getLevelInfo(stats.xp).lv;
-  stats.xp += amount;
-  const after = getLevelInfo(stats.xp);
-  stats.level = after.lv;
+function getRank(lv) { return RANKS.find(r=>r.lv===lv) || RANKS[RANKS.length-1]; }
+function getExpForLevel(lv) { const r=RANKS.find(x=>x.lv===lv); return r ? r.expNext : 99999; }
+
+function addEXP(amount) {
+  const before = stats.level;
+  stats.exp += amount;
+  // recalc level
+  let newLv = 1;
+  for (const r of RANKS) { if (stats.exp >= (r.lv===1?0:RANKS[r.lv-2].expNext)) newLv = r.lv; }
+  stats.level = newLv;
   saveS();
-  if (after.lv > before) {
-    showToast(`レベルアップ! Lv.${after.lv} — ${after.name}`);
+  if (stats.level > before) {
+    const rank = getRank(stats.level);
+    setTimeout(() => showToast(`Level Up! Lv.${stats.level} — ${rank.name}`), 200);
   } else {
-    showToast(`+${amount} XP`);
+    showToast(`+${amount} EXP`);
   }
-  updateXPDisplay();
+  updateHeader();
 }
 
-function updateXPDisplay() {
-  const info = getLevelInfo(stats.xp);
-  const pct = info.xpNext > info.xpNeeded
-    ? Math.round((stats.xp - info.xpNeeded) / (info.xpNext - info.xpNeeded) * 100)
-    : 100;
-  document.getElementById('xp-disp').textContent    = `${stats.xp} XP`;
-  document.getElementById('lv-disp').textContent    = `Lv.${info.lv}`;
-  document.getElementById('lv-badge').textContent   = info.lv;
-  document.getElementById('lv-name-txt').textContent = info.name;
-  document.getElementById('lv-sub-txt').textContent  = info.xpNext - stats.xp > 0 ? `次まで ${info.xpNext - stats.xp} XP` : '最高レベル達成!';
+function updateHeader() {
+  const rank = getRank(stats.level);
+  const expThisLevel = stats.level > 1 ? RANKS[stats.level-2].expNext : 0;
+  const expNext = rank.expNext;
+  const pct = expNext > expThisLevel ? Math.min(100, Math.round((stats.exp - expThisLevel) / (expNext - expThisLevel) * 100)) : 100;
+  const rem = Math.max(0, expNext - stats.exp);
+
+  document.getElementById('exp-disp').textContent = `${stats.exp} EXP`;
+  document.getElementById('rank-tag').textContent  = `Lv.${stats.level} · ${rank.name}`;
+  document.getElementById('lv-badge').textContent  = stats.level;
+  document.getElementById('lv-name-txt').textContent = rank.name;
+  document.getElementById('lv-sub-txt').textContent  = rem > 0 ? `Next level in ${rem} EXP` : 'Max level!';
   document.getElementById('lv-pct-txt').textContent  = `${pct}%`;
   document.getElementById('lv-fill').style.width     = pct + '%';
   document.getElementById('streak-val').textContent  = stats.streak;
@@ -790,314 +464,314 @@ function updateXPDisplay() {
 }
 
 function calcStreak() {
-  let streak = 0;
-  const now = new Date();
-  for (let i = 0; i < 365; i++) {
-    const d = new Date(now); d.setDate(d.getDate() - i);
-    const k = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    if (logs[k] && Object.keys(logs[k]).length > 0) streak++;
+  let s = 0; const now = new Date();
+  for (let i=0; i<365; i++) {
+    const d=new Date(now); d.setDate(d.getDate()-i);
+    const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+    if (logs[k] && Object.keys(logs[k]).length>0) s++;
     else break;
   }
-  return streak;
+  return s;
 }
 
-function checkBadges() {
-  const newBadges = [];
-  for (const b of BADGE_DEFS) {
-    if (!stats.earnedBadges.includes(b.id) && b.check(stats)) {
-      stats.earnedBadges.push(b.id);
-      newBadges.push(b.name);
+function checkMissions() {
+  const newOnes = [];
+  for (const m of MISSIONS) {
+    if (!stats.earnedMissions.includes(m.id) && m.check(stats)) {
+      stats.earnedMissions.push(m.id);
+      newOnes.push({name: m.name, exp: m.exp});
     }
   }
-  if (newBadges.length) { saveS(); setTimeout(() => showToast(`バッジ獲得: ${newBadges.join(', ')}`), 700); }
+  if (newOnes.length) {
+    saveS();
+    newOnes.forEach((m,i) => setTimeout(() => showToast(`Mission: ${m.name}  +${m.exp} EXP`), 900 + i*600));
+  }
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2400);
+  setTimeout(() => t.classList.remove('show'), 2500);
 }
 
+function nextQuote() {
+  quoteIdx = (quoteIdx + 1) % QUOTES.length;
+  document.getElementById('quote-txt').textContent = QUOTES[quoteIdx];
+}
+
+// ── SCREENS ─────────────────────────────────────────────────────
+const SCREEN_TITLES = { today:'Today', missions:'Missions', calendar:'Log', report:'Report', settings:'Settings' };
+
 function sw(name, btn) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('s-' + name).classList.add('active');
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('s-'+name).classList.add('active');
   btn.classList.add('active');
   document.getElementById('content').scrollTop = 0;
-  const eye = {today:'習慣トラッカー', badges:'実績', calendar:'カレンダー', report:'週次レポート', settings:'設定'};
-  const ttl = {today:'今日', badges:'バッジ', calendar:'記録', report:'レポート', settings:'目標'};
-  document.getElementById('tb-eye').textContent   = eye[name];
-  document.getElementById('tb-title').textContent = ttl[name];
-  if (name === 'calendar') renderCal();
-  if (name === 'report')   updStats();
-  if (name === 'settings') renderMgr();
-  if (name === 'badges')   renderBadges();
+  document.getElementById('tb-title').textContent = SCREEN_TITLES[name];
+  if (name==='calendar')  { if(calY===undefined){const n=new Date();calY=n.getFullYear();calM=n.getMonth();} renderCal(); renderDayLog(selDay||todayK()); }
+  if (name==='report')    renderReport();
+  if (name==='settings')  renderMgr();
+  if (name==='missions')  renderMissions();
 }
 
 const openOv  = id => document.getElementById(id).classList.add('open');
 const closeOv = id => document.getElementById(id).classList.remove('open');
 
+// ── TODAY ────────────────────────────────────────────────────────
+function renderHome() {
+  const today = todayK();
+  document.getElementById('quote-txt').textContent = QUOTES[quoteIdx];
+  document.getElementById('goal-list').innerHTML = goals.map(g => {
+    const log = logs[today]?.[g.id];
+    let sub='', pct=0, showBar=false, isDone=false;
+    if (g.type==='numeric') {
+      pct = log ? Math.min(100, Math.round((log.value/g.target)*100)) : 0;
+      sub = log ? `${log.value} / ${g.target} ${g.unit}` : `Goal: ${g.target} ${g.unit}`;
+      showBar = true;
+    } else if (g.type==='boolean') {
+      isDone = !!(log?.done); sub = isDone ? 'Done' : 'Not logged';
+    } else {
+      sub = log ? 'Logged' : 'No memo';
+    }
+    const done = isDone || pct>=100;
+    return `<div class="goal-row">
+      <div class="goal-dot" style="background:${g.color}"></div>
+      <div class="goal-body">
+        <div class="goal-name">${g.name}</div>
+        <div class="goal-sub">${sub}</div>
+        ${showBar?`<div class="goal-track"><div class="goal-fill" style="width:${pct}%;background:${g.color}"></div></div>`:''}
+      </div>
+      <button class="rec-pill${done?' done':''}" onclick="openLog(${g.id})">${done?'Done':'Log'}</button>
+    </div>`;
+  }).join('');
+  updateHeader();
+}
+
 function openLog(gid) {
-  const g = goals.find(x => x.id === gid); activeId = gid;
+  const g = goals.find(x=>x.id===gid); activeId = gid;
   document.getElementById('log-title').textContent = g.name;
-  document.getElementById('log-sub').textContent   = new Date().toLocaleDateString('ja-JP', {month:'long', day:'numeric', weekday:'short'});
-  const today = todayK(); const ex = logs[today] && logs[today][gid];
-  let html = '';
-  if (g.type === 'numeric') {
-    html = `<div class="fl">今日の値</div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
-        <input class="fi" id="lv" type="number" inputmode="decimal" placeholder="0" style="margin:0;flex:1;" value="${ex?.value||''}">
-        <span style="font-size:14px;color:var(--text3);">${g.unit}</span>
-      </div>
-      <div class="fl">メモ（任意）</div>
-      <textarea class="fi" id="lm" rows="2" placeholder="今日の様子を記録">${ex?.memo||''}</textarea>`;
-  } else if (g.type === 'boolean') {
+  document.getElementById('log-sub').textContent = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',weekday:'short'});
+  const today=todayK(); const ex=logs[today]?.[gid];
+  let html='';
+  if (g.type==='numeric') {
+    html=`<div class="fl">Value</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+      <input class="fi" id="lv" type="number" inputmode="decimal" placeholder="0" style="margin:0;flex:1;" value="${ex?.value||''}">
+      <span style="font-size:14px;color:var(--text3);">${g.unit}</span>
+    </div>
+    <div class="fl">Memo (optional)</div>
+    <textarea class="fi" id="lm" rows="2" placeholder="How did it go?">${ex?.memo||''}</textarea>`;
+  } else if (g.type==='boolean') {
     boolV = ex ? ex.done : true;
-    html = `<div class="fl">達成しましたか</div>
-      <div class="chip-row" style="margin-bottom:18px;">
-        <button class="chip${boolV?' on':''}" id="by" onclick="setBool(true)">達成</button>
-        <button class="chip${!boolV?' on':''}" id="bn" onclick="setBool(false)">未達成</button>
-      </div>
-      <div class="fl">メモ（任意）</div>
-      <textarea class="fi" id="lm" rows="2" placeholder="コメント">${ex?.memo||''}</textarea>`;
+    html=`<div class="fl">Did you do it?</div>
+    <div class="chip-row" style="margin-bottom:16px;">
+      <button class="chip${boolV?' on':''}" id="by" onclick="setBool(true)">Done</button>
+      <button class="chip${!boolV?' on':''}" id="bn" onclick="setBool(false)">Not done</button>
+    </div>
+    <div class="fl">Memo (optional)</div>
+    <textarea class="fi" id="lm" rows="2" placeholder="Any notes?">${ex?.memo||''}</textarea>`;
   } else {
-    html = `<div class="fl">今日の記録</div>
-      <textarea class="fi" id="lm" rows="4" placeholder="今日の内容を書いてください">${ex?.memo||''}</textarea>`;
+    html=`<div class="fl">Today's log</div>
+    <textarea class="fi" id="lm" rows="4" placeholder="Write anything...">${ex?.memo||''}</textarea>`;
   }
   document.getElementById('log-body').innerHTML = html;
   openOv('log-ov');
 }
 
 function setBool(v) {
-  boolV = v;
-  document.getElementById('by').classList.toggle('on', v);
-  document.getElementById('bn').classList.toggle('on', !v);
+  boolV=v;
+  document.getElementById('by').classList.toggle('on',v);
+  document.getElementById('bn').classList.toggle('on',!v);
 }
 
 function saveLog() {
-  const g = goals.find(x => x.id === activeId); const today = todayK();
-  const isNew = !logs[today] || !logs[today][activeId];
-  if (!logs[today]) logs[today] = {};
-  if (g.type === 'numeric')      logs[today][activeId] = {value: parseFloat(document.getElementById('lv').value)||0, memo: document.getElementById('lm')?.value||''};
-  else if (g.type === 'boolean') logs[today][activeId] = {done: boolV, memo: document.getElementById('lm')?.value||''};
-  else                           logs[today][activeId] = {memo: document.getElementById('lm')?.value||''};
+  const g=goals.find(x=>x.id===activeId); const today=todayK();
+  const isNew=!logs[today]||!logs[today][activeId];
+  if (!logs[today]) logs[today]={};
+  if (g.type==='numeric')      logs[today][activeId]={value:parseFloat(document.getElementById('lv').value)||0, memo:document.getElementById('lm')?.value||''};
+  else if (g.type==='boolean') logs[today][activeId]={done:boolV, memo:document.getElementById('lm')?.value||''};
+  else                         logs[today][activeId]={memo:document.getElementById('lm')?.value||''};
   saveL();
   if (isNew) {
     stats.totalLogs++;
     stats.streak = calcStreak();
-    stats.lastLogDate = today;
     saveS();
-    addXP(20);
-    checkBadges();
+    addEXP(20);
+    checkMissions();
   }
   closeOv('log-ov');
   renderHome();
 }
 
-function renderHome() {
-  const today = todayK();
-  document.getElementById('goal-list').innerHTML = goals.map(g => {
-    const log = logs[today] && logs[today][g.id];
-    let sub = '', pct = 0, showBar = false, isDone = false;
-    if (g.type === 'numeric') {
-      if (log) { pct = Math.min(100, Math.round((log.value / g.target) * 100)); sub = `${log.value} / ${g.target} ${g.unit}`; }
-      else sub = `目標 ${g.target} ${g.unit}`;
-      showBar = true;
-    } else if (g.type === 'boolean') {
-      isDone = log && log.done; sub = isDone ? '達成' : '未記録';
-    } else {
-      sub = log ? '記録済み' : 'メモ未記録';
-    }
-    const donePill = isDone || pct >= 100;
-    return `<div class="goal-row">
-      <div class="goal-dot" style="background:${g.color}"></div>
-      <div class="goal-body">
-        <div class="goal-name">${g.name}</div>
-        <div class="goal-sub">${sub}</div>
-        ${showBar ? `<div class="goal-track"><div class="goal-fill" style="width:${pct}%;background:${g.color}"></div></div>` : ''}
-      </div>
-      <button class="rec-pill${donePill?' done':''}" onclick="openLog(${g.id})">${donePill ? '完了' : '記録'}</button>
-    </div>`;
-  }).join('');
-  updateXPDisplay();
-}
-
-async function callAI(prompt) {
-  const res = await fetch('/api/ai', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 400,
-      messages: [{role:'user', content: prompt}],
-    }),
-  });
-  const data = await res.json();
-  return data.content?.map(c => c.text || '').join('') || '';
-}
-
-async function fetchDailyComment() {
-  const el = document.getElementById('ai-daily-txt');
-  el.textContent = '読み込み中...'; el.className = 'ai-body loading';
-  const today = todayK();
-  const loggedToday = logs[today] ? Object.keys(logs[today]).length : 0;
-  const goalNames = goals.map(g => g.name).join('、') || '未設定';
-  const prompt = `あなたは習慣コーチです。ユーザーへの一言メッセージを日本語で返してください。
-設定目標: ${goalNames}
-今日の記録数: ${loggedToday}/${goals.length}
-連続日数: ${stats.streak}日
-レベル: ${stats.level}
-励ましや気づきを与える一言（2文以内、50文字程度）をプレーンテキストで。鍵括弧不要。`;
-  try {
-    const txt = await callAI(prompt);
-    el.textContent = txt || '今日も一歩ずつ積み重ねよう。';
-    el.className = 'ai-body';
-  } catch(e) {
-    el.textContent = '今日も一歩ずつ積み重ねよう。小さな継続が大きな変化を生む。';
-    el.className = 'ai-body';
+// ── MISSIONS ────────────────────────────────────────────────────
+function renderMissions() {
+  const active=[], done=[];
+  for (const m of MISSIONS) {
+    if (stats.earnedMissions.includes(m.id)) done.push(m);
+    else active.push(m);
   }
-}
-
-function renderBadges() {
-  document.getElementById('badges-grid').innerHTML = BADGE_DEFS.map(b => {
-    const earned = stats.earnedBadges.includes(b.id);
-    return `<div class="badge-card${earned ? '' : ' locked'}">
-      <div class="badge-icon" style="background:${b.bg};color:${b.col}"><i class="ti ${b.icon}"></i></div>
-      <div>
-        <div class="badge-name">${b.name}</div>
-        <div class="badge-cond">${earned ? '獲得済み' : b.cond}</div>
+  const card = (m, isDone) => `
+    <div class="mission-card${isDone?' done':''}">
+      <div class="mission-icon" style="background:${m.bg};color:${m.col}"><i class="ti ${m.icon}"></i></div>
+      <div class="mission-body">
+        <div class="mission-name">${m.name}</div>
+        <div class="mission-cond">${m.desc}</div>
       </div>
+      ${isDone
+        ? `<span class="mission-done-badge">Cleared</span>`
+        : `<span class="mission-xp">+${m.exp} EXP</span>`}
     </div>`;
-  }).join('');
+  document.getElementById('missions-active').innerHTML = active.length ? active.map(m=>card(m,false)).join('') : '<div class="day-log-empty">All missions cleared!</div>';
+  document.getElementById('missions-done').innerHTML   = done.length   ? done.map(m=>card(m,true)).join('')   : '<div class="day-log-empty">None yet.</div>';
 }
 
+// ── CALENDAR ────────────────────────────────────────────────────
 function chM(dir) {
-  calM += dir;
-  if (calM < 0)  { calM = 11; calY--; }
-  if (calM > 11) { calM = 0;  calY++; }
+  calM+=dir;
+  if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;}
   renderCal();
 }
 
 function renderCal() {
-  const now = new Date();
-  if (calY === undefined) { calY = now.getFullYear(); calM = now.getMonth(); }
-  const mns = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
-  document.getElementById('cal-lbl').textContent = `${calY}年 ${mns[calM]}`;
-  const first = new Date(calY, calM, 1).getDay();
-  const dim   = new Date(calY, calM+1, 0).getDate();
-  const dows  = ['日','月','火','水','木','金','土'];
-  let h = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
-  for (let i = 0; i < first; i++) h += `<div></div>`;
-  for (let d = 1; d <= dim; d++) {
-    const key = `${calY}-${calM+1}-${d}`;
-    const isToday = calY===now.getFullYear() && calM===now.getMonth() && d===now.getDate();
-    const has = logs[key] && Object.keys(logs[key]).length > 0;
-    h += `<div class="cal-day${isToday?' today':''}${has?' has-log':''}"><span>${d}</span><span class="pip"></span></div>`;
+  const now=new Date();
+  if(calY===undefined){calY=now.getFullYear();calM=now.getMonth();}
+  const mns=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-lbl').textContent=`${mns[calM]} ${calY}`;
+  const first=new Date(calY,calM,1).getDay();
+  const dim=new Date(calY,calM+1,0).getDate();
+  const dows=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0;i<first;i++) h+=`<div></div>`;
+  for(let d=1;d<=dim;d++){
+    const key=fmtKey(calY,calM,d);
+    const isToday=calY===now.getFullYear()&&calM===now.getMonth()&&d===now.getDate();
+    const isSel=key===selDay&&!isToday;
+    const has=logs[key]&&Object.keys(logs[key]).length>0;
+    h+=`<div class="cal-day${isToday?' today':''}${isSel?' selected':''}${has?' has-log':''}" onclick="selectDay('${key}')">
+      <span>${d}</span><span class="pip"></span>
+    </div>`;
   }
-  document.getElementById('cal-grid').innerHTML = h;
-  renderBars();
+  document.getElementById('cal-grid').innerHTML=h;
 }
 
-function renderBars() {
-  const rows = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i);
-    const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    rows.push({cnt: logs[key] ? Object.keys(logs[key]).length : 0, label: ['日','月','火','水','木','金','土'][d.getDay()]});
-  }
-  const max = Math.max(...rows.map(r => r.cnt), 1);
-  document.getElementById('bar-chart').innerHTML = rows.map(r => {
-    const h = Math.max(3, Math.round((r.cnt / max) * 52));
-    return `<div class="bar-col"><div class="bar-b${r.cnt>0?' filled':''}" style="height:${h}px"></div><span class="bar-d">${r.label}</span></div>`;
-  }).join('');
+function selectDay(key) {
+  selDay=key; renderCal(); renderDayLog(key);
 }
 
-function updStats() {
-  let days = 0, total = 0, cnt = 0;
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(); d.setDate(d.getDate() - i);
-    const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    if (logs[key] && Object.keys(logs[key]).length > 0) {
-      days++; total += Object.keys(logs[key]).length / Math.max(goals.length, 1) * 100; cnt++;
-    }
-  }
-  document.getElementById('st-days').textContent = `${days}日`;
-  document.getElementById('st-rate').textContent = cnt ? `${Math.round(total / cnt)}%` : '—';
-}
-
-async function genReport() {
-  document.getElementById('ai-load').style.display = 'block';
-  document.getElementById('report-out').innerHTML  = '';
-  const now = new Date(); let lines = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(now); d.setDate(d.getDate() - i);
-    const key = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    const lbl = `${d.getMonth()+1}/${d.getDate()}`;
-    if (logs[key]) {
-      const entries = Object.entries(logs[key]).map(([id, l]) => {
-        const g = goals.find(x => x.id == id); if (!g) return '';
-        if (g.type === 'numeric')  return `${g.name}:${l.value}${g.unit}`;
-        if (g.type === 'boolean')  return `${g.name}:${l.done?'達成':'未達成'}`;
-        return `${g.name}:${l.memo}`;
-      }).filter(Boolean);
-      if (entries.length) lines.push(`${lbl} ${entries.join(', ')}`);
-    } else lines.push(`${lbl} 記録なし`);
-  }
-  const gDesc = goals.map(g => g.type==='numeric' ? `${g.name}(目標${g.target}${g.unit})` : g.name).join(', ');
-  const prompt = `習慣コーチとして1週間の記録を分析。目標: ${gDesc}\n記録:\n${lines.join('\n')}\n\nJSON形式のみ（マークダウン不要）:\n{"grade":"A","label":"一言評価","comment":"3文程度の分析"}`;
-  try {
-    const raw = await callAI(prompt);
-    const parsed = JSON.parse(raw.replace(/```json|```/g, '').trim());
-    document.getElementById('report-out').innerHTML = `
-      <div class="report-card">
-        <div class="report-period">${now.getMonth()+1}月第${Math.ceil(now.getDate()/7)}週</div>
-        <div class="grade-row"><span class="grade-char">${parsed.grade}</span><span class="grade-desc">${parsed.label||''}</span></div>
-        <div class="report-div"></div>
-        <div class="report-body">${parsed.comment}</div>
+function renderDayLog(key) {
+  if (!key) key=todayK();
+  const d=new Date(key.replace(/(\d+)-(\d+)-(\d+)/,'$1/$2/$3'));
+  const label=d.toLocaleDateString('en-US',{month:'long',day:'numeric',weekday:'long'});
+  const dayLogs=logs[key]||{};
+  const entries=Object.entries(dayLogs);
+  let html=`<div class="day-log-header"><span class="day-log-date">${label}</span></div>`;
+  if (!entries.length) {
+    html+=`<div class="day-log-empty">No logs for this day.</div>`;
+  } else {
+    html+=entries.map(([id,l])=>{
+      const g=goals.find(x=>x.id==id); if(!g) return '';
+      let val='';
+      if(g.type==='numeric') val=`${l.value} ${g.unit}${l.memo?` — ${l.memo}`:''}`;
+      else if(g.type==='boolean') val=`${l.done?'Done':'Not done'}${l.memo?` — ${l.memo}`:''}`;
+      else val=l.memo||'';
+      return `<div class="day-log-row">
+        <div class="day-log-dot" style="background:${g.color}"></div>
+        <div class="day-log-body">
+          <div class="day-log-name">${g.name}</div>
+          <div class="day-log-val">${val}</div>
+        </div>
       </div>`;
-  } catch(e) {
-    document.getElementById('report-out').innerHTML = `<div class="report-card"><div class="report-body">レポートの生成に失敗しました。</div></div>`;
+    }).join('');
   }
-  document.getElementById('ai-load').style.display = 'none';
+  document.getElementById('day-log-section').innerHTML=html;
 }
 
-const openAddGoal = () => openOv('add-ov');
+// ── REPORT ──────────────────────────────────────────────────────
+function renderReport() {
+  let days=0, total=0, cnt=0;
+  const now=new Date();
+  const weekRows=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(now); d.setDate(d.getDate()-i);
+    const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+    const c=logs[key]?Object.keys(logs[key]).length:0;
+    if(c>0){days++;total+=c/Math.max(goals.length,1)*100;cnt++;}
+    weekRows.push({label:'SMTWTFS'[d.getDay()], count:c});
+  }
+  document.getElementById('st-streak').textContent=`${stats.streak}d`;
+  document.getElementById('st-days').textContent=`${days}/7`;
+  document.getElementById('st-rate').textContent=cnt?`${Math.round(total/cnt)}%`:'—';
+  document.getElementById('st-exp').textContent=`${stats.exp}`;
 
-function selType(btn, t) {
-  gType = t;
-  document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.remove('on'));
+  // weekly bar chart
+  const maxC=Math.max(...weekRows.map(r=>r.count),1);
+  const period=`${now.getMonth()+1}月第${Math.ceil(now.getDate()/7)}週`;
+  document.getElementById('week-report').innerHTML=`
+    <div class="wr-head"><span class="wr-title">This Week</span><span class="wr-period">${period}</span></div>
+    <div class="wr-bars">${weekRows.map(r=>{
+      const h=Math.max(3,Math.round((r.count/maxC)*52));
+      return `<div class="wr-col"><div class="wr-bar${r.count>0?' on':''}" style="height:${h}px"></div><span class="wr-dl">${r.label}</span></div>`;
+    }).join('')}</div>`;
+
+  // per-goal progress (past 30 days)
+  const goalHtml=goals.map(g=>{
+    let logged=0;
+    for(let i=0;i<30;i++){
+      const d=new Date(now);d.setDate(d.getDate()-i);
+      const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+      if(logs[key]?.[g.id]) logged++;
+    }
+    const pct=Math.round(logged/30*100);
+    return `<div class="goal-report-card">
+      <div class="gr-head">
+        <div class="gr-dot" style="background:${g.color}"></div>
+        <div class="gr-name">${g.name}</div>
+        <div class="gr-days">${logged}/30 days</div>
+      </div>
+      <div class="gr-track"><div class="gr-fill" style="width:${pct}%;background:${g.color}"></div></div>
+    </div>`;
+  }).join('');
+  document.getElementById('goal-reports').innerHTML=goalHtml;
+}
+
+// ── SETTINGS ────────────────────────────────────────────────────
+const openAddGoal=()=>openOv('add-ov');
+function selType(btn,t){
+  gType=t;
+  document.querySelectorAll('#type-chips .chip').forEach(c=>c.classList.remove('on'));
   btn.classList.add('on');
-  document.getElementById('num-opt').style.display = t === 'numeric' ? '' : 'none';
+  document.getElementById('num-opt').style.display=t==='numeric'?'':'none';
 }
-function selCol(el, c) {
-  gCol = c;
-  document.querySelectorAll('.swatch').forEach(s => s.classList.remove('on'));
+function selCol(el,c){
+  gCol=c;
+  document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));
   el.classList.add('on');
 }
-function saveGoal() {
-  const name = document.getElementById('g-name').value.trim(); if (!name) return;
-  const g = {id: Date.now(), name, type: gType, color: gCol};
-  if (gType === 'numeric') { g.target = parseFloat(document.getElementById('g-target').value)||0; g.unit = document.getElementById('g-unit').value||''; }
-  goals.push(g); saveG(); closeOv('add-ov');
-  document.getElementById('g-name').value = '';
-  renderHome(); renderMgr();
+function saveGoal(){
+  const name=document.getElementById('g-name').value.trim(); if(!name)return;
+  const g={id:Date.now(),name,type:gType,color:gCol};
+  if(gType==='numeric'){g.target=parseFloat(document.getElementById('g-target').value)||0;g.unit=document.getElementById('g-unit').value||'';}
+  goals.push(g);saveG();closeOv('add-ov');
+  document.getElementById('g-name').value='';
+  renderHome();renderMgr();
 }
-function renderMgr() {
-  document.getElementById('goals-mgr').innerHTML = goals.map(g => `
-    <div class="settings-row">
+function renderMgr(){
+  document.getElementById('goals-mgr').innerHTML=goals.map(g=>`
+    <div class="goal-row">
       <div class="goal-dot" style="background:${g.color}"></div>
       <div class="goal-body">
         <div class="goal-name">${g.name}</div>
-        <div class="goal-sub">${g.type==='numeric' ? `${g.target}${g.unit}` : g.type==='boolean' ? '達成 / 未達成' : 'メモ'}</div>
+        <div class="goal-sub">${g.type==='numeric'?`${g.target} ${g.unit}`:g.type==='boolean'?'Done / Not done':'Memo'}</div>
       </div>
-      <button class="rec-pill" onclick="delGoal(${g.id})" style="color:#c00;border-color:#c00;">削除</button>
+      <button class="rec-pill" onclick="delGoal(${g.id})" style="color:#c00;border-color:#c00;">Delete</button>
     </div>`).join('');
 }
-function delGoal(id) { goals = goals.filter(g => g.id !== id); saveG(); renderMgr(); renderHome(); }
+function delGoal(id){goals=goals.filter(g=>g.id!==id);saveG();renderMgr();renderHome();}
 
-stats.streak = calcStreak();
+// ── INIT ─────────────────────────────────────────────────────────
+stats.streak=calcStreak();
 renderHome();
-fetchDailyComment();
 </script>
 </body>
 </html>
