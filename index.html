@@ -1,186 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Habitual">
-<meta name="theme-color" content="#ffffff">
 <title>Habitual</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --bg: #ffffff; --bg2: #f5f5f5; --bg3: #efefef;
-  --text: #111111; --text2: #555555; --text3: #999999;
-  --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
-  --nav-h: 60px; --safe-b: env(safe-area-inset-bottom, 0px);
-  --amber: #BA7517; --amber-bg: #FAEEDA; --amber-dk: #633806;
-  --green: #1D9E75; --green-bg: #E1F5EE; --green-dk: #085041;
-  --blue: #378ADD; --blue-bg: #E6F1FB; --blue-dk: #0C447C;
-  --red: #D85A30; --red-bg: #FAECE7; --red-dk: #712B13;
-  --r: 10px; --rl: 14px; --pill: 999px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0d0d;--bg2:#161616;--bg3:#1e1e1e;--bg4:#252525;
+  --text:#f0ede6;--text2:#b8b0a0;--text3:#6b6358;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --gold:#c9a84c;--gold-bg:rgba(201,168,76,0.12);--gold-dk:#8a6a1f;
+  --green:#4caf7d;--green-bg:rgba(76,175,125,0.12);
+  --blue:#5b9bd5;--blue-bg:rgba(91,155,213,0.12);
+  --red:#c97b5a;--red-bg:rgba(201,123,90,0.12);
+  --r:10px;--rl:14px;--pill:999px;
+  --nav-h:60px;--safe-b:env(safe-area-inset-bottom,0px);
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:#111111; --bg2:#1c1c1e; --bg3:#2c2c2e;
-    --text:#f5f5f5; --text2:#aaaaaa; --text3:#666666;
-    --border:rgba(255,255,255,0.09); --border2:rgba(255,255,255,0.16);
-    --amber-bg:#2d2000; --amber-dk:#FAC775;
-    --green-bg:#001f14; --green-dk:#5DCAA5;
-    --blue-bg:#001830; --blue-dk:#85B7EB;
-    --red-bg:#2d0f00; --red-dk:#F0997B;
-  }
-}
-html,body { height:100%; font-family:-apple-system,'Helvetica Neue',sans-serif; background:var(--bg3); color:var(--text); -webkit-font-smoothing:antialiased; overscroll-behavior:none; }
-#app { max-width:430px; margin:0 auto; height:100dvh; display:flex; flex-direction:column; background:var(--bg3); overflow:hidden; position:relative; }
-
-/* TOPBAR */
-.topbar { flex-shrink:0; background:var(--bg); border-bottom:0.5px solid var(--border); padding:calc(env(safe-area-inset-top,0px) + 10px) 18px 10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.tb-left { flex:1; min-width:0; }
-.tb-app { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text3); margin-bottom:1px; }
-.tb-title { font-size:19px; font-weight:600; color:var(--text); letter-spacing:-0.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.tb-right { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex-shrink:0; }
-.exp-pill { display:flex; align-items:center; gap:5px; background:var(--amber-bg); border-radius:var(--pill); padding:4px 10px; }
-.exp-pill i { font-size:13px; color:var(--amber); }
-.exp-val { font-size:12px; font-weight:600; color:var(--amber-dk); }
-.rank-tag { font-size:10px; font-weight:600; color:var(--text3); letter-spacing:0.04em; text-align:right; }
-
-/* CONTENT / NAV */
-.content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-.nav { flex-shrink:0; height:calc(var(--nav-h) + var(--safe-b)); padding-bottom:var(--safe-b); display:flex; background:var(--bg); border-top:0.5px solid var(--border); }
-.nav-btn { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; background:none; border:none; cursor:pointer; color:var(--text3); font-size:10px; letter-spacing:0.03em; font-family:inherit; transition:color .15s; padding:0; }
-.nav-btn i { font-size:21px; }
-.nav-btn.active { color:var(--text); }
-.nav-dot { width:4px; height:4px; border-radius:50%; background:var(--text); opacity:0; transition:opacity .15s; }
-.nav-btn.active .nav-dot { opacity:1; }
-
-/* SCREENS */
-.screen { display:none; }
-.screen.active { display:block; animation:fadeUp .16s ease; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(3px)} to{opacity:1;transform:none} }
-
-.sec-label { font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--text3); padding:16px 18px 8px; }
-
-/* LEVEL CARD */
-.level-card { margin:12px 14px 0; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:14px 16px; }
-.lv-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:9px; }
-.lv-info { display:flex; align-items:center; gap:11px; }
-.lv-badge { width:40px; height:40px; border-radius:var(--r); background:var(--amber-bg); display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:700; color:var(--amber-dk); }
-.lv-name { font-size:14px; font-weight:600; color:var(--text); }
-.lv-sub  { font-size:11px; color:var(--text3); margin-top:2px; }
-.lv-pct  { font-size:12px; font-weight:600; color:var(--text2); }
-.lv-bar  { height:5px; background:var(--bg3); border-radius:3px; overflow:hidden; }
-.lv-fill { height:100%; border-radius:3px; background:var(--amber); transition:width .7s cubic-bezier(.25,.8,.25,1); }
-
-/* STREAK */
-.streak-row { display:flex; gap:8px; padding:8px 14px 0; }
-.streak-box { flex:1; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:12px 14px; display:flex; align-items:center; justify-content:space-between; }
-.streak-val { font-size:24px; font-weight:600; color:var(--text); line-height:1; }
-.streak-lbl { font-size:11px; color:var(--text3); margin-top:3px; }
-
-/* QUOTE */
-.quote-card { margin:8px 14px 0; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:12px 14px; }
-.quote-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
-.quote-tag { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); }
-.quote-btn { background:none; border:none; cursor:pointer; color:var(--text3); font-size:15px; padding:2px; }
-.quote-txt { font-size:13px; color:var(--text2); line-height:1.6; }
-
-/* GOAL ROWS */
-.goal-row { display:flex; align-items:center; gap:11px; padding:12px 18px; background:var(--bg); border-bottom:0.5px solid var(--border); }
-.goal-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.goal-body { flex:1; min-width:0; }
-.goal-name { font-size:15px; font-weight:500; color:var(--text); margin-bottom:1px; }
-.goal-sub  { font-size:12px; color:var(--text3); }
-.goal-track { height:2px; background:var(--bg3); border-radius:1px; margin-top:7px; overflow:hidden; }
-.goal-fill  { height:100%; border-radius:1px; transition:width .5s cubic-bezier(.25,.8,.25,1); }
-.rec-pill { font-size:12px; font-weight:500; border:0.5px solid var(--border2); border-radius:var(--pill); padding:5px 13px; background:none; color:var(--text); cursor:pointer; white-space:nowrap; font-family:inherit; }
-.rec-pill.done { background:var(--text); color:var(--bg); border-color:var(--text); }
-.add-row { display:flex; align-items:center; gap:10px; padding:13px 18px; cursor:pointer; color:var(--text3); font-size:14px; }
-
-/* MISSIONS */
-.mission-card { margin:0 14px 10px; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:14px 16px; display:flex; align-items:center; gap:12px; }
-.mission-card.done { opacity:.55; }
-.mission-icon { width:36px; height:36px; border-radius:var(--r); display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
-.mission-body { flex:1; min-width:0; }
-.mission-name { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
-.mission-cond { font-size:12px; color:var(--text3); }
-.mission-xp { font-size:12px; font-weight:600; color:var(--amber-dk); background:var(--amber-bg); border-radius:var(--pill); padding:3px 9px; white-space:nowrap; flex-shrink:0; }
-.mission-done-badge { font-size:11px; font-weight:600; color:var(--green-dk); background:var(--green-bg); border-radius:var(--pill); padding:3px 9px; white-space:nowrap; flex-shrink:0; }
-
-/* CALENDAR */
-.cal-nav-row { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; }
-.cal-month { font-size:17px; font-weight:600; color:var(--text); }
-.cal-arr { background:none; border:none; cursor:pointer; color:var(--text2); font-size:22px; padding:4px; line-height:1; }
-.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; padding:0 10px; }
-.cal-dow { text-align:center; font-size:11px; color:var(--text3); padding:5px 0; letter-spacing:.04em; }
-.cal-day { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:var(--r); font-size:13px; color:var(--text2); gap:3px; cursor:pointer; transition:background .1s; }
-.cal-day:hover { background:var(--bg2); }
-.cal-day.today { background:var(--text); color:var(--bg); font-weight:600; }
-.cal-day.selected:not(.today) { background:var(--bg2); border:1px solid var(--border2); }
-.pip { width:3px; height:3px; border-radius:50%; background:var(--text3); display:none; }
-.cal-day.has-log .pip { display:block; }
-.cal-day.today .pip { background:rgba(255,255,255,.5); }
-
-/* DAY LOG */
-.day-log-header { padding:14px 18px 8px; display:flex; align-items:center; justify-content:space-between; }
-.day-log-date { font-size:13px; font-weight:600; color:var(--text); }
-.day-log-empty { padding:16px 18px; font-size:13px; color:var(--text3); }
-.day-log-row { display:flex; align-items:flex-start; gap:10px; padding:10px 18px; background:var(--bg); border-bottom:0.5px solid var(--border); }
-.day-log-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:4px; }
-.day-log-body { flex:1; }
-.day-log-name { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
-.day-log-val  { font-size:12px; color:var(--text3); }
-
-/* REPORT */
-.stats-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; padding:0 14px; margin-top:14px; }
-.stat-box { background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:13px; }
-.stat-l { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); margin-bottom:4px; }
-.stat-v { font-size:26px; font-weight:600; color:var(--text); }
-.week-report { margin:12px 14px; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:18px; }
-.wr-head { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; }
-.wr-title { font-size:13px; font-weight:600; color:var(--text); }
-.wr-period { font-size:11px; color:var(--text3); }
-.wr-bars { display:flex; align-items:flex-end; gap:4px; height:60px; margin-bottom:6px; }
-.wr-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; }
-.wr-bar { width:100%; border-radius:3px 3px 0 0; background:var(--bg3); min-height:2px; transition:height .4s; }
-.wr-bar.on { background:var(--text); }
-.wr-dl { font-size:10px; color:var(--text3); }
-.goal-report-card { margin:0 14px 10px; background:var(--bg); border:0.5px solid var(--border); border-radius:var(--rl); padding:14px 16px; }
-.gr-head { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-.gr-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.gr-name { font-size:13px; font-weight:600; color:var(--text); }
-.gr-days { font-size:11px; color:var(--text3); margin-left:auto; }
-.gr-track { height:4px; background:var(--bg3); border-radius:2px; overflow:hidden; }
-.gr-fill  { height:100%; border-radius:2px; }
-
-/* SHEET / OVERLAY */
-.overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:100; align-items:flex-end; justify-content:center; }
-.overlay.open { display:flex; }
-.sheet { background:var(--bg); border-radius:20px 20px 0 0; width:100%; max-width:430px; padding-bottom:calc(24px + var(--safe-b)); max-height:90dvh; overflow-y:auto; animation:slideUp .25s cubic-bezier(.32,1.1,.6,1); }
-@keyframes slideUp { from{transform:translateY(100%)} to{transform:none} }
-.sh-handle { width:36px; height:3px; background:var(--border2); border-radius:2px; margin:12px auto 14px; }
-.sh-head { padding:0 20px 12px; border-bottom:0.5px solid var(--border); }
-.sh-title { font-size:17px; font-weight:600; color:var(--text); }
-.sh-sub   { font-size:13px; color:var(--text3); margin-top:2px; }
-.sh-body  { padding:16px 20px 0; }
-.fl { font-size:11px; letter-spacing:.07em; text-transform:uppercase; color:var(--text3); margin-bottom:7px; }
-.fi { width:100%; padding:10px 12px; border:0.5px solid var(--border2); border-radius:var(--r); background:var(--bg2); color:var(--text); font-size:15px; font-family:inherit; margin-bottom:16px; outline:none; transition:border-color .15s; }
-.fi:focus { border-color:var(--text); }
-.chip-row { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
-.chip { padding:6px 15px; border-radius:var(--pill); border:0.5px solid var(--border2); font-size:13px; color:var(--text2); background:none; cursor:pointer; font-family:inherit; }
-.chip.on { background:var(--text); color:var(--bg); border-color:var(--text); }
-.swatch-row { display:flex; gap:9px; margin-bottom:16px; }
-.swatch { width:27px; height:27px; border-radius:50%; cursor:pointer; border:2px solid transparent; }
-.swatch.on { outline:2.5px solid var(--text); outline-offset:2px; }
-.sh-actions { display:flex; gap:10px; padding:16px 20px 0; }
-.btn-main  { flex:1; background:var(--text); color:var(--bg); border:none; border-radius:var(--r); padding:13px; font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; }
-.btn-ghost { flex:1; background:none; border:0.5px solid var(--border2); border-radius:var(--r); padding:13px; font-size:15px; color:var(--text); cursor:pointer; font-family:inherit; }
-
-/* TOAST */
-.toast { position:fixed; top:56px; left:50%; transform:translateX(-50%) translateY(-6px); background:var(--text); color:var(--bg); border-radius:var(--pill); padding:8px 18px; font-size:13px; font-weight:600; white-space:nowrap; opacity:0; transition:opacity .2s,transform .2s; pointer-events:none; z-index:200; max-width:calc(100% - 32px); }
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
+#app{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+.topbar{flex-shrink:0;background:rgba(13,13,13,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);padding:calc(env(safe-area-inset-top,0px) + 8px) 18px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.tb-left .tb-app{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1px;}
+.tb-left .tb-title{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.tb-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
+.exp-pill{display:flex;align-items:center;gap:5px;background:var(--gold-bg);border:0.5px solid rgba(201,168,76,0.3);border-radius:var(--pill);padding:4px 10px;}
+.exp-pill i{font-size:12px;color:var(--gold);}
+.exp-val{font-size:12px;font-weight:600;color:var(--gold);}
+.rank-tag{font-size:10px;color:var(--text3);letter-spacing:0.04em;}
+.content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.nav{flex-shrink:0;height:calc(var(--nav-h) + var(--safe-b));padding-bottom:var(--safe-b);display:flex;background:rgba(13,13,13,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:0.5px solid var(--border);}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:none;border:none;cursor:pointer;color:var(--text3);font-size:10px;letter-spacing:0.03em;font-family:inherit;transition:color .15s;padding:0;}
+.nav-btn i{font-size:21px;}
+.nav-btn.active{color:var(--gold);}
+.nav-dot{width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:0;transition:opacity .15s;}
+.nav-btn.active .nav-dot{opacity:1;}
+.screen{display:none;}
+.screen.active{display:block;animation:fadeUp .18s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.sec-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);padding:16px 18px 8px;}
+.hero-card{position:relative;margin:12px 14px 0;border-radius:var(--rl);overflow:hidden;min-height:200px;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0a0e1a 0%,#1a1228 40%,#0d1a12 100%);}
+.hero-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,0.6) 0%,transparent 100%),radial-gradient(1px 1px at 80% 20%,rgba(255,255,255,0.4) 0%,transparent 100%),radial-gradient(1px 1px at 50% 60%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 10% 70%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1px 1px at 90% 80%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 65% 15%,rgba(255,255,255,0.5) 0%,transparent 100%),radial-gradient(1px 1px at 75% 50%,rgba(255,255,255,0.3) 0%,transparent 100%),radial-gradient(1px 1px at 25% 45%,rgba(255,255,255,0.4) 0%,transparent 100%);}
+.hero-content{position:relative;z-index:1;padding:18px 18px 16px;}
+.hero-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.hero-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(201,168,76,0.7);}
+.hero-refresh{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.3);font-size:16px;padding:2px;}
+.hero-quote{font-size:16px;font-weight:500;color:var(--text);line-height:1.65;letter-spacing:0.01em;margin-bottom:16px;font-style:italic;}
+.hero-divider{height:0.5px;background:rgba(255,255,255,0.1);margin-bottom:14px;}
+.hero-person{display:flex;align-items:center;gap:12px;}
+.hero-avatar{width:40px;height:40px;border-radius:50%;background:var(--gold-bg);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gold);flex-shrink:0;}
+.hero-person-info{flex:1;min-width:0;}
+.hero-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:1px;}
+.hero-bio{font-size:11px;color:var(--text3);line-height:1.4;}
+.hero-expand{background:none;border:none;cursor:pointer;color:var(--gold);font-size:11px;letter-spacing:0.05em;padding:0;font-family:inherit;white-space:nowrap;}
+.person-detail{margin:8px 14px 0;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;display:none;}
+.person-detail.open{display:block;}
+.pd-head{padding:14px 16px;border-bottom:0.5px solid var(--border);}
+.pd-title{font-size:13px;font-weight:600;color:var(--gold);margin-bottom:3px;}
+.pd-years{font-size:11px;color:var(--text3);}
+.pd-body{padding:14px 16px;}
+.pd-sec-label{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:5px;}
+.pd-text{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px;}
+.pd-knowledge{background:var(--bg3);border-radius:var(--r);padding:12px 14px;}
+.pd-k-label{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.pd-k-text{font-size:13px;color:var(--text2);line-height:1.6;}
+.level-card{margin:8px 14px 0;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:13px 15px;}
+.lv-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.lv-info{display:flex;align-items:center;gap:10px;}
+.lv-badge{width:38px;height:38px;border-radius:var(--r);background:var(--gold-bg);border:0.5px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--gold);}
+.lv-name{font-size:13px;font-weight:600;color:var(--text);}
+.lv-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+.lv-pct{font-size:12px;font-weight:600;color:var(--text3);}
+.lv-bar{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.lv-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold-dk),var(--gold));transition:width .8s cubic-bezier(.25,.8,.25,1);}
+.streak-row{display:flex;gap:8px;padding:8px 14px 0;}
+.streak-box{flex:1;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:11px 13px;display:flex;align-items:center;justify-content:space-between;}
+.streak-val{font-size:22px;font-weight:600;color:var(--text);line-height:1;}
+.streak-lbl{font-size:10px;color:var(--text3);margin-top:3px;}
+.goal-row{display:flex;align-items:center;gap:11px;padding:11px 18px;background:var(--bg2);border-bottom:0.5px solid var(--border);}
+.goal-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.goal-body{flex:1;min-width:0;}
+.goal-name{font-size:14px;font-weight:500;color:var(--text);margin-bottom:1px;}
+.goal-sub{font-size:11px;color:var(--text3);}
+.goal-track{height:2px;background:var(--bg3);border-radius:1px;margin-top:6px;overflow:hidden;}
+.goal-fill{height:100%;border-radius:1px;transition:width .5s cubic-bezier(.25,.8,.25,1);}
+.rec-pill{font-size:11px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--pill);padding:5px 12px;background:none;color:var(--text2);cursor:pointer;white-space:nowrap;font-family:inherit;}
+.rec-pill.done{background:var(--gold);color:#000;border-color:var(--gold);}
+.add-row{display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;color:var(--text3);font-size:13px;}
+.mission-card{margin:0 14px 8px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:13px 14px;display:flex;align-items:center;gap:11px;}
+.mission-card.done{opacity:.4;}
+.mission-icon{width:34px;height:34px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.mission-body{flex:1;min-width:0;}
+.mission-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1px;}
+.mission-cond{font-size:11px;color:var(--text3);}
+.mission-exp{font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-bg);border-radius:var(--pill);padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.mission-done-badge{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);border-radius:var(--pill);padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.cal-nav-row{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;}
+.cal-month{font-size:16px;font-weight:600;color:var(--text);}
+.cal-arr{background:none;border:none;cursor:pointer;color:var(--text3);font-size:22px;padding:4px;line-height:1;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;padding:0 10px;}
+.cal-dow{text-align:center;font-size:10px;color:var(--text3);padding:5px 0;letter-spacing:.04em;}
+.cal-day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:var(--r);font-size:13px;color:var(--text3);gap:3px;cursor:pointer;}
+.cal-day.today{background:var(--gold);color:#000;font-weight:600;}
+.cal-day.selected:not(.today){background:var(--bg3);border:0.5px solid var(--border2);color:var(--text);}
+.cal-day.has-log{color:var(--text2);}
+.pip{width:3px;height:3px;border-radius:50%;background:var(--gold);display:none;}
+.cal-day.has-log .pip{display:block;}
+.cal-day.today .pip{background:rgba(0,0,0,0.4);}
+.day-log-header{padding:14px 18px 8px;}
+.day-log-date{font-size:13px;font-weight:600;color:var(--text);}
+.day-log-empty{padding:14px 18px;font-size:13px;color:var(--text3);}
+.day-log-row{display:flex;align-items:flex-start;gap:10px;padding:10px 18px;background:var(--bg2);border-bottom:0.5px solid var(--border);}
+.day-log-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.day-log-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1px;}
+.day-log-val{font-size:11px;color:var(--text3);}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 14px;margin-top:12px;}
+.stat-box{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:12px 13px;}
+.stat-l{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.stat-v{font-size:24px;font-weight:600;color:var(--text);}
+.week-report{margin:10px 14px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;}
+.wr-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px;}
+.wr-title{font-size:13px;font-weight:600;color:var(--text);}
+.wr-period{font-size:11px;color:var(--text3);}
+.wr-bars{display:flex;align-items:flex-end;gap:4px;height:56px;margin-bottom:6px;}
+.wr-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.wr-bar{width:100%;border-radius:3px 3px 0 0;background:var(--bg3);min-height:2px;}
+.wr-bar.on{background:linear-gradient(180deg,var(--gold),var(--gold-dk));}
+.wr-dl{font-size:9px;color:var(--text3);}
+.goal-report-card{margin:0 14px 8px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:13px 14px;}
+.gr-head{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.gr-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.gr-name{font-size:13px;font-weight:500;color:var(--text);}
+.gr-days{font-size:11px;color:var(--text3);margin-left:auto;}
+.gr-track{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.gr-fill{height:100%;border-radius:2px;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:flex-end;justify-content:center;}
+.overlay.open{display:flex;}
+.sheet{background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-width:430px;padding-bottom:calc(24px + var(--safe-b));max-height:90dvh;overflow-y:auto;animation:slideUp .25s cubic-bezier(.32,1.1,.6,1);border-top:0.5px solid var(--border);}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:none}}
+.sh-handle{width:36px;height:3px;background:var(--border2);border-radius:2px;margin:12px auto 14px;}
+.sh-head{padding:0 20px 12px;border-bottom:0.5px solid var(--border);}
+.sh-title{font-size:17px;font-weight:600;color:var(--text);}
+.sh-sub{font-size:12px;color:var(--text3);margin-top:2px;}
+.sh-body{padding:16px 20px 0;}
+.fl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:7px;}
+.fi{width:100%;padding:11px 13px;border:0.5px solid var(--border2);border-radius:var(--r);background:var(--bg3);color:var(--text);font-size:16px;font-family:inherit;margin-bottom:15px;outline:none;transition:border-color .15s;}
+.fi:focus{border-color:var(--gold);}
+.chip-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:15px;}
+.chip{padding:6px 14px;border-radius:var(--pill);border:0.5px solid var(--border2);font-size:12px;color:var(--text2);background:none;cursor:pointer;font-family:inherit;}
+.chip.on{background:var(--gold);color:#000;border-color:var(--gold);font-weight:600;}
+.swatch-row{display:flex;gap:9px;margin-bottom:15px;}
+.swatch{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;}
+.swatch.on{outline:2px solid var(--gold);outline-offset:2px;}
+.sh-actions{display:flex;gap:10px;padding:15px 20px 0;}
+.btn-main{flex:1;background:var(--gold);color:#000;border:none;border-radius:var(--r);padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
+.btn-ghost{flex:1;background:none;border:0.5px solid var(--border2);border-radius:var(--r);padding:13px;font-size:15px;color:var(--text2);cursor:pointer;font-family:inherit;}
+.toast{position:fixed;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);background:var(--gold);color:#000;border-radius:var(--pill);padding:8px 18px;font-size:13px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:200;max-width:calc(100% - 32px);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
@@ -191,69 +171,63 @@ html,body { height:100%; font-family:-apple-system,'Helvetica Neue',sans-serif; 
       <div class="tb-title" id="tb-title">Today</div>
     </div>
     <div class="tb-right">
-      <div class="exp-pill">
-        <i class="ti ti-bolt"></i>
-        <span class="exp-val" id="exp-disp">0 EXP</span>
-      </div>
+      <div class="exp-pill"><i class="ti ti-bolt"></i><span class="exp-val" id="exp-disp">0 EXP</span></div>
       <div class="rank-tag" id="rank-tag">Lv.1 · 下忍</div>
     </div>
   </div>
-
   <div class="content" id="content">
-
-    <!-- TODAY -->
     <div id="s-today" class="screen active">
+      <div class="hero-card">
+        <div class="hero-bg"></div><div class="hero-stars"></div>
+        <div class="hero-content">
+          <div class="hero-top">
+            <span class="hero-label">今日の一言</span>
+            <button class="hero-refresh" onclick="nextPerson()"><i class="ti ti-refresh"></i></button>
+          </div>
+          <div class="hero-quote" id="hero-quote"></div>
+          <div class="hero-divider"></div>
+          <div class="hero-person">
+            <div class="hero-avatar"><i class="ti ti-user"></i></div>
+            <div class="hero-person-info">
+              <div class="hero-name" id="hero-name"></div>
+              <div class="hero-bio" id="hero-bio"></div>
+            </div>
+            <button class="hero-expand" onclick="toggleDetail()">詳しく →</button>
+          </div>
+        </div>
+      </div>
+      <div class="person-detail" id="person-detail">
+        <div class="pd-head"><div class="pd-title" id="pd-name"></div><div class="pd-years" id="pd-years"></div></div>
+        <div class="pd-body">
+          <div class="pd-sec-label">プロフィール</div>
+          <div class="pd-text" id="pd-profile"></div>
+          <div class="pd-knowledge"><div class="pd-k-label">今日の知識</div><div class="pd-k-text" id="pd-knowledge"></div></div>
+        </div>
+      </div>
       <div class="level-card">
         <div class="lv-row">
           <div class="lv-info">
             <div class="lv-badge" id="lv-badge">1</div>
-            <div>
-              <div class="lv-name" id="lv-name-txt">下忍</div>
-              <div class="lv-sub" id="lv-sub-txt">Next level in — EXP</div>
-            </div>
+            <div><div class="lv-name" id="lv-name-txt">下忍</div><div class="lv-sub" id="lv-sub-txt">次のレベルまで — EXP</div></div>
           </div>
           <div class="lv-pct" id="lv-pct-txt">0%</div>
         </div>
         <div class="lv-bar"><div class="lv-fill" id="lv-fill" style="width:0%"></div></div>
       </div>
-
       <div class="streak-row">
-        <div class="streak-box">
-          <div><div class="streak-val" id="streak-val">0</div><div class="streak-lbl">Day streak</div></div>
-          <i class="ti ti-flame" style="font-size:22px;color:var(--red);"></i>
-        </div>
-        <div class="streak-box">
-          <div><div class="streak-val" id="total-val">0</div><div class="streak-lbl">Total logs</div></div>
-          <i class="ti ti-check" style="font-size:22px;color:var(--green);"></i>
-        </div>
+        <div class="streak-box"><div><div class="streak-val" id="streak-val">0</div><div class="streak-lbl">日連続</div></div><i class="ti ti-flame" style="font-size:20px;color:var(--red);"></i></div>
+        <div class="streak-box"><div><div class="streak-val" id="total-val">0</div><div class="streak-lbl">総記録数</div></div><i class="ti ti-check" style="font-size:20px;color:var(--green);"></i></div>
       </div>
-
-      <div class="quote-card">
-        <div class="quote-head">
-          <span class="quote-tag">Daily Quote</span>
-          <button class="quote-btn" onclick="nextQuote()"><i class="ti ti-refresh"></i></button>
-        </div>
-        <div class="quote-txt" id="quote-txt"></div>
-      </div>
-
-      <div class="sec-label">Goals</div>
+      <div class="sec-label">目標</div>
       <div id="goal-list"></div>
-      <div class="add-row" onclick="openAddGoal()">
-        <i class="ti ti-plus"></i><span>Add goal</span>
-      </div>
+      <div class="add-row" onclick="openAddGoal()"><i class="ti ti-plus"></i><span>目標を追加</span></div>
       <div style="height:16px;"></div>
     </div>
-
-    <!-- MISSIONS -->
     <div id="s-missions" class="screen">
-      <div class="sec-label">Active Missions</div>
-      <div id="missions-active"></div>
-      <div class="sec-label">Completed</div>
-      <div id="missions-done"></div>
+      <div class="sec-label">進行中のミッション</div><div id="missions-active"></div>
+      <div class="sec-label">達成済み</div><div id="missions-done"></div>
       <div style="height:20px;"></div>
     </div>
-
-    <!-- CALENDAR -->
     <div id="s-calendar" class="screen">
       <div class="cal-nav-row">
         <button class="cal-arr" onclick="chM(-1)"><i class="ti ti-chevron-left"></i></button>
@@ -264,514 +238,367 @@ html,body { height:100%; font-family:-apple-system,'Helvetica Neue',sans-serif; 
       <div id="day-log-section"></div>
       <div style="height:16px;"></div>
     </div>
-
-    <!-- REPORT -->
     <div id="s-report" class="screen">
       <div class="stats-grid">
-        <div class="stat-box"><div class="stat-l">Streak</div><div class="stat-v" id="st-streak">—</div></div>
-        <div class="stat-box"><div class="stat-l">This week</div><div class="stat-v" id="st-days">—</div></div>
-        <div class="stat-box"><div class="stat-l">Avg rate</div><div class="stat-v" id="st-rate">—</div></div>
-        <div class="stat-box"><div class="stat-l">Total EXP</div><div class="stat-v" id="st-exp">—</div></div>
+        <div class="stat-box"><div class="stat-l">連続記録</div><div class="stat-v" id="st-streak">—</div></div>
+        <div class="stat-box"><div class="stat-l">今週</div><div class="stat-v" id="st-days">—</div></div>
+        <div class="stat-box"><div class="stat-l">平均達成率</div><div class="stat-v" id="st-rate">—</div></div>
+        <div class="stat-box"><div class="stat-l">累計 EXP</div><div class="stat-v" id="st-exp">—</div></div>
       </div>
       <div class="week-report" id="week-report"></div>
-      <div class="sec-label">Goal Progress</div>
+      <div class="sec-label">目標別の達成率（過去30日）</div>
       <div id="goal-reports"></div>
       <div style="height:20px;"></div>
     </div>
-
-    <!-- SETTINGS -->
     <div id="s-settings" class="screen">
-      <div class="sec-label">Goals</div>
-      <div id="goals-mgr"></div>
-      <div class="add-row" onclick="openAddGoal()">
-        <i class="ti ti-plus"></i><span>Add goal</span>
-      </div>
+      <div class="sec-label">目標一覧</div><div id="goals-mgr"></div>
+      <div class="add-row" onclick="openAddGoal()"><i class="ti ti-plus"></i><span>目標を追加</span></div>
       <div style="height:20px;"></div>
     </div>
-
   </div>
-
   <nav class="nav">
-    <button class="nav-btn active" onclick="sw('today',this)">
-      <i class="ti ti-home"></i><span>Today</span><span class="nav-dot"></span>
-    </button>
-    <button class="nav-btn" onclick="sw('missions',this)">
-      <i class="ti ti-sword"></i><span>Missions</span><span class="nav-dot"></span>
-    </button>
-    <button class="nav-btn" onclick="sw('calendar',this)">
-      <i class="ti ti-calendar"></i><span>Log</span><span class="nav-dot"></span>
-    </button>
-    <button class="nav-btn" onclick="sw('report',this)">
-      <i class="ti ti-chart-bar"></i><span>Report</span><span class="nav-dot"></span>
-    </button>
-    <button class="nav-btn" onclick="sw('settings',this)">
-      <i class="ti ti-sliders"></i><span>Settings</span><span class="nav-dot"></span>
-    </button>
+    <button class="nav-btn active" onclick="sw('today',this)"><i class="ti ti-home"></i><span>Today</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('missions',this)"><i class="ti ti-sword"></i><span>Missions</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('calendar',this)"><i class="ti ti-calendar"></i><span>Log</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('report',this)"><i class="ti ti-chart-bar"></i><span>Report</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('settings',this)"><i class="ti ti-sliders"></i><span>Settings</span><span class="nav-dot"></span></button>
   </nav>
 </div>
-
-<!-- LOG MODAL -->
 <div class="overlay" id="log-ov">
   <div class="sheet">
     <div class="sh-handle"></div>
     <div class="sh-head"><div class="sh-title" id="log-title"></div><div class="sh-sub" id="log-sub"></div></div>
     <div class="sh-body" id="log-body"></div>
-    <div class="sh-actions">
-      <button class="btn-ghost" onclick="closeOv('log-ov')">Cancel</button>
-      <button class="btn-main" onclick="saveLog()">Save  +20 EXP</button>
-    </div>
+    <div class="sh-actions"><button class="btn-ghost" onclick="closeOv('log-ov')">キャンセル</button><button class="btn-main" onclick="saveLog()">保存 +20 EXP</button></div>
   </div>
 </div>
-
-<!-- ADD GOAL MODAL -->
 <div class="overlay" id="add-ov">
   <div class="sheet">
     <div class="sh-handle"></div>
-    <div class="sh-head"><div class="sh-title">Add Goal</div><div class="sh-sub">Set a daily habit to track</div></div>
+    <div class="sh-head"><div class="sh-title">目標を追加</div><div class="sh-sub">毎日続けたいことを設定します</div></div>
     <div class="sh-body">
-      <div class="fl">Goal name</div>
-      <input class="fi" id="g-name" placeholder="e.g. Running" />
-      <div class="fl">Type</div>
+      <div class="fl">目標名</div><input class="fi" id="g-name" placeholder="例：ランニング"/>
+      <div class="fl">記録の種類</div>
       <div class="chip-row" id="type-chips">
-        <button class="chip on" onclick="selType(this,'numeric')">Numeric</button>
-        <button class="chip" onclick="selType(this,'boolean')">Done / Not done</button>
-        <button class="chip" onclick="selType(this,'text')">Memo</button>
+        <button class="chip on" onclick="selType(this,'numeric')">数値</button>
+        <button class="chip" onclick="selType(this,'boolean')">達成 / 未達成</button>
+        <button class="chip" onclick="selType(this,'text')">メモ</button>
       </div>
       <div id="num-opt">
-        <div class="fl">Target &amp; Unit</div>
-        <div style="display:flex;gap:8px;margin-bottom:16px;">
-          <input class="fi" id="g-target" type="number" placeholder="30" style="margin:0;flex:1;" />
-          <input class="fi" id="g-unit" placeholder="min" style="margin:0;flex:1;" />
+        <div class="fl">目標値と単位</div>
+        <div style="display:flex;gap:8px;margin-bottom:15px;">
+          <input class="fi" id="g-target" type="number" placeholder="30" style="margin:0;flex:1;"/>
+          <input class="fi" id="g-unit" placeholder="分" style="margin:0;flex:1;"/>
         </div>
       </div>
-      <div class="fl">Color</div>
+      <div class="fl">カラー</div>
       <div class="swatch-row">
-        <div class="swatch on" style="background:#111;" onclick="selCol(this,'#111')"></div>
-        <div class="swatch" style="background:#378ADD;" onclick="selCol(this,'#378ADD')"></div>
-        <div class="swatch" style="background:#1D9E75;" onclick="selCol(this,'#1D9E75')"></div>
-        <div class="swatch" style="background:#D85A30;" onclick="selCol(this,'#D85A30')"></div>
-        <div class="swatch" style="background:#BA7517;" onclick="selCol(this,'#BA7517')"></div>
+        <div class="swatch on" style="background:#c9a84c;" onclick="selCol(this,'#c9a84c')"></div>
+        <div class="swatch" style="background:#5b9bd5;" onclick="selCol(this,'#5b9bd5')"></div>
+        <div class="swatch" style="background:#4caf7d;" onclick="selCol(this,'#4caf7d')"></div>
+        <div class="swatch" style="background:#c97b5a;" onclick="selCol(this,'#c97b5a')"></div>
+        <div class="swatch" style="background:#9b7bc9;" onclick="selCol(this,'#9b7bc9')"></div>
       </div>
     </div>
-    <div class="sh-actions">
-      <button class="btn-ghost" onclick="closeOv('add-ov')">Cancel</button>
-      <button class="btn-main" onclick="saveGoal()">Add</button>
-    </div>
+    <div class="sh-actions"><button class="btn-ghost" onclick="closeOv('add-ov')">キャンセル</button><button class="btn-main" onclick="saveGoal()">追加</button></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
-// ── RANKS (anime-inspired) ──────────────────────────────────────
-const RANKS = [
-  {lv:1,  name:'下忍',        sub:'Naruto · 修行を始めたばかり',    expNext:100},
-  {lv:2,  name:'海賊見習い',  sub:'One Piece · 海に出たばかり',     expNext:250},
-  {lv:3,  name:'中忍',        sub:'Naruto · 実力を認められた',       expNext:500},
-  {lv:4,  name:'剣士見習い',  sub:'鬼滅 · 鱗滝の弟子',             expNext:900},
-  {lv:5,  name:'上忍',        sub:'Naruto · エリートへの道',         expNext:1400},
-  {lv:6,  name:'一航士',      sub:'One Piece · 船を任される強さ',   expNext:2000},
-  {lv:7,  name:'水柱',        sub:'鬼滅 · 柱の称号を持つ者',        expNext:2800},
-  {lv:8,  name:'七武海',      sub:'One Piece · 世界が認めた実力者', expNext:3800},
-  {lv:9,  name:'火影',        sub:'Naruto · 里を守る最強の忍',      expNext:5000},
-  {lv:10, name:'海賊王',      sub:'One Piece · 最強の称号',         expNext:99999},
+const RANKS=[
+  {lv:1,name:'下忍',expNext:100},{lv:2,name:'海賊見習い',expNext:250},
+  {lv:3,name:'中忍',expNext:500},{lv:4,name:'剣士見習い',expNext:900},
+  {lv:5,name:'上忍',expNext:1400},{lv:6,name:'一航士',expNext:2000},
+  {lv:7,name:'水柱',expNext:2800},{lv:8,name:'七武海',expNext:3800},
+  {lv:9,name:'火影',expNext:5000},{lv:10,name:'海賊王',expNext:99999},
+];
+const MISSIONS=[
+  {id:'first',icon:'ti-flag',bg:'var(--green-bg)',col:'var(--green)',name:'First Step',desc:'初めて記録する',exp:30,check:s=>s.totalLogs>=1},
+  {id:'s3',icon:'ti-flame',bg:'var(--red-bg)',col:'var(--red)',name:'On Fire',desc:'3日連続で記録',exp:50,check:s=>s.streak>=3},
+  {id:'s7',icon:'ti-flame',bg:'var(--red-bg)',col:'var(--red)',name:'Week Warrior',desc:'7日連続で記録',exp:100,check:s=>s.streak>=7},
+  {id:'s30',icon:'ti-flame',bg:'var(--red-bg)',col:'var(--red)',name:'Unstoppable',desc:'30日連続で記録',exp:500,check:s=>s.streak>=30},
+  {id:'l10',icon:'ti-star',bg:'var(--gold-bg)',col:'var(--gold)',name:'Getting Serious',desc:'合計10回記録',exp:80,check:s=>s.totalLogs>=10},
+  {id:'l50',icon:'ti-star',bg:'var(--gold-bg)',col:'var(--gold)',name:'Dedicated',desc:'合計50回記録',exp:200,check:s=>s.totalLogs>=50},
+  {id:'l100',icon:'ti-star',bg:'var(--gold-bg)',col:'var(--gold)',name:'Century',desc:'合計100回記録',exp:500,check:s=>s.totalLogs>=100},
+  {id:'lv3',icon:'ti-bolt',bg:'var(--blue-bg)',col:'var(--blue)',name:'Rising Star',desc:'レベル3に到達',exp:100,check:s=>s.level>=3},
+  {id:'lv5',icon:'ti-bolt',bg:'var(--blue-bg)',col:'var(--blue)',name:'Mid Boss',desc:'レベル5に到達',exp:200,check:s=>s.level>=5},
+  {id:'lv8',icon:'ti-crown',bg:'var(--gold-bg)',col:'var(--gold)',name:'Elite Class',desc:'レベル8に到達',exp:500,check:s=>s.level>=8},
+  {id:'exp500',icon:'ti-trophy',bg:'var(--blue-bg)',col:'var(--blue)',name:'EXP Hunter',desc:'累計500 EXP獲得',exp:100,check:s=>s.exp>=500},
+  {id:'exp2000',icon:'ti-trophy',bg:'var(--blue-bg)',col:'var(--blue)',name:'Power Grinder',desc:'累計2000 EXP獲得',exp:300,check:s=>s.exp>=2000},
+];
+const PEOPLE=[
+  {name:'老子',years:'紀元前6世紀頃',bio:'中国の哲学者・道教の祖',quote:'千里の道も一歩から。',profile:'古代中国の哲学者で、道教の創始者とされる。著書「道徳経」は世界で最も読まれた書物のひとつ。「道（タオ）」という概念を中心に、自然の流れに従うことの大切さを説いた。',knowledge:'道徳経は81章から成り、わずか5000文字で宇宙の本質を表現しようとした。英語への翻訳数は聖書に次いで多いとされる。'},
+  {name:'イチロー',years:'1973年生まれ',bio:'元プロ野球選手',quote:'小さなことを積み重ねることが、とんでもないところへ行くただ一つの道。',profile:'MLB通算3089安打。毎日のルーティンを徹底し、道具への愛着と感謝を大切にした。「45歳まで現役で少年たちに夢を見せたかった」と語った。',knowledge:'イチローは毎朝カレーを食べる習慣で有名。体のルーティンを徹底的に管理し、40歳を超えても現役を続けた。'},
+  {name:'スティーブ・ジョブズ',years:'1955-2011',bio:'Apple共同創業者',quote:'今日が人生最後の日だったとしても、今日やろうとしていることをやりたいか？',profile:'アップルを共同創業し、Mac・iPod・iPhone・iPadなど革命的な製品を生み出した。「Think Different」の精神で20世紀最高のイノベーターとされる。',knowledge:'ジョブズはスタンフォード大学の卒業式スピーチで「Stay hungry, stay foolish」という言葉を残した。このスピーチは今も世界中で語り継がれている。'},
+  {name:'アルベルト・アインシュタイン',years:'1879-1955',bio:'理論物理学者',quote:'想像力は知識より重要だ。',profile:'相対性理論を発表し、現代物理学の基礎を築いた。1921年にノーベル物理学賞を受賞。「神はサイコロを振らない」という言葉でも知られる。',knowledge:'アインシュタインの脳は死後に研究のため保存された。頂葉が通常より15%大きく、数学的・空間的思考に関わる部位が発達していたことが判明した。'},
+  {name:'マハトマ・ガンジー',years:'1869-1948',bio:'インド独立運動の指導者',quote:'世界を変えたいなら、まず自分を変えなさい。',profile:'非暴力・不服従運動によりインドをイギリスからの独立へ導いた。「マハトマ（偉大な魂）」の称号で呼ばれ、公民権運動にも大きな影響を与えた。',knowledge:'ガンジーは生涯に18回の断食を行った。最長は21日間。彼の非暴力の思想はマーティン・ルーサー・キング牧師にも深く影響を与えた。'},
+  {name:'ウィンストン・チャーチル',years:'1874-1965',bio:'英国首相',quote:'成功とは失敗を重ねても情熱を失わない能力のことだ。',profile:'第二次世界大戦中の首相として連合国を勝利に導いた。1953年にノーベル文学賞を受賞。「決して諦めるな」の演説で知られる。',knowledge:'チャーチルは生涯に57冊の本を書き、4000本以上の絵画を描いた。1日14時間以上働きながらも昼寝を欠かさなかった。'},
+  {name:'ベンジャミン・フランクリン',years:'1706-1790',bio:'アメリカ建国の父・発明家',quote:'今日できることを明日に延ばすな。',profile:'避雷針や二焦点眼鏡を発明。アメリカ独立宣言の起草に参加した。100ドル紙幣に肖像が描かれている。',knowledge:'フランクリンは13の徳目を手帳に記録して自己改善に努めた。これは世界初の習慣トラッカーとも言われている。'},
+  {name:'ウォルト・ディズニー',years:'1901-1966',bio:'エンターテイメントの魔法使い',quote:'夢を見る力がある者は、それを実現する力もある。',profile:'ミッキーマウスの生みの親であり、ウォルト・ディズニー・カンパニーの共同創業者。ディズニーランドを設立し、夢と魔法の世界を生み出した。',knowledge:'ウォルト・ディズニーは生涯に22のアカデミー賞を受賞した。これは一個人として最多記録。'},
+  {name:'ナポレオン・ボナパルト',years:'1769-1821',bio:'フランス皇帝・軍事的天才',quote:'不可能とは、小さな人間が大きな力を持つ者を罵るために使う言葉だ。',profile:'フランス革命後の混乱を収束させ、ヨーロッパの大部分を支配した。ナポレオン法典を制定し、近代法律の基礎を築いた。',knowledge:'ナポレオンは遠征中も常に本を携帯し、6万冊以上の本を読んだといわれている。'},
+  {name:'ヘンリー・フォード',years:'1863-1947',bio:'フォード・モーター創業者',quote:'できると思えばできる。できないと思えばできない。どちらも正しい。',profile:'T型フォードをベルトコンベア方式で大量生産して自動車を庶民に普及させた。週40時間労働制の導入にも貢献した。',knowledge:'フォードは小学校しか卒業していないが、アメリカで最も裕福な人物のひとりになった。'},
+  {name:'マリア・キュリー',years:'1867-1934',bio:'ノーベル賞2度受賞の物理学者',quote:'人生に恐れるものは何もない。ただ理解するものがあるだけだ。',profile:'放射能の研究で1903年にノーベル物理学賞、1911年にノーベル化学賞を受賞。ノーベル賞を2つの異なる科学分野で受賞した唯一の人物。',knowledge:'キュリーの研究ノートは今も放射能を帯びており、鉛の箱に保管されている。'},
+  {name:'ピーター・ドラッカー',years:'1909-2005',bio:'経営学者・マネジメントの父',quote:'未来を予測する最善の方法は、未来を創り出すことだ。',profile:'現代のマネジメント理論の基礎を築き、「マネジメントの父」と呼ばれる。「目標管理」「知識労働者」などの概念を提唱した。',knowledge:'ドラッカーは生涯に39冊の本を書き、最後の著作を95歳で完成させた。'},
+  {name:'アリストテレス',years:'紀元前384-322年',bio:'古代ギリシャの哲学者',quote:'人は習慣によってつくられる。卓越性は行動ではなく習慣だ。',profile:'プラトンの弟子であり、アレクサンドロス大王の家庭教師。論理学・倫理学・政治学・生物学など多くの分野で著作を残した。',knowledge:'アリストテレスは史上初めて動物を体系的に分類した。500種以上の動物を観察・記録し「動物誌」を著した。'},
+  {name:'ソクラテス',years:'紀元前470-399年',bio:'古代ギリシャの哲学者',quote:'吟味されない人生は生きる価値がない。',profile:'自ら著書を書かず、対話によって真理を探求した。「無知の知」という概念で知られ、アテナイ市民に問いを投げかけ続けた。',knowledge:'ソクラテスは裁判で有罪判決を受けた後、弟子たちの逃亡の勧めを断り、法に従って毒杯をあおって死んだ。'},
+  {name:'ウォーレン・バフェット',years:'1930年生まれ',bio:'投資家・バークシャー・ハサウェイCEO',quote:'成功への道はいつも工事中だ。',profile:'「オマハの賢人」の愛称で知られ、長期投資で財を成した。世界有数の富豪でありながら質素な生活を続けることで知られる。',knowledge:'バフェットは11歳で初めて株を買い、13歳から確定申告をしていた。'},
+  {name:'レオナルド・ダ・ヴィンチ',years:'1452-1519',bio:'万能の天才・芸術家・科学者',quote:'シンプルさは究極の洗練さだ。',profile:'モナリザや最後の晩餐を描いた芸術家でありながら、飛行機・戦車・ヘリコプターの原型となるアイデアを設計図に残した科学者。',knowledge:'ダ・ヴィンチは左利きで鏡文字を使って7000ページ以上のノートを残した。全ては今も発見されていない。'},
+  {name:'マーティン・ルーサー・キング',years:'1929-1968',bio:'公民権運動の指導者',quote:'今日の勇気が明日の伝説になる。',profile:'非暴力主義によって黒人差別撤廃運動を指導し、「I Have a Dream」の名演説を行った。1964年にノーベル平和賞を受賞。',knowledge:'キング牧師はわずか39歳で暗殺された。しかし彼の誕生日はアメリカの祝日となっている。'},
+  {name:'ネルソン・マンデラ',years:'1918-2013',bio:'南アフリカ大統領',quote:'それは常に不可能に見える、達成されるまでは。',profile:'27年間投獄された後、1994年に南アフリカ初の黒人大統領に就任。1993年にノーベル平和賞を受賞。',knowledge:'マンデラは27年間の服役中も法律の勉強を続け、自伝を秘密裏に書き続けた。'},
+  {name:'マザー・テレサ',years:'1910-1997',bio:'カトリック修道女・ノーベル平和賞受賞者',quote:'小さな行動で大きな愛を表せ。',profile:'インド・コルカタの貧民街で孤児・病人・瀕死の人々を救う活動を続け、1979年にノーベル平和賞を受賞。',knowledge:'マザー・テレサは晩年、長い間「神の不在を感じる孤独」と戦っていたことが死後の書簡で明らかになった。'},
+  {name:'アブラハム・リンカーン',years:'1809-1865',bio:'アメリカ第16代大統領',quote:'あなたが転んでしまったことに関心はない。そこから立ち上がることに関心があるのだ。',profile:'貧しい丸太小屋に生まれ独学で弁護士になり第16代大統領に就任。南北戦争を指導し奴隷解放宣言を発布した。',knowledge:'リンカーンの公式教育は合計1年程度だったが、独学で法律を学び弁護士になった。'},
+  {name:'スティーブン・コヴィー',years:'1932-2012',bio:'「7つの習慣」著者',quote:'今日の自分は昨日の選択の結果だ。',profile:'「7つの習慣」は全世界で4000万部以上売れたビジネス書の金字塔。「重要なことを先に行う」などの原則で知られる。',knowledge:'コヴィーは「重要性と緊急性」の4つの象限を広めた。多くの人は緊急なことに時間を使いすぎて重要なことを後回しにしてしまうと説いた。'},
+  {name:'ジェームズ・クリア',years:'1986年生まれ',bio:'習慣研究者・「Atomic Habits」著者',quote:'1%の改善を毎日続ければ、1年で37倍になる。',profile:'著書「Atomic Habits」は全世界で1500万部以上売れた。「習慣の積み重ねが人格を作る」というメッセージで世界中の人々に影響を与えている。',knowledge:'1日1%の改善を365日続けると1.01の365乗＝37.78倍になる。逆に1日1%悪化すると0.99の365乗＝0.03まで落ちる。'},
+  {name:'大谷翔平',years:'1994年生まれ',bio:'MLB選手・投打の二刀流',quote:'今この瞬間に全力を尽くす。それだけだ。',profile:'2021年・2023年のMLB MVPを受賞。ベーブ・ルース以来の真の二刀流選手として歴史に名を刻んでいる。',knowledge:'大谷は高1のとき「マンダラチャート」で「ドラフト1位で8球団から指名される」という目標を掲げ、その通りになった。'},
+  {name:'羽生善治',years:'1970年生まれ',bio:'将棋棋士・永世七冠',quote:'プロとは自分が誓ったからやる人間のことだ。',profile:'史上初の七冠同時制覇を達成。タイトル通算99期獲得という前人未到の記録を持つ。AIの台頭後も第一線で活躍し続ける。',knowledge:'羽生は将棋の局面は10の220乗という天文学的な数の可能性があると述べた。チェス（10の120乗）を大幅に上回る。'},
+  {name:'藤井聡太',years:'2002年生まれ',bio:'将棋棋士・八冠',quote:'一手一手を大切に指すことが将棋の真髄だ。',profile:'2023年に前人未到の八冠同時制覇を達成。AIを活用した研究で新時代の将棋を開拓している。',knowledge:'藤井聡太はデビュー後に29連勝という史上最多連勝記録を達成した。'},
+  {name:'渋沢栄一',years:'1840-1931',bio:'日本資本主義の父',quote:'道徳と経済の一致を図ることなしに、真の繁栄はない。',profile:'500以上の企業・600以上の社会事業の設立に関わった。2024年から一万円紙幣の肖像に採用。',knowledge:'渋沢は500社以上の企業設立に関わりながら、どの会社の株も過半数は保有しないというポリシーを持っていた。'},
+  {name:'本田宗一郎',years:'1906-1991',bio:'Honda創業者',quote:'失敗したところでやめるから失敗になる。成功するまで続ければ成功になる。',profile:'戦後の焼け野原から自転車にエンジンを取り付けたバイクを作り始め、世界最大のオートバイメーカーへと育て上げた。',knowledge:'本田は小学校卒業の学歴しかなかったが、名誉卒業証書を「額縁に入れても食べられない」と言ってその場に置いてきた。'},
+  {name:'松下幸之助',years:'1894-1989',bio:'パナソニック創業者',quote:'素直な心で学べば、どんな人からも学べる。',profile:'小学校中退、丁稚奉公から出発し、松下電気器具製作所（現パナソニック）を創業。「経営の神様」と称された。',knowledge:'松下は「自分には学歴がない、健康でない、お金がない—だからこそ人に頼り、人から学ぶことができた」と語った。'},
+  {name:'吉田松陰',years:'1830-1859',bio:'思想家・教育者',quote:'志を立てて、以て万事の源となす。',profile:'松下村塾を開き、伊藤博文・山縣有朋・高杉晋作など明治維新を担う多くの人材を育てた。',knowledge:'松陰は30年の短い生涯で約700冊の本を読んだとされる。獄中でも学びをやめず囚人仲間に講義を行った。'},
+  {name:'坂本龍馬',years:'1836-1867',bio:'幕末の志士',quote:'世の中の人は何とも言わば言え。我が成すことは我のみぞ知る。',profile:'薩長同盟の締結に奔走し、大政奉還の実現に貢献した幕末の英雄。31歳で暗殺された。',knowledge:'龍馬は日本で最初に新婚旅行をした人物とされる。妻のおりょうと鹿児島に出かけた旅が「日本最初の新婚旅行」といわれている。'},
+  {name:'宮本武蔵',years:'1584-1645',bio:'剣豪・哲学者',quote:'千日の稽古をもって鍛とし、万日の稽古をもって錬とす。',profile:'佐々木小次郎との巌流島の決闘で有名。晩年に著した「五輪書」は現代でもビジネス書として世界中で読まれる。',knowledge:'武蔵は「二天一流」という両手に刀を持つ二刀流を開発した。生涯無敗とされ60回以上の決闘に勝利したとされる。'},
+  {name:'徳川家康',years:'1543-1616',bio:'江戸幕府初代将軍',quote:'人の一生は重荷を負うて遠き道を行くがごとし。急ぐべからず。',profile:'幼少期を人質として過ごし、関ヶ原の戦いで勝利し江戸幕府を開いた。260年以上続く江戸時代の礎を築いた。',knowledge:'家康は非常に健康に気を使い、自ら薬草を研究・調合した。73歳まで現役で政治を行った。'},
+  {name:'織田信長',years:'1534-1582',bio:'戦国武将',quote:'是非もなし。',profile:'「天下布武」を掲げ、鉄砲の集団戦法など革新的な軍事戦略で戦国時代の覇者となった。本能寺の変で明智光秀に討たれた。',knowledge:'信長は黒人家臣「弥助」を侍に取り立てたことは日本史における異文化受容の象徴的エピソードとして世界的に有名。'},
+  {name:'ヴィクトル・フランクル',years:'1905-1997',bio:'精神科医・「夜と霧」著者',quote:'意味を見つけた者は、どんな状況にも耐えられる。',profile:'ホロコーストを生き延び、その体験を「夜と霧」に著した。「ロゴセラピー（意味による治療）」を創始した。',knowledge:'フランクルはアウシュビッツに移送される直前、アメリカへのビザを手に入れた。しかし年老いた両親を置いて逃げることができず、ビザを破棄してナチスに連行された。'},
+  {name:'マルクス・アウレリウス',years:'121-180年',bio:'ローマ皇帝・哲学者',quote:'今日一日を十分に生きよ。',profile:'ローマ皇帝でありながら哲学者として「自省録」を著した。ストア哲学の実践者として知られる。',knowledge:'「自省録」はアウレリウスが自分自身のために書いたメモであり、出版を意図していなかった。'},
+  {name:'セネカ',years:'紀元前4年-65年',bio:'ローマのストア哲学者',quote:'人生は短い。しかし、十分に使えば十分に長い。',profile:'ローマの哲学者・劇作家・政治家。「人生の短さについて」などの著作でストア哲学の実践を説いた。最後はネロに自殺を命じられた。',knowledge:'セネカは「人生が短いのではなく、我々が人生を無駄にしている」と説いた。'},
+  {name:'チャールズ・ダーウィン',years:'1809-1882',bio:'生物学者・進化論の父',quote:'最終的に生き残るのは、最も強い種でも最も賢い種でもなく、変化に最もよく適応した種だ。',profile:'ビーグル号での世界一周調査の後、「種の起源」を発表し進化論を提唱した。すべての生物は共通の祖先から変化して生まれたという考えは近代生物学の基礎となった。',knowledge:'ダーウィンは「種の起源」の出版を20年以上躊躇し続けた。アルフレッド・ウォレスが同様の理論を完成させたという知らせを受けてようやく出版を決意した。'},
+  {name:'ルイ・パスツール',years:'1822-1895',bio:'微生物学の父',quote:'チャンスは準備ができている人のところにやってくる。',profile:'細菌が発酵・腐敗・感染症を引き起こすことを証明し「パスツール滅菌法」を開発。狂犬病・炭疽病ワクチンの開発にも成功した。',knowledge:'パスツールは脳卒中で半身不随になったにもかかわらず研究を続けた。'},
+  {name:'アイザック・ニュートン',years:'1643-1727',bio:'物理学者・数学者',quote:'私が遠くを見渡せたとしたら、それはただ巨人の肩の上に立っていたからだ。',profile:'万有引力の法則・運動の三法則を発見し微積分を独立に発明した。科学史上最大の天才のひとりとされる。',knowledge:'ニュートンは「まだ発見されていない真理という広大な海のほとりで貝殻を拾っている少年のようなものだ」と語った。'},
+  {name:'ガリレオ・ガリレイ',years:'1564-1642',bio:'物理学者・天文学者',quote:'それでも地球は動く。',profile:'望遠鏡を改良して天体を観測し地動説を支持した。慣性の法則・落体の法則を発見し近代科学の礎を築いた。',knowledge:'ガリレオは宗教裁判で地動説を撤回させられた後も軟禁状態の中で「新科学対話」を完成させ、こっそりオランダで出版させた。'},
+  {name:'ニコラ・テスラ',years:'1856-1943',bio:'電気技術者・発明家',quote:'現在は未来のものだ。',profile:'交流電流システム・誘導電動機・テスラコイルなど多くの発明で電気文明を革命的に変えた。エジソンのライバルとして「電流戦争」を繰り広げた。',knowledge:'テスラはニューヨークのホテルに33年間暮らし毎晩ひとりで夕食をとった。晩年は極貧のうちに死んだが業績は死後に正当に評価された。'},
+  {name:'フョードル・ドストエフスキー',years:'1821-1881',bio:'ロシアの小説家',quote:'人間は苦しみの中でこそ、最も深く生きる。',profile:'「罪と罰」「白痴」「カラマーゾフの兄弟」などで人間の深淵を描いた。死刑判決を受けて処刑場に立ったが直前に特赦となりシベリア送りになった。',knowledge:'ドストエフスキーはギャンブル依存症で全財産を何度も失った。しかし逆説的に追い詰められた状況が彼の創作を促した。'},
+  {name:'レフ・トルストイ',years:'1828-1910',bio:'ロシアの小説家・思想家',quote:'物事を変えたければ、まず自分が変われ。',profile:'「戦争と平和」「アンナ・カレーニナ」「復活」などの大作を著した。晩年は無所有・非暴力・菜食主義を実践した。',knowledge:'トルストイは82歳のとき家族との軋轢から家を飛び出し、旅の途中の駅で死んだ。その劇的な最期は世界中に電報で伝えられた。'},
+  {name:'カール・ユング',years:'1875-1961',bio:'分析心理学の創始者',quote:'無意識を意識にすれば、それがあなたの人生を導く。',profile:'「元型」「集合的無意識」「内向性・外向性」などの概念を提唱し現代心理学・文化に多大な影響を与えた。',knowledge:'ユングは晩年スイス・ボーリンゲンに電気・水道・ガスを引かない塔を建てて隠遁した。「内なる自己と向き合う」実践の場として大切にした。'},
+  {name:'ウィリアム・ジェームズ',years:'1842-1910',bio:'心理学者・哲学者',quote:'行動が感情を変える。感情を変えたければ、まず行動せよ。',profile:'プラグマティズム哲学を確立し「心理学の父」とも呼ばれる。「思考が変われば行動が変わる」という連鎖の概念は現代の自己啓発の基礎になった。',knowledge:'ジェームズは若いころ深刻な抑うつに悩み自殺を考えた時期もあったが「意志の力によって人生を変えられる」という信念を持ち哲学・心理学の研究に人生を捧げた。'},
+  {name:'ナポレオン・ヒル',years:'1883-1970',bio:'自己啓発作家',quote:'思考は現実化する。',profile:'アンドリュー・カーネギーの紹介で500人以上の成功者を取材し「Think and Grow Rich（思考は現実化する）」を著した。全世界で1億冊以上売れた自己啓発の聖典。',knowledge:'ヒルは「マスターマインド」という概念を提唱した。2人以上の人が共通の目的に向かって協力するとき単独では生まれない「第三の知性」が生まれるという考え。'},
+  {name:'デール・カーネギー',years:'1888-1955',bio:'「人を動かす」著者',quote:'人を動かすには、相手の心から動きたいという気持ちを引き出すことだ。',profile:'「人を動かす」「道は開ける」は合計で1億冊以上売れたベストセラー。ミズーリ州の貧しい農家に生まれ独学でコミュニケーション術を磨いた。',knowledge:'カーネギーは「人の名前を覚えることが最も基本的な礼儀だ」と説いた。'},
+  {name:'イーロン・マスク',years:'1971年生まれ',bio:'Tesla・SpaceX CEO',quote:'失敗は選択肢のひとつだ。失敗していないなら、十分に革新していない。',profile:'Tesla・SpaceX・X（旧Twitter）などを率いる。電気自動車の普及と火星移住計画を現実に近づけている。',knowledge:'マスクはSpaceXで従来の宇宙開発コストを90%以上削減した。ロケット本体の再利用に成功し宇宙開発のコストを革命的に下げた。'},
+  {name:'ジェフ・ベゾス',years:'1964年生まれ',bio:'Amazon創業者',quote:'失敗と発明は切り離せない双子だ。',profile:'1994年にガレージでAmazonを創業し世界最大のEコマース企業に育てた。「地球上で最も顧客中心の企業になる」というビジョンを掲げる。',knowledge:'ベゾスは「80歳になったとき、やらなかったことを後悔したくない」という考え方（後悔最小化フレームワーク）でAmazon創業を決断したと語っている。'},
+  {name:'ジム・ロン',years:'1930-2009',bio:'起業家・モチベーション講師',quote:'あなたが読む本と付き合う人が、5年後の自分を作る。',profile:'貧しい農家の出身から成功哲学を説く講師として世界中で6000万人以上に影響を与えた。アンソニー・ロビンズなどの師匠としても知られる。',knowledge:'ロンは「人は付き合う5人の平均値になる」という法則を説いた。'},
+  {name:'マーク・ザッカーバーグ',years:'1984年生まれ',bio:'Meta（Facebook）創業者',quote:'最大のリスクはリスクを冒さないことだ。',profile:'ハーバード在学中にFacebook（現Meta）を創業し世界最大のSNSプラットフォームに育て上げた。毎年「個人的な課題」を設定することで知られる。',knowledge:'ザッカーバーグは毎年個人的な挑戦（中国語学習・本を毎週1冊読む・毎日走るなど）を設定し公表している。'},
+  {name:'ビル・ゲイツ',years:'1955年生まれ',bio:'Microsoft共同創業者',quote:'成功を祝うのはいいが、失敗から学ぶことの方が重要だ。',profile:'ポール・アレンとMicrosoftを共同創業しPCのOS「Windows」で世界制覇した。現在は「ビル&メリンダ・ゲイツ財団」を通じて世界的な医療・貧困問題に取り組む。',knowledge:'ゲイツはハーバード大学に入学したがMicrosoftを設立するために中退した。その後ハーバードは彼に名誉博士号を授与した。'},
+  {name:'孫正義',years:'1957年生まれ',bio:'ソフトバンク創業者',quote:'夢は大きく、行動は細かく。',profile:'ソフトバンクを創業し携帯電話・インターネット・AIへの大胆な投資で日本最大級の企業グループに育て上げた。',knowledge:'孫は19歳のとき1歳から70歳までの計画を詳細に記した人生設計書を作った。'},
+  {name:'稲盛和夫',years:'1932-2022',bio:'京セラ・KDDI創業者',quote:'人生・仕事の結果＝考え方×熱意×能力',profile:'京セラ・KDDIを創業しJALの再建も手がけた。「アメーバ経営」を提唱し経営者として高い倫理観と精神性を追求した。',knowledge:'稲盛の方程式では考え方がマイナス（悪意）なら能力・熱意がどれだけ高くても結果はマイナスになる。'},
+  {name:'柳井正',years:'1949年生まれ',bio:'ユニクロ創業者',quote:'一勝九敗。',profile:'父親から受け継いだ小さな洋品店をグローバルブランド「ユニクロ」に育て上げた。失敗をおそれず挑戦し続けることの重要性を説く。',knowledge:'柳井は「安くて良いものを大量に売る」という逆転の発想で業界の常識を覆した。'},
+  {name:'夏目漱石',years:'1867-1916',bio:'小説家・英文学者',quote:'智に働けば角が立つ。情に棹させば流される。とかく人の世は住みにくい。',profile:'「吾輩は猫である」「坊っちゃん」「こころ」など日本近代文学の名作を生み出した。晩年は「則天去私」を人生の理念とした。',knowledge:'漱石は英国留学中に神経衰弱に陥り帰国後、朝日新聞に入社して専業作家になった。'},
+  {name:'宮沢賢治',years:'1896-1933',bio:'詩人・童話作家',quote:'世界がぜんたい幸福にならないうちは個人の幸福はあり得ない。',profile:'「銀河鉄道の夜」「注文の多い料理店」など独自の世界観を持つ作品を残した。農業学校の教員として働きながら創作を続け37歳で病没した。',knowledge:'宮沢賢治は生前ほぼ無名で自費出版した詩集はほとんど売れなかった。作品が再評価されたのは死後のことだった。'},
+  {name:'岡本太郎',years:'1911-1996',bio:'芸術家',quote:'芸術は爆発だ。',profile:'パリでピカソの絵に衝撃を受け帰国後に独自の前衛芸術を開拓。大阪万博の「太陽の塔」は代表作。',knowledge:'岡本太郎は「芸術は上手くなくていい。むしろ下手でいい」と言い続け、評価を求めず自分のスタイルを貫いた。'},
+  {name:'手塚治虫',years:'1928-1989',bio:'漫画の神様',quote:'人間は皆、最後まで走り続けなければならない。',profile:'「鉄腕アトム」「ブラック・ジャック」「火の鳥」などを著し「漫画の神様」と称される。日本のストーリー漫画の基礎を築いた。',knowledge:'手塚は生涯に700作品以上、総ページ数15万ページ以上の漫画を描いた。入院中も点滴を打ちながら描き続け「僕の仕事を取り上げないでくれ」という言葉を残して60歳で亡くなった。'},
+  {name:'黒澤明',years:'1910-1998',bio:'映画監督',quote:'完璧な映画を作ることよりも、今日も映画を作り続けることだ。',profile:'「羅生門」「七人の侍」「生きる」などで世界映画史に名を刻んだ。スピルバーグ・ルーカスなど世界の名監督が師と仰ぐ。',knowledge:'「七人の侍」の撮影は1年以上かかり予算は当初の10倍に膨らんだ。制作会社が中止を命じたが黒澤は「やめるなら死ぬ」と言い張って完成させた。'},
+  {name:'福沢諭吉',years:'1835-1901',bio:'啓蒙思想家・慶應義塾創設者',quote:'天は人の上に人を造らず、人の下に人を造らずと言えり。',profile:'慶應義塾（現慶應義塾大学）を創設。「学問のすすめ」で西洋の合理主義思想を日本に広め明治維新後の近代化に貢献した。',knowledge:'福沢諭吉は下級武士の家に生まれ身分の差で常に不当な扱いを受けたことが平等の精神を育んだ。'},
+  {name:'伊能忠敬',years:'1745-1818',bio:'測量家・地図製作者',quote:'地道な努力が、歴史を変える地図を作る。',profile:'55歳から全国測量の旅を始め17年かけて日本初の精密な全国地図「大日本沿海輿地全図」を完成させた。',knowledge:'忠敬が50代から学び始めて歩いた距離は約4万km（地球1周に相当）といわれる。'},
+  {name:'北里柴三郎',years:'1853-1931',bio:'細菌学者・医師',quote:'病に勝るものは予防なり。',profile:'破傷風菌の純粋培養と血清療法を発見。ペスト菌の発見でも名声を得た。2024年から千円紙幣の肖像。',knowledge:'北里は帰国後東京大学医学部と対立し孤立したが、福沢諭吉の支援を受けて伝染病研究所を設立した。'},
+  {name:'湯川秀樹',years:'1907-1981',bio:'日本人初のノーベル物理学賞受賞者',quote:'科学は不思議に思うことから始まる。',profile:'中間子理論を予言し1949年に日本人初のノーベル物理学賞を受賞。敗戦直後の日本に希望を与えた「昭和の英雄」。',knowledge:'湯川は中間子の存在を理論的に予言した論文を1934年に発表したが当初は学界に無視された。12年後に実験で発見され予言の正しさが証明された。'},
+  {name:'ヴィクトル・ユーゴー',years:'1802-1885',bio:'フランスの詩人・小説家',quote:'最も暗い夜でも、朝は必ずやって来る。',profile:'「レ・ミゼラブル」「ノートルダム・ド・パリ」などの名作で知られる。政治亡命期間中も創作を続けた。',knowledge:'「レ・ミゼラブル」は出版後わずか1日で初版が完売した。'},
+  {name:'オスカー・ワイルド',years:'1854-1900',bio:'アイルランドの作家',quote:'自分自身であれ。他の人はみな既にいる。',profile:'「ドリアン・グレイの肖像」「幸福な王子」などで知られる。鋭い社会批評とウィットに富んだ言葉は今も多くの人に引用される。',knowledge:'ワイルドは同性愛を理由に起訴され2年間の重労働刑を受けた。出獄後パリに渡り「De Profundis」を書いた。'},
+  {name:'エレノア・ルーズベルト',years:'1884-1962',bio:'人権活動家・元ファーストレディ',quote:'美しい若さは偶然だが、美しい老いは芸術だ。',profile:'フランクリン・ルーズベルト大統領の妻として第二次世界大戦中に活躍。国連世界人権宣言の起草に関わった。',knowledge:'エレノアは幼少期に母親から「みにくい子」と言われて育ったが世界で最も影響力のある女性のひとりになった。'},
+  {name:'ヘレン・ケラー',years:'1880-1968',bio:'作家・教育者',quote:'一人で達成できることは小さい。一緒なら多くを達成できる。',profile:'1歳半で視力と聴力を失ったが、アン・サリバン先生の指導で教育を受けラドクリフ大学を卒業した。',knowledge:'ケラーが「water」という言葉を理解した瞬間は映画・舞台「奇跡の人」で有名。言語というものが世界に存在することをその瞬間に理解した。'},
+  {name:'モハメド・アリ',years:'1942-2016',bio:'プロボクサー',quote:'チャンピオンはジムで作られるのではない。心の奥底で作られるのだ。',profile:'3度の世界ヘビー級王座を獲得。「蝶のように舞い、蜂のように刺す」の言葉で知られる。ベトナム戦争への反対で徴兵を拒否した。',knowledge:'アリはパーキンソン病で晩年は思うように話せなくなった。しかし1996年のアトランタ五輪の聖火最終ランナーを震える手で務め世界中の人々を感動させた。'},
+  {name:'マイケル・ジョーダン',years:'1963年生まれ',bio:'NBAバスケットボール選手',quote:'自分の限界は自分が決める。それが真実だ。',profile:'シカゴ・ブルズで6回のNBA優勝・6回のファイナルMVPを獲得した史上最高の選手。「エア・ジョーダン」ブランドは年間40億ドル以上の売上を誇る。',knowledge:'ジョーダンは高校2年のときバーシティチームのメンバーから外された。その屈辱をバネに猛練習を重ね「カットされた日のことを今も毎朝思い出す」と語っている。'},
+  {name:'コービー・ブライアント',years:'1978-2020',bio:'NBAバスケットボール選手',quote:'英雄とは、他の人が眠っているときに練習している人だ。',profile:'LAレイカーズで5回のNBA優勝を果たした。「マンバ・メンタリティ」として知られる勝利への執念と練習への姿勢は今も多くのアスリートの手本となっている。',knowledge:'コービーは毎朝4時に起きて練習することで有名だった。「他の人が眠っている間に練習する。それが差をつける方法だ」という言葉を実践した。'},
+  {name:'ウサイン・ボルト',years:'1986年生まれ',bio:'陸上競技選手・人類史上最速',quote:'限界を超えた先に本当の自分がいる。',profile:'100m・200m・4×100mリレーのオリンピック3連覇を達成。100mの世界記録9秒58は現在も破られていない。',knowledge:'ボルトは子供の頃クリケットとサッカーが好きだった。陸上を真剣にやり始めたのは比較的遅く、コーチが強制的に陸上に集中させた。'},
+  {name:'セリーナ・ウィリアムズ',years:'1981年生まれ',bio:'テニス選手・グランドスラム23勝',quote:'偉大さは才能から来るのではなく、困難を乗り越える意志から来る。',profile:'23回のグランドスラム優勝を達成した歴代最多勝利数の選手。人種差別・性差別に立ち向かいながら頂点に立ち続けた。',knowledge:'ウィリアムズは2017年の全豪オープン優勝時、妊娠中だったことが後に明らかになった。'},
+  {name:'オプラ・ウィンフリー',years:'1954年生まれ',bio:'テレビ司会者・慈善家',quote:'あなたの人生の目的は、あなたの最も大きな才能と、世界の最も大きなニーズが交わる場所で見つかる。',profile:'貧困と虐待の幼少期から世界最大のトーク番組を作り上げた。黒人女性で初の億万長者となった。',knowledge:'オプラは幼少期に祖母に「あなたはスピーチが上手い」と言われたことが自信の源になったと語っている。'},
+  {name:'ジョン・F・ケネディ',years:'1917-1963',bio:'アメリカ第35代大統領',quote:'我々が月に行くことを選んだのは、それが簡単だからではなく、困難だからだ。',profile:'第35代大統領として冷戦・キューバ危機・公民権運動などの難題に向き合った。「アポロ計画」を宣言し人類の月面着陸への道を開いた。',knowledge:'ケネディが暗殺されたのは、リンカーン大統領暗殺から100年後のことだった。'},
+  {name:'マーガレット・サッチャー',years:'1925-2013',bio:'英国首相',quote:'自分が信じることに対して立ち上がれ。さもなければ何のために生きているのか。',profile:'英国初の女性首相として「鉄の女」の異名を持つ。サッチャリズムと呼ばれる新自由主義的経済政策を推進した。',knowledge:'サッチャーは首相就任前、化学者として研究職に就いていた。'},
+  {name:'バラク・オバマ',years:'1961年生まれ',bio:'アメリカ第44代大統領',quote:'変化は下からやってくる。',profile:'アメリカ初の黒人大統領として第44代大統領に就任。「Yes We Can」のスローガンで若者・少数民族の政治参加を促した。2009年にノーベル平和賞を受賞。',knowledge:'オバマはハーバード・ロー・スクールで初の黒人編集長に選ばれた。この実績が注目を集め初の自伝出版につながった。'},
+  {name:'ダライ・ラマ14世',years:'1935年生まれ',bio:'チベット仏教の最高指導者',quote:'幸福は外にあるのではなく、内にある。',profile:'1959年に中国によるチベット占領でインドに亡命。非暴力によるチベット独立運動を指導し1989年にノーベル平和賞を受賞。',knowledge:'ダライ・ラマは「科学が仏教の教えを反証したなら、仏教はその教えを変えなければならない」と語った。'},
+  {name:'ブッダ（釈迦）',years:'紀元前563-483年頃',bio:'仏教の開祖',quote:'今この瞬間に生きることが、最高の生き方だ。',profile:'王族として生まれ苦行・瞑想を経て悟りを開いた。「四諦八正道」を説き苦しみの原因は執着にあると教えた。仏教は今日世界で5億人以上が信仰する。',knowledge:'ブッダは悟りを開いた後その教えを伝えるべきか迷ったが「理解できる人がいるかもしれない」と考え説法を始めた。'},
+  {name:'マルティン・ルター',years:'1483-1546',bio:'宗教改革者',quote:'明日地球が滅びるとしても、今日私はリンゴの木を植える。',profile:'カトリック教会の腐敗を批判する「95カ条の論題」を発表しプロテスタント宗教改革を開始した。聖書をドイツ語に翻訳しドイツ語の標準化に貢献した。',knowledge:'ルターが「95カ条の論題」を発表した1517年10月31日は後にプロテスタントの祭日「宗教改革記念日」になった。'},
+  {name:'フローレンス・ナイチンゲール',years:'1820-1910',bio:'近代看護の創始者',quote:'準備なしに好機を待つのは、意味がない。',profile:'クリミア戦争での看護活動と衛生改革で兵士の死亡率を劇的に下げた。世界初の近代看護学校を設立した。',knowledge:'ナイチンゲールはデータビジュアライゼーションのパイオニアでもある。病院の衛生状態と死亡率の関係を「鶏のとさか図」で可視化し政治家を説得した。'},
+  {name:'正岡子規',years:'1867-1902',bio:'俳人・歌人',quote:'柿食えば 鐘が鳴るなり 法隆寺',profile:'俳句・短歌の近代的革新を進め「写生」の理念を打ち立てた。脊椎カリエスによる激痛の中でも創作を続け34歳で亡くなった。',knowledge:'子規は野球に熱狂し日本で最初に「野球」という訳語を使った人物のひとりとされる。野球殿堂表彰を受けている。'},
+  {name:'新渡戸稲造',years:'1862-1933',bio:'教育家・農学者',quote:'人道の道は一つしかない。人類愛の道だ。',profile:'英語で著した「武士道」は世界的ベストセラーとなり日本精神を世界に紹介した。国際連盟事務次長として国際平和に貢献した。',knowledge:'新渡戸の「武士道」はアメリカで書かれ当初日本語版は存在しなかった。'},
+  {name:'野口英世',years:'1876-1928',bio:'細菌学者・医師',quote:'成功の秘訣は忍耐なり。',profile:'幼少期の火傷で左手に障害を持ちながらも苦学し梅毒スピロヘータの純粋培養に成功。ロックフェラー医学研究所で活躍した。',knowledge:'野口英世は医師・弁護士・英語・フランス語など多くの資格・語学を習得した努力家だった。'},
+  {name:'松岡修造',years:'1967年生まれ',bio:'元テニス選手・スポーツキャスター',quote:'絶対に熱くなれる! 絶対に可能性はある!',profile:'ウィンブルドンベスト8入りを果たした日本人男子最後のグランドスラムベスト8進出者。現在は「熱血キャスター」として日本中を元気にしている。',knowledge:'松岡修造カレンダーは毎年ベストセラーになっている。彼の一言が多くの日本人のモチベーションの源となっている。'},
+  {name:'三浦知良',years:'1967年生まれ',bio:'プロサッカー選手・キング・カズ',quote:'老いることへの恐れより老いることへの準備をせよ。',profile:'「キング・カズ」の愛称で知られJリーグ創立から現在まで現役を続ける超レジェンド。50歳を超えても現役にこだわり続ける。',knowledge:'カズは15歳でブラジルに渡り路上生活を経験しながらサッカーの腕を磨いた。'},
+  {name:'羽生結弦',years:'1994年生まれ',bio:'フィギュアスケーター',quote:'自分が納得できるまでやり抜くことが大切だ。',profile:'オリンピック2連覇（2014年・2018年）を達成した史上最高のスケーターのひとり。東日本大震災の被災者でもあり故郷への思いを演技に込め続けている。',knowledge:'羽生は「4回転アクセル」という超高難度のジャンプに挑戦し続けた。北京五輪では転倒したが「挑戦した事実は誰にも消せない」と語った。'},
+  {name:'松井秀喜',years:'1974年生まれ',bio:'元プロ野球選手・ゴジラ',quote:'結果が出ないときこそ、焦らず、急がず、諦めず。',profile:'MLBニューヨーク・ヤンキースに移籍し2009年のワールドシリーズMVPを獲得。「ゴジラ」の愛称で日米で愛された。',knowledge:'松井は高校時代、5打席連続で敬遠された甲子園の試合でも表情を変えず相手投手に礼をした。「高校野球史に残る紳士的態度」として語り継がれる。'},
+  {name:'中田英寿',years:'1977年生まれ',bio:'元サッカー選手・実業家',quote:'自分で決めた道を、自分の責任で歩め。',profile:'ACミラン・パルマなどのセリエAで活躍した日本人初のワールドクラスMF。引退後は日本文化の発信・伝統工芸の支援など多彩な活動を展開している。',knowledge:'中田は日本人アスリートが「ブランド」として自分を管理した先駆者とされる。'},
+  {name:'ロジャー・フェデラー',years:'1981年生まれ',bio:'元テニス選手・グランドスラム20勝',quote:'完璧なテニスを求めるから、素晴らしいテニスができる。',profile:'20回のグランドスラム優勝を達成した史上最高のテニス選手のひとり。テクニックの美しさ・スポーツマンシップ・人格の高さで「テニスの神様」と称される。',knowledge:'フェデラーは10代の頃ラケットを投げたり審判に暴言を吐いたりする激情家だったが、メンタルコーチをつけてから劇的に変化した。'},
+  {name:'アントン・チェーホフ',years:'1860-1904',bio:'ロシアの劇作家・小説家',quote:'医学は私の妻、文学は私の愛人だ。',profile:'「桜の園」「三人姉妹」「かもめ」などの戯曲と多くの短編小説で近代演劇・文学に革命をもたらした。医師として貧しい患者を無料で診察しながら執筆を続けた。',knowledge:'「チェーホフの銃」—物語の第1幕で壁に銃が掛けてあれば、第3幕で発射されなければならない—は現代の脚本術に今も引用される。'},
+  {name:'ヴィクトル・ユーゴー（別名言）',years:'1802-1885',bio:'フランスの小説家',quote:'軍隊よりも強いものがある。その時代が来た思想だ。',profile:'「レ・ミゼラブル」「ノートルダム・ド・パリ」で知られるフランス文学の巨人。政治亡命期間中も創作を続けフランス共和主義の象徴的存在となった。',knowledge:'ヒューゴーは出版社に本の評判を聞くために「?」とだけ書いた手紙を送ったことがある。出版社は「!」とだけ返信した。世界最短の手紙のやりとりとして有名。'},
+  {name:'アルフレッド・アドラー',years:'1870-1937',bio:'個人心理学の創始者',quote:'すべての悩みは対人関係の悩みである。',profile:'フロイト・ユングと並ぶ「心理学の三大巨頭」のひとり。「劣等感」「補償」「共同体感覚」などの概念を提唱。「嫌われる勇気」で21世紀に再評価されている。',knowledge:'アドラーは幼少期に重病で死にかけた経験が医師・心理学者を志す原点になった。'},
+  {name:'エーリッヒ・フロム',years:'1900-1980',bio:'社会心理学者',quote:'愛することは技術だ。技術を磨くには練習が必要だ。',profile:'「愛するということ」「自由からの逃走」などの著作で現代人の孤独・不安・消費主義的生き方を批判し真の愛と自由を追求することを説いた。',knowledge:'フロムは「多くの人が「どうすれば愛されるか」は考えるが「どうすれば愛することができるか」を考えない」と指摘した。'},
+  {name:'イマヌエル・カント',years:'1724-1804',bio:'哲学者',quote:'道徳的に行動するとは、あなたの行動の原則が普遍的法則になりうるよう行動することだ。',profile:'「純粋理性批判」「実践理性批判」「判断力批判」の三批判書で近代哲学を集大成した近代哲学の最重要人物のひとり。',knowledge:'カントは毎日同じ時刻の散歩で有名。近所の人々がカントの散歩を見て時計を合わせたという逸話がある。'},
+  {name:'フリードリヒ・ニーチェ',years:'1844-1900',bio:'哲学者',quote:'怪物と戦う者は、自らが怪物にならないよう注意せよ。',profile:'「ツァラトゥストラはかく語りき」「善悪の彼岸」などを著した。「神は死んだ」「永劫回帰」「超人」などの概念を提唱し20世紀の哲学・文学・文化に多大な影響を与えた。',knowledge:'ニーチェはルー・ザロメへのプロポーズを断られ友人のパウル・レーに奪われた。この失恋が「ツァラトゥストラはかく語りき」を書くきっかけになったとされる。'},
+  {name:'バートランド・ラッセル',years:'1872-1970',bio:'哲学者・ノーベル賞受賞者',quote:'退屈の原因は行動の欠如ではなく、意味の欠如だ。',profile:'「数学原理」でホワイトヘッドと共に数学を論理学に基礎づけた。反戦・核廃絶運動を生涯続け1950年にノーベル文学賞を受賞。98歳まで積極的に発言し続けた。',knowledge:'ラッセルは生涯に3度以上の投獄経験を持つ。第一次世界大戦中の反戦活動で収監されたが獄中で執筆した名著が今も読まれる。'},
+  {name:'スティーブン・ガイズ',years:'1979年生まれ',bio:'ミニ習慣の提唱者',quote:'小さすぎるくらい小さな習慣から始めよ。',profile:'「ミニ習慣」で「腕立て伏せ1回から始める」という超小さな行動目標が大きな変化をもたらすことを実証した。',knowledge:'ガイズは「毎日腕立て伏せ1回」から始めた習慣が最終的に毎日100回と本格的な筋トレへと発展した。'},
+  {name:'チャールズ・デュヒッグ',years:'1974年生まれ',bio:'「習慣の力」著者',quote:'習慣のループ（きっかけ・ルーティン・報酬）を理解すれば、習慣を変えられる。',profile:'「習慣の力」「スマート・ファスター・ベター」などを執筆。人間の習慣形成のメカニズムを科学的に解説した。',knowledge:'デュヒッグは歯磨き粉の普及が「泡立ちと清涼感という報酬」を加えたことで急拡大したという事例を紹介した。'},
+  {name:'マルコム・グラッドウェル',years:'1963年生まれ',bio:'ジャーナリスト・作家',quote:'成功の背後には、常に幸運と努力の両方がある。',profile:'「ティッピング・ポイント」「Outliers（1万時間の法則）」などのベストセラーで社会現象を独自の視点で解説する。',knowledge:'グラッドウェルが「1万時間の法則」を紹介した後、元研究者が「ただ1万時間ではなく意図的な練習が重要」と指摘した。'},
+  {name:'ダニエル・カーネマン',years:'1934年生まれ',bio:'ノーベル経済学賞受賞の心理学者',quote:'速く考えるな。遅く考えよ。重要な決断には時間をかけよ。',profile:'「ファスト&スロー」で人間の思考の二つのシステムを解説した。アモス・トベルスキーとの共同研究で行動経済学を確立し2002年にノーベル経済学賞を受賞。',knowledge:'カーネマンとトベルスキーは「損失回避」の心理を証明した。人は同じ金額でも「得る」より「失う」方を強く感じる。'},
+  {name:'ブライアン・トレーシー',years:'1944年生まれ',bio:'自己啓発コンサルタント',quote:'カエルを食べろ。最も困難なことから始めよ。',profile:'「カエルを食べてしまえ!」などのベストセラーで知られる。高校中退から独学で成功した自己啓発の実践者。',knowledge:'トレーシーの「カエルを食べろ」理論は最も困難で重要なタスクを朝一番に処理するというもの。'},
+  {name:'ジャック・マー',years:'1964年生まれ',bio:'Alibaba創業者',quote:'今日は厳しい。明日はさらに厳しい。しかし明後日は美しい。',profile:'英語教師からAlibabaを創業し中国最大のEコマース企業に育て上げた。10回以上の就職・入学試験に落ち続けた「失敗の達人」。',knowledge:'ジャック・マーはハーバード大学の入学試験に10回落ちた。KFCの採用面接でも24人中23人が採用される中ひとり落ちた。'},
+  {name:'ヴィンス・ロンバルディ',years:'1913-1970',bio:'NFLコーチ',quote:'勝利は習慣だ。不幸なことに、敗北もそうだ。',profile:'グリーンベイ・パッカーズを率いてスーパーボウル初の2連覇を達成した伝説的コーチ。「ロンバルディ・トロフィー」はスーパーボウル優勝チームに贈られる。',knowledge:'ロンバルディは練習の最初に必ず「これがフットボールだ」とボールを掲げ基礎から始めた。どれだけ強いチームでも基礎の徹底を怠らなかった。'},
+  {name:'宮崎駿',years:'1941年生まれ',bio:'アニメーション監督',quote:'人生は複雑じゃない。人間が複雑なのだ。',profile:'「風の谷のナウシカ」「となりのトトロ」「千と千尋の神隠し」などで世界中を魅了した。2002年にアカデミー賞長編アニメーション賞を受賞。',knowledge:'宮崎駿は引退宣言を5回行ったことで知られる。しかし毎回新作を作り始める。80歳を超えた現在も新作を制作中。'},
+  {name:'村上春樹',years:'1949年生まれ',bio:'小説家',quote:'走ることについて語るとき、僕の語ること。',profile:'「ノルウェイの森」「1Q84」「海辺のカフカ」など世界40以上の言語に翻訳された作品を持つ。毎日走ることを欠かさず、フルマラソンや100kmウルトラマラソンにも挑戦している。',knowledge:'村上春樹は1978年、ヤクルト対広島の試合を見ていて突然「小説が書けるかもしれない」と思ったというエピソードがある。その夜家に帰り書き始めたのが処女作だ。'},
+  {name:'北野武',years:'1947年生まれ',bio:'映画監督・コメディアン',quote:'バカじゃないと、新しいことはできない。',profile:'「HANA-BI」「菊次郎の夏」などで世界的評価を受ける映画監督であり、ビートたけしとしてお笑い界の革命を起こしたコメディアン。',knowledge:'北野武は映画「HANA-BI」でベネチア国際映画祭金獅子賞を受賞した。'},
+  {name:'プラトン',years:'紀元前427-347年',bio:'古代ギリシャの哲学者',quote:'自分に打ち勝つことが、最も偉大な勝利だ。',profile:'ソクラテスの弟子でありアリストテレスの師。「イデア論」を提唱し真の実在は感覚ではなく理性によって把握されるイデアだと説いた。アカデメイアを創設した。',knowledge:'プラトンはもともとレスラーとして活躍しオリンピック競技にも出場したとされる。「プラトン」は「広い肩」を意味するニックネームで本名はアリストクレスだった。'},
+  {name:'エピクテトス',years:'50-135年頃',bio:'ストア哲学者',quote:'困難な時期こそ、人間が何者かが示される。',profile:'ローマの奴隷出身のストア哲学者。奴隷として過酷な扱いを受けたがその経験が「自分でコントロールできることとできないことを区別する」というストア哲学の核心を育んだ。',knowledge:'エピクテトスは主人に足を折られたときも表情を変えなかったという逸話がある。'},
 ];
 
-// ── MISSIONS ───────────────────────────────────────────────────
-const MISSIONS = [
-  {id:'first',    icon:'ti-flag',    bg:'var(--green-bg)', col:'var(--green-dk)', name:'First Step',      desc:'初めて記録する',        exp:30,  check:s=>s.totalLogs>=1},
-  {id:'s3',       icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red-dk)',   name:'On Fire',         desc:'3日連続で記録',         exp:50,  check:s=>s.streak>=3},
-  {id:'s7',       icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red-dk)',   name:'Week Warrior',    desc:'7日連続で記録',         exp:100, check:s=>s.streak>=7},
-  {id:'s30',      icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red-dk)',   name:'Unstoppable',     desc:'30日連続で記録',        exp:500, check:s=>s.streak>=30},
-  {id:'l10',      icon:'ti-star',    bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Getting Serious', desc:'合計10回記録する',      exp:80,  check:s=>s.totalLogs>=10},
-  {id:'l50',      icon:'ti-star',    bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Dedicated',       desc:'合計50回記録する',      exp:200, check:s=>s.totalLogs>=50},
-  {id:'l100',     icon:'ti-star',    bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Century',         desc:'合計100回記録する',     exp:500, check:s=>s.totalLogs>=100},
-  {id:'lv3',      icon:'ti-bolt',    bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'Rising Star',     desc:'レベル3に到達する',     exp:100, check:s=>s.level>=3},
-  {id:'lv5',      icon:'ti-bolt',    bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'Mid Boss',        desc:'レベル5に到達する',     exp:200, check:s=>s.level>=5},
-  {id:'lv8',      icon:'ti-crown',   bg:'var(--amber-bg)', col:'var(--amber-dk)', name:'Elite Class',     desc:'レベル8に到達する',     exp:500, check:s=>s.level>=8},
-  {id:'exp500',   icon:'ti-trophy',  bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'EXP Hunter',      desc:'累計500 EXP獲得',      exp:100, check:s=>s.exp>=500},
-  {id:'exp2000',  icon:'ti-trophy',  bg:'var(--blue-bg)',  col:'var(--blue-dk)',  name:'Power Grinder',   desc:'累計2000 EXP獲得',     exp:300, check:s=>s.exp>=2000},
+let goals=JSON.parse(localStorage.getItem('hb_goals')||'null')||[
+  {id:1,name:'ランニング',type:'numeric',target:30,unit:'分',color:'#5b9bd5'},
+  {id:2,name:'読書',type:'numeric',target:20,unit:'分',color:'#4caf7d'},
+  {id:3,name:'瞑想',type:'boolean',color:'#c9a84c'},
 ];
-
-const QUOTES = [
-  '小さな一歩の積み重ねが、やがて大きな変化になる。',
-  '今日できることを、今日やる。それだけでいい。',
-  '完璧を目指すより、続けることを目指そう。',
-  '昨日の自分より少しだけ前に進めばいい。',
-  '記録することは、自分を知ること。',
-  'モチベーションは波がある。だから習慣にする。',
-  '結果は後からついてくる。今日もただ続けよう。',
-  '三日坊主でもいい。また始めればいい。',
-  '小さな習慣が、人生を静かに変えていく。',
-  '今日記録したことは、未来の自分への贈り物。',
-  '継続は力なり。でも、休むことも力なり。',
-  '千里の道も一歩から。',
-];
-
-let goals = JSON.parse(localStorage.getItem('hb_goals')||'null') || [
-  {id:1, name:'Running',   type:'numeric', target:30, unit:'min', color:'#378ADD'},
-  {id:2, name:'Reading',   type:'numeric', target:20, unit:'min', color:'#1D9E75'},
-  {id:3, name:'Meditation',type:'boolean',                        color:'#111111'},
-];
-let logs  = JSON.parse(localStorage.getItem('hb_logs') ||'{}');
-let stats = JSON.parse(localStorage.getItem('hb_stats')||'{"exp":0,"level":1,"streak":0,"totalLogs":0,"earnedMissions":[]}');
-
-let calY, calM, selDay = null, activeId = null, gType = 'numeric', gCol = '#111111', boolV = true;
-let quoteIdx = Math.floor(Math.random() * QUOTES.length);
-
-const saveG = () => localStorage.setItem('hb_goals',  JSON.stringify(goals));
-const saveL = () => localStorage.setItem('hb_logs',   JSON.stringify(logs));
-const saveS = () => localStorage.setItem('hb_stats',  JSON.stringify(stats));
-const todayK = () => { const d=new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; };
-const fmtKey = (y,m,d) => `${y}-${m+1}-${d}`;
-
-function getRank(lv) { return RANKS.find(r=>r.lv===lv) || RANKS[RANKS.length-1]; }
-function getExpForLevel(lv) { const r=RANKS.find(x=>x.lv===lv); return r ? r.expNext : 99999; }
-
-function addEXP(amount) {
-  const before = stats.level;
-  stats.exp += amount;
-  // recalc level
-  let newLv = 1;
-  for (const r of RANKS) { if (stats.exp >= (r.lv===1?0:RANKS[r.lv-2].expNext)) newLv = r.lv; }
-  stats.level = newLv;
-  saveS();
-  if (stats.level > before) {
-    const rank = getRank(stats.level);
-    setTimeout(() => showToast(`Level Up! Lv.${stats.level} — ${rank.name}`), 200);
-  } else {
-    showToast(`+${amount} EXP`);
-  }
+let logs=JSON.parse(localStorage.getItem('hb_logs')||'{}');
+let stats=JSON.parse(localStorage.getItem('hb_stats')||'{"exp":0,"level":1,"streak":0,"totalLogs":0,"earnedMissions":[]}');
+let calY,calM,selDay=null,activeId=null,gType='numeric',gCol='#c9a84c',boolV=true,detailOpen=false;
+let personIdx=(()=>{const d=new Date();return(d.getFullYear()*365+d.getMonth()*30+d.getDate())%PEOPLE.length;})();
+const saveG=()=>localStorage.setItem('hb_goals',JSON.stringify(goals));
+const saveL=()=>localStorage.setItem('hb_logs',JSON.stringify(logs));
+const saveS=()=>localStorage.setItem('hb_stats',JSON.stringify(stats));
+const todayK=()=>{const d=new Date();return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;};
+const fmtKey=(y,m,d)=>`${y}-${m+1}-${d}`;
+function getRank(lv){return RANKS.find(r=>r.lv===lv)||RANKS[RANKS.length-1];}
+function addEXP(amount){
+  const before=stats.level;stats.exp+=amount;
+  let newLv=1;
+  for(let i=0;i<RANKS.length;i++){const thr=i===0?0:RANKS[i-1].expNext;if(stats.exp>=thr)newLv=RANKS[i].lv;}
+  stats.level=newLv;saveS();
+  if(stats.level>before){const r=getRank(stats.level);setTimeout(()=>showToast(`Level Up! Lv.${stats.level} — ${r.name}`),300);}
+  else showToast(`+${amount} EXP`);
   updateHeader();
 }
-
-function updateHeader() {
-  const rank = getRank(stats.level);
-  const expThisLevel = stats.level > 1 ? RANKS[stats.level-2].expNext : 0;
-  const expNext = rank.expNext;
-  const pct = expNext > expThisLevel ? Math.min(100, Math.round((stats.exp - expThisLevel) / (expNext - expThisLevel) * 100)) : 100;
-  const rem = Math.max(0, expNext - stats.exp);
-
-  document.getElementById('exp-disp').textContent = `${stats.exp} EXP`;
-  document.getElementById('rank-tag').textContent  = `Lv.${stats.level} · ${rank.name}`;
-  document.getElementById('lv-badge').textContent  = stats.level;
-  document.getElementById('lv-name-txt').textContent = rank.name;
-  document.getElementById('lv-sub-txt').textContent  = rem > 0 ? `Next level in ${rem} EXP` : 'Max level!';
-  document.getElementById('lv-pct-txt').textContent  = `${pct}%`;
-  document.getElementById('lv-fill').style.width     = pct + '%';
-  document.getElementById('streak-val').textContent  = stats.streak;
-  document.getElementById('total-val').textContent   = stats.totalLogs;
+function updateHeader(){
+  const rank=getRank(stats.level);
+  const expTL=stats.level>1?RANKS[stats.level-2].expNext:0;
+  const expNext=rank.expNext;
+  const pct=expNext>expTL?Math.min(100,Math.round((stats.exp-expTL)/(expNext-expTL)*100)):100;
+  const rem=Math.max(0,expNext-stats.exp);
+  document.getElementById('exp-disp').textContent=`${stats.exp} EXP`;
+  document.getElementById('rank-tag').textContent=`Lv.${stats.level} · ${rank.name}`;
+  document.getElementById('lv-badge').textContent=stats.level;
+  document.getElementById('lv-name-txt').textContent=rank.name;
+  document.getElementById('lv-sub-txt').textContent=rem>0?`次のレベルまで ${rem} EXP`:'最高レベル達成!';
+  document.getElementById('lv-pct-txt').textContent=`${pct}%`;
+  document.getElementById('lv-fill').style.width=pct+'%';
+  document.getElementById('streak-val').textContent=stats.streak;
+  document.getElementById('total-val').textContent=stats.totalLogs;
 }
-
-function calcStreak() {
-  let s = 0; const now = new Date();
-  for (let i=0; i<365; i++) {
-    const d=new Date(now); d.setDate(d.getDate()-i);
-    const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    if (logs[k] && Object.keys(logs[k]).length>0) s++;
-    else break;
-  }
-  return s;
+function calcStreak(){let s=0;const now=new Date();for(let i=0;i<365;i++){const d=new Date(now);d.setDate(d.getDate()-i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k]&&Object.keys(logs[k]).length>0)s++;else break;}return s;}
+function checkMissions(){const n=[];for(const m of MISSIONS){if(!stats.earnedMissions.includes(m.id)&&m.check(stats)){stats.earnedMissions.push(m.id);n.push({name:m.name,exp:m.exp});}}if(n.length){saveS();n.forEach((m,i)=>setTimeout(()=>showToast(`Mission: ${m.name}  +${m.exp} EXP`),900+i*600));}}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function renderPerson(){
+  const p=PEOPLE[personIdx];
+  document.getElementById('hero-quote').textContent=`"${p.quote}"`;
+  document.getElementById('hero-name').textContent=p.name;
+  document.getElementById('hero-bio').textContent=`${p.years}  ${p.bio}`;
+  document.getElementById('pd-name').textContent=p.name;
+  document.getElementById('pd-years').textContent=`${p.years} · ${p.bio}`;
+  document.getElementById('pd-profile').textContent=p.profile;
+  document.getElementById('pd-knowledge').textContent=p.knowledge;
+  const pd=document.getElementById('person-detail');
+  if(detailOpen)pd.classList.add('open');else pd.classList.remove('open');
 }
-
-function checkMissions() {
-  const newOnes = [];
-  for (const m of MISSIONS) {
-    if (!stats.earnedMissions.includes(m.id) && m.check(stats)) {
-      stats.earnedMissions.push(m.id);
-      newOnes.push({name: m.name, exp: m.exp});
-    }
-  }
-  if (newOnes.length) {
-    saveS();
-    newOnes.forEach((m,i) => setTimeout(() => showToast(`Mission: ${m.name}  +${m.exp} EXP`), 900 + i*600));
-  }
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-function nextQuote() {
-  quoteIdx = (quoteIdx + 1) % QUOTES.length;
-  document.getElementById('quote-txt').textContent = QUOTES[quoteIdx];
-}
-
-// ── SCREENS ─────────────────────────────────────────────────────
-const SCREEN_TITLES = { today:'Today', missions:'Missions', calendar:'Log', report:'Report', settings:'Settings' };
-
-function sw(name, btn) {
+function nextPerson(){personIdx=(personIdx+1)%PEOPLE.length;detailOpen=false;renderPerson();}
+function toggleDetail(){detailOpen=!detailOpen;document.getElementById('person-detail').classList.toggle('open',detailOpen);}
+const SCREEN_TITLES={today:'Today',missions:'Missions',calendar:'Log',report:'Report',settings:'Settings'};
+function sw(name,btn){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('s-'+name).classList.add('active');
-  btn.classList.add('active');
-  document.getElementById('content').scrollTop = 0;
-  document.getElementById('tb-title').textContent = SCREEN_TITLES[name];
-  if (name==='calendar')  { if(calY===undefined){const n=new Date();calY=n.getFullYear();calM=n.getMonth();} renderCal(); renderDayLog(selDay||todayK()); }
-  if (name==='report')    renderReport();
-  if (name==='settings')  renderMgr();
-  if (name==='missions')  renderMissions();
+  document.getElementById('s-'+name).classList.add('active');btn.classList.add('active');
+  document.getElementById('content').scrollTop=0;
+  document.getElementById('tb-title').textContent=SCREEN_TITLES[name];
+  if(name==='calendar'){if(calY===undefined){const n=new Date();calY=n.getFullYear();calM=n.getMonth();}renderCal();renderDayLog(selDay||todayK());}
+  if(name==='report')renderReport();
+  if(name==='settings')renderMgr();
+  if(name==='missions')renderMissions();
 }
-
-const openOv  = id => document.getElementById(id).classList.add('open');
-const closeOv = id => document.getElementById(id).classList.remove('open');
-
-// ── TODAY ────────────────────────────────────────────────────────
-function renderHome() {
-  const today = todayK();
-  document.getElementById('quote-txt').textContent = QUOTES[quoteIdx];
-  document.getElementById('goal-list').innerHTML = goals.map(g => {
-    const log = logs[today]?.[g.id];
-    let sub='', pct=0, showBar=false, isDone=false;
-    if (g.type==='numeric') {
-      pct = log ? Math.min(100, Math.round((log.value/g.target)*100)) : 0;
-      sub = log ? `${log.value} / ${g.target} ${g.unit}` : `Goal: ${g.target} ${g.unit}`;
-      showBar = true;
-    } else if (g.type==='boolean') {
-      isDone = !!(log?.done); sub = isDone ? 'Done' : 'Not logged';
-    } else {
-      sub = log ? 'Logged' : 'No memo';
-    }
-    const done = isDone || pct>=100;
-    return `<div class="goal-row">
-      <div class="goal-dot" style="background:${g.color}"></div>
-      <div class="goal-body">
-        <div class="goal-name">${g.name}</div>
-        <div class="goal-sub">${sub}</div>
-        ${showBar?`<div class="goal-track"><div class="goal-fill" style="width:${pct}%;background:${g.color}"></div></div>`:''}
-      </div>
-      <button class="rec-pill${done?' done':''}" onclick="openLog(${g.id})">${done?'Done':'Log'}</button>
-    </div>`;
-  }).join('');
-  updateHeader();
-}
-
-function openLog(gid) {
-  const g = goals.find(x=>x.id===gid); activeId = gid;
-  document.getElementById('log-title').textContent = g.name;
-  document.getElementById('log-sub').textContent = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',weekday:'short'});
-  const today=todayK(); const ex=logs[today]?.[gid];
+const openOv=id=>document.getElementById(id).classList.add('open');
+const closeOv=id=>document.getElementById(id).classList.remove('open');
+function openLog(gid){
+  const g=goals.find(x=>x.id===gid);activeId=gid;
+  document.getElementById('log-title').textContent=g.name;
+  document.getElementById('log-sub').textContent=new Date().toLocaleDateString('ja-JP',{month:'long',day:'numeric',weekday:'short'});
+  const today=todayK();const ex=logs[today]?.[gid];
   let html='';
-  if (g.type==='numeric') {
-    html=`<div class="fl">Value</div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-      <input class="fi" id="lv" type="number" inputmode="decimal" placeholder="0" style="margin:0;flex:1;" value="${ex?.value||''}">
-      <span style="font-size:14px;color:var(--text3);">${g.unit}</span>
-    </div>
-    <div class="fl">Memo (optional)</div>
-    <textarea class="fi" id="lm" rows="2" placeholder="How did it go?">${ex?.memo||''}</textarea>`;
-  } else if (g.type==='boolean') {
-    boolV = ex ? ex.done : true;
-    html=`<div class="fl">Did you do it?</div>
-    <div class="chip-row" style="margin-bottom:16px;">
-      <button class="chip${boolV?' on':''}" id="by" onclick="setBool(true)">Done</button>
-      <button class="chip${!boolV?' on':''}" id="bn" onclick="setBool(false)">Not done</button>
-    </div>
-    <div class="fl">Memo (optional)</div>
-    <textarea class="fi" id="lm" rows="2" placeholder="Any notes?">${ex?.memo||''}</textarea>`;
-  } else {
-    html=`<div class="fl">Today's log</div>
-    <textarea class="fi" id="lm" rows="4" placeholder="Write anything...">${ex?.memo||''}</textarea>`;
-  }
-  document.getElementById('log-body').innerHTML = html;
-  openOv('log-ov');
+  if(g.type==='numeric'){html=`<div class="fl">今日の値</div><div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;"><input class="fi" id="lv" type="number" inputmode="decimal" placeholder="0" style="margin:0;flex:1;" value="${ex?.value||''}"><span style="font-size:14px;color:var(--text3);">${g.unit}</span></div><div class="fl">メモ（任意）</div><textarea class="fi" id="lm" rows="2" placeholder="今日の様子を記録">${ex?.memo||''}</textarea>`;}
+  else if(g.type==='boolean'){boolV=ex?ex.done:true;html=`<div class="fl">達成しましたか</div><div class="chip-row" style="margin-bottom:15px;"><button class="chip${boolV?' on':''}" id="by" onclick="setBool(true)">達成</button><button class="chip${!boolV?' on':''}" id="bn" onclick="setBool(false)">未達成</button></div><div class="fl">メモ（任意）</div><textarea class="fi" id="lm" rows="2" placeholder="コメント">${ex?.memo||''}</textarea>`;}
+  else{html=`<div class="fl">今日の記録</div><textarea class="fi" id="lm" rows="4" placeholder="今日の内容を書いてください">${ex?.memo||''}</textarea>`;}
+  document.getElementById('log-body').innerHTML=html;openOv('log-ov');
 }
-
-function setBool(v) {
-  boolV=v;
-  document.getElementById('by').classList.toggle('on',v);
-  document.getElementById('bn').classList.toggle('on',!v);
-}
-
-function saveLog() {
-  const g=goals.find(x=>x.id===activeId); const today=todayK();
+function setBool(v){boolV=v;document.getElementById('by').classList.toggle('on',v);document.getElementById('bn').classList.toggle('on',!v);}
+function saveLog(){
+  const g=goals.find(x=>x.id===activeId);const today=todayK();
   const isNew=!logs[today]||!logs[today][activeId];
-  if (!logs[today]) logs[today]={};
-  if (g.type==='numeric')      logs[today][activeId]={value:parseFloat(document.getElementById('lv').value)||0, memo:document.getElementById('lm')?.value||''};
-  else if (g.type==='boolean') logs[today][activeId]={done:boolV, memo:document.getElementById('lm')?.value||''};
-  else                         logs[today][activeId]={memo:document.getElementById('lm')?.value||''};
+  if(!logs[today])logs[today]={};
+  if(g.type==='numeric')logs[today][activeId]={value:parseFloat(document.getElementById('lv').value)||0,memo:document.getElementById('lm')?.value||''};
+  else if(g.type==='boolean')logs[today][activeId]={done:boolV,memo:document.getElementById('lm')?.value||''};
+  else logs[today][activeId]={memo:document.getElementById('lm')?.value||''};
   saveL();
-  if (isNew) {
-    stats.totalLogs++;
-    stats.streak = calcStreak();
-    saveS();
-    addEXP(20);
-    checkMissions();
-  }
-  closeOv('log-ov');
-  renderHome();
+  if(isNew){stats.totalLogs++;stats.streak=calcStreak();saveS();addEXP(20);checkMissions();}
+  closeOv('log-ov');renderHome();
 }
-
-// ── MISSIONS ────────────────────────────────────────────────────
-function renderMissions() {
-  const active=[], done=[];
-  for (const m of MISSIONS) {
-    if (stats.earnedMissions.includes(m.id)) done.push(m);
-    else active.push(m);
-  }
-  const card = (m, isDone) => `
-    <div class="mission-card${isDone?' done':''}">
-      <div class="mission-icon" style="background:${m.bg};color:${m.col}"><i class="ti ${m.icon}"></i></div>
-      <div class="mission-body">
-        <div class="mission-name">${m.name}</div>
-        <div class="mission-cond">${m.desc}</div>
-      </div>
-      ${isDone
-        ? `<span class="mission-done-badge">Cleared</span>`
-        : `<span class="mission-xp">+${m.exp} EXP</span>`}
-    </div>`;
-  document.getElementById('missions-active').innerHTML = active.length ? active.map(m=>card(m,false)).join('') : '<div class="day-log-empty">All missions cleared!</div>';
-  document.getElementById('missions-done').innerHTML   = done.length   ? done.map(m=>card(m,true)).join('')   : '<div class="day-log-empty">None yet.</div>';
+function renderHome(){
+  const today=todayK();
+  document.getElementById('goal-list').innerHTML=goals.map(g=>{
+    const log=logs[today]?.[g.id];let sub='',pct=0,showBar=false,isDone=false;
+    if(g.type==='numeric'){pct=log?Math.min(100,Math.round((log.value/g.target)*100)):0;sub=log?`${log.value} / ${g.target} ${g.unit}`:`目標: ${g.target} ${g.unit}`;showBar=true;}
+    else if(g.type==='boolean'){isDone=!!(log?.done);sub=isDone?'達成':'未記録';}
+    else{sub=log?'記録済み':'メモ未記録';}
+    const done=isDone||pct>=100;
+    return `<div class="goal-row"><div class="goal-dot" style="background:${g.color}"></div><div class="goal-body"><div class="goal-name">${g.name}</div><div class="goal-sub">${sub}</div>${showBar?`<div class="goal-track"><div class="goal-fill" style="width:${pct}%;background:${g.color}"></div></div>`:''}</div><button class="rec-pill${done?' done':''}" onclick="openLog(${g.id})">${done?'完了':'記録'}</button></div>`;
+  }).join('');updateHeader();
 }
-
-// ── CALENDAR ────────────────────────────────────────────────────
-function chM(dir) {
-  calM+=dir;
-  if(calM<0){calM=11;calY--;} if(calM>11){calM=0;calY++;}
-  renderCal();
+function renderMissions(){
+  const active=[],done=[];
+  for(const m of MISSIONS){if(stats.earnedMissions.includes(m.id))done.push(m);else active.push(m);}
+  const card=(m,isDone)=>`<div class="mission-card${isDone?' done':''}"><div class="mission-icon" style="background:${m.bg};color:${m.col}"><i class="ti ${m.icon}"></i></div><div class="mission-body"><div class="mission-name">${m.name}</div><div class="mission-cond">${m.desc}</div></div>${isDone?`<span class="mission-done-badge">達成</span>`:`<span class="mission-exp">+${m.exp} EXP</span>`}</div>`;
+  document.getElementById('missions-active').innerHTML=active.length?active.map(m=>card(m,false)).join(''):'<div style="padding:12px 18px;font-size:13px;color:var(--text3);">全ミッションクリア!</div>';
+  document.getElementById('missions-done').innerHTML=done.length?done.map(m=>card(m,true)).join(''):'<div style="padding:12px 18px;font-size:13px;color:var(--text3);">まだありません。</div>';
 }
-
-function renderCal() {
+function chM(dir){calM+=dir;if(calM<0){calM=11;calY--;}if(calM>11){calM=0;calY++;}renderCal();}
+function renderCal(){
   const now=new Date();
   if(calY===undefined){calY=now.getFullYear();calM=now.getMonth();}
-  const mns=['January','February','March','April','May','June','July','August','September','October','November','December'];
-  document.getElementById('cal-lbl').textContent=`${mns[calM]} ${calY}`;
-  const first=new Date(calY,calM,1).getDay();
-  const dim=new Date(calY,calM+1,0).getDate();
-  const dows=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const mns=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('cal-lbl').textContent=`${calY}年 ${mns[calM]}`;
+  const first=new Date(calY,calM,1).getDay();const dim=new Date(calY,calM+1,0).getDate();
+  const dows=['日','月','火','水','木','金','土'];
   let h=dows.map(d=>`<div class="cal-dow">${d}</div>`).join('');
-  for(let i=0;i<first;i++) h+=`<div></div>`;
+  for(let i=0;i<first;i++)h+=`<div></div>`;
   for(let d=1;d<=dim;d++){
     const key=fmtKey(calY,calM,d);
     const isToday=calY===now.getFullYear()&&calM===now.getMonth()&&d===now.getDate();
     const isSel=key===selDay&&!isToday;
     const has=logs[key]&&Object.keys(logs[key]).length>0;
-    h+=`<div class="cal-day${isToday?' today':''}${isSel?' selected':''}${has?' has-log':''}" onclick="selectDay('${key}')">
-      <span>${d}</span><span class="pip"></span>
-    </div>`;
+    h+=`<div class="cal-day${isToday?' today':''}${isSel?' selected':''}${has?' has-log':''}" onclick="selectDay('${key}')"><span>${d}</span><span class="pip"></span></div>`;
   }
   document.getElementById('cal-grid').innerHTML=h;
 }
-
-function selectDay(key) {
-  selDay=key; renderCal(); renderDayLog(key);
-}
-
-function renderDayLog(key) {
-  if (!key) key=todayK();
+function selectDay(key){selDay=key;renderCal();renderDayLog(key);}
+function renderDayLog(key){
+  if(!key)key=todayK();
   const d=new Date(key.replace(/(\d+)-(\d+)-(\d+)/,'$1/$2/$3'));
-  const label=d.toLocaleDateString('en-US',{month:'long',day:'numeric',weekday:'long'});
-  const dayLogs=logs[key]||{};
-  const entries=Object.entries(dayLogs);
+  const label=d.toLocaleDateString('ja-JP',{month:'long',day:'numeric',weekday:'long'});
+  const dayLogs=logs[key]||{};const entries=Object.entries(dayLogs);
   let html=`<div class="day-log-header"><span class="day-log-date">${label}</span></div>`;
-  if (!entries.length) {
-    html+=`<div class="day-log-empty">No logs for this day.</div>`;
-  } else {
-    html+=entries.map(([id,l])=>{
-      const g=goals.find(x=>x.id==id); if(!g) return '';
-      let val='';
-      if(g.type==='numeric') val=`${l.value} ${g.unit}${l.memo?` — ${l.memo}`:''}`;
-      else if(g.type==='boolean') val=`${l.done?'Done':'Not done'}${l.memo?` — ${l.memo}`:''}`;
-      else val=l.memo||'';
-      return `<div class="day-log-row">
-        <div class="day-log-dot" style="background:${g.color}"></div>
-        <div class="day-log-body">
-          <div class="day-log-name">${g.name}</div>
-          <div class="day-log-val">${val}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
+  if(!entries.length){html+=`<div class="day-log-empty">この日の記録はありません。</div>`;}
+  else{html+=entries.map(([id,l])=>{const g=goals.find(x=>x.id==id);if(!g)return '';let val='';if(g.type==='numeric')val=`${l.value} ${g.unit}${l.memo?` — ${l.memo}`:''}`;else if(g.type==='boolean')val=`${l.done?'達成':'未達成'}${l.memo?` — ${l.memo}`:''}`;else val=l.memo||'';return `<div class="day-log-row"><div class="day-log-dot" style="background:${g.color}"></div><div><div class="day-log-name">${g.name}</div><div class="day-log-val">${val}</div></div></div>`;}).join('');}
   document.getElementById('day-log-section').innerHTML=html;
 }
-
-// ── REPORT ──────────────────────────────────────────────────────
-function renderReport() {
-  let days=0, total=0, cnt=0;
-  const now=new Date();
-  const weekRows=[];
-  for(let i=6;i>=0;i--){
-    const d=new Date(now); d.setDate(d.getDate()-i);
-    const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-    const c=logs[key]?Object.keys(logs[key]).length:0;
-    if(c>0){days++;total+=c/Math.max(goals.length,1)*100;cnt++;}
-    weekRows.push({label:'SMTWTFS'[d.getDay()], count:c});
-  }
-  document.getElementById('st-streak').textContent=`${stats.streak}d`;
+function renderReport(){
+  let days=0,total=0,cnt=0;const now=new Date();const weekRows=[];
+  for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;const c=logs[key]?Object.keys(logs[key]).length:0;if(c>0){days++;total+=c/Math.max(goals.length,1)*100;cnt++;}weekRows.push({label:'日月火水木金土'[d.getDay()],count:c});}
+  document.getElementById('st-streak').textContent=`${stats.streak}日`;
   document.getElementById('st-days').textContent=`${days}/7`;
   document.getElementById('st-rate').textContent=cnt?`${Math.round(total/cnt)}%`:'—';
   document.getElementById('st-exp').textContent=`${stats.exp}`;
-
-  // weekly bar chart
   const maxC=Math.max(...weekRows.map(r=>r.count),1);
   const period=`${now.getMonth()+1}月第${Math.ceil(now.getDate()/7)}週`;
-  document.getElementById('week-report').innerHTML=`
-    <div class="wr-head"><span class="wr-title">This Week</span><span class="wr-period">${period}</span></div>
-    <div class="wr-bars">${weekRows.map(r=>{
-      const h=Math.max(3,Math.round((r.count/maxC)*52));
-      return `<div class="wr-col"><div class="wr-bar${r.count>0?' on':''}" style="height:${h}px"></div><span class="wr-dl">${r.label}</span></div>`;
-    }).join('')}</div>`;
-
-  // per-goal progress (past 30 days)
-  const goalHtml=goals.map(g=>{
-    let logged=0;
-    for(let i=0;i<30;i++){
-      const d=new Date(now);d.setDate(d.getDate()-i);
-      const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-      if(logs[key]?.[g.id]) logged++;
-    }
-    const pct=Math.round(logged/30*100);
-    return `<div class="goal-report-card">
-      <div class="gr-head">
-        <div class="gr-dot" style="background:${g.color}"></div>
-        <div class="gr-name">${g.name}</div>
-        <div class="gr-days">${logged}/30 days</div>
-      </div>
-      <div class="gr-track"><div class="gr-fill" style="width:${pct}%;background:${g.color}"></div></div>
-    </div>`;
-  }).join('');
-  document.getElementById('goal-reports').innerHTML=goalHtml;
+  document.getElementById('week-report').innerHTML=`<div class="wr-head"><span class="wr-title">今週の記録</span><span class="wr-period">${period}</span></div><div class="wr-bars">${weekRows.map(r=>{const h=Math.max(3,Math.round((r.count/maxC)*48));return `<div class="wr-col"><div class="wr-bar${r.count>0?' on':''}" style="height:${h}px"></div><span class="wr-dl">${r.label}</span></div>`;}).join('')}</div>`;
+  document.getElementById('goal-reports').innerHTML=goals.map(g=>{let logged=0;for(let i=0;i<30;i++){const d=new Date(now);d.setDate(d.getDate()-i);const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[key]?.[g.id])logged++;}const pct=Math.round(logged/30*100);return `<div class="goal-report-card"><div class="gr-head"><div class="gr-dot" style="background:${g.color}"></div><div class="gr-name">${g.name}</div><div class="gr-days">${logged}/30日</div></div><div class="gr-track"><div class="gr-fill" style="width:${pct}%;background:${g.color}"></div></div></div>`;}).join('');
 }
-
-// ── SETTINGS ────────────────────────────────────────────────────
 const openAddGoal=()=>openOv('add-ov');
-function selType(btn,t){
-  gType=t;
-  document.querySelectorAll('#type-chips .chip').forEach(c=>c.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('num-opt').style.display=t==='numeric'?'':'none';
-}
-function selCol(el,c){
-  gCol=c;
-  document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));
-  el.classList.add('on');
-}
-function saveGoal(){
-  const name=document.getElementById('g-name').value.trim(); if(!name)return;
-  const g={id:Date.now(),name,type:gType,color:gCol};
-  if(gType==='numeric'){g.target=parseFloat(document.getElementById('g-target').value)||0;g.unit=document.getElementById('g-unit').value||'';}
-  goals.push(g);saveG();closeOv('add-ov');
-  document.getElementById('g-name').value='';
-  renderHome();renderMgr();
-}
-function renderMgr(){
-  document.getElementById('goals-mgr').innerHTML=goals.map(g=>`
-    <div class="goal-row">
-      <div class="goal-dot" style="background:${g.color}"></div>
-      <div class="goal-body">
-        <div class="goal-name">${g.name}</div>
-        <div class="goal-sub">${g.type==='numeric'?`${g.target} ${g.unit}`:g.type==='boolean'?'Done / Not done':'Memo'}</div>
-      </div>
-      <button class="rec-pill" onclick="delGoal(${g.id})" style="color:#c00;border-color:#c00;">Delete</button>
-    </div>`).join('');
-}
+function selType(btn,t){gType=t;document.querySelectorAll('#type-chips .chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');document.getElementById('num-opt').style.display=t==='numeric'?'':' none';}
+function selCol(el,c){gCol=c;document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));el.classList.add('on');}
+function saveGoal(){const name=document.getElementById('g-name').value.trim();if(!name)return;const g={id:Date.now(),name,type:gType,color:gCol};if(gType==='numeric'){g.target=parseFloat(document.getElementById('g-target').value)||0;g.unit=document.getElementById('g-unit').value||'';}goals.push(g);saveG();closeOv('add-ov');document.getElementById('g-name').value='';renderHome();renderMgr();}
+function renderMgr(){document.getElementById('goals-mgr').innerHTML=goals.map(g=>`<div class="goal-row"><div class="goal-dot" style="background:${g.color}"></div><div class="goal-body"><div class="goal-name">${g.name}</div><div class="goal-sub">${g.type==='numeric'?`${g.target} ${g.unit}`:g.type==='boolean'?'達成 / 未達成':'メモ'}</div></div><button class="rec-pill" onclick="delGoal(${g.id})" style="color:#c97b5a;border-color:#c97b5a;">削除</button></div>`).join('');}
 function delGoal(id){goals=goals.filter(g=>g.id!==id);saveG();renderMgr();renderHome();}
-
-// ── INIT ─────────────────────────────────────────────────────────
-stats.streak=calcStreak();
-renderHome();
+stats.streak=calcStreak();renderHome();renderPerson();
 </script>
 </body>
 </html>
