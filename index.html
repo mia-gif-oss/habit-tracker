@@ -6,6 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Habitual">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230d0d0d'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle' fill='%23c9a84c'%3E🌱%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22Habitual%22%2C%22short_name%22%3A%22Habitual%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%2520viewBox%3D'0%25200%2520100%2520100'%253E%253Crect%2520width%3D'100'%2520height%3D'100'%2520rx%3D'22'%2520fill%3D'%25230d0d0d'%2F%253E%253Ctext%2520x%3D'50'%2520y%3D'68'%2520font-size%3D'58'%2520text-anchor%3D'middle'%2520fill%3D'%2523c9a84c'%253E%25F0%259F%258C%25B1%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230d0d0d%22%2C%22theme_color%22%3A%22%230d0d0d%22%7D">
 <title>Habitual</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 <style>
@@ -91,14 +93,17 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
 .rec-pill{font-size:11px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--pill);padding:5px 12px;background:none;color:var(--text2);cursor:pointer;white-space:nowrap;font-family:inherit;}
 .rec-pill.done{background:var(--gold);color:#000;border-color:var(--gold);}
 .add-row{display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;color:var(--text3);font-size:13px;}
-.mission-card{margin:0 14px 8px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:13px 14px;display:flex;align-items:center;gap:11px;}
-.mission-card.done{opacity:.4;}
-.mission-icon{width:34px;height:34px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.mission-body{flex:1;min-width:0;}
-.mission-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1px;}
-.mission-cond{font-size:11px;color:var(--text3);}
-.mission-exp{font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-bg);border-radius:var(--pill);padding:3px 9px;white-space:nowrap;flex-shrink:0;}
-.mission-done-badge{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);border-radius:var(--pill);padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.challenge-card{margin:0 14px 8px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:13px 14px;}
+.challenge-card.done{opacity:.45;}
+.challenge-top{display:flex;align-items:center;gap:11px;margin-bottom:8px;}
+.challenge-icon{width:34px;height:34px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.challenge-body{flex:1;min-width:0;}
+.challenge-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1px;}
+.challenge-desc{font-size:11px;color:var(--text3);}
+.challenge-exp{font-size:11px;font-weight:600;color:var(--gold);background:var(--gold-bg);border-radius:var(--pill);padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.challenge-done-badge{font-size:11px;font-weight:600;color:var(--green);background:var(--green-bg);border-radius:var(--pill);padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.challenge-prog{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.challenge-prog-fill{height:100%;border-radius:2px;transition:width .5s;}
 .cal-nav-row{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;}
 .cal-month{font-size:16px;font-weight:600;color:var(--text);}
 .cal-arr{background:none;border:none;cursor:pointer;color:var(--text3);font-size:22px;padding:4px;line-height:1;}
@@ -159,6 +164,17 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
 .sh-actions{display:flex;gap:10px;padding:15px 20px 0;}
 .btn-main{flex:1;background:var(--gold);color:#000;border:none;border-radius:var(--r);padding:13px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;}
 .btn-ghost{flex:1;background:none;border:0.5px solid var(--border2);border-radius:var(--r);padding:13px;font-size:15px;color:var(--text2);cursor:pointer;font-family:inherit;}
+.settings-block{margin:0 14px 1px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.settings-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:0.5px solid var(--border);}
+.settings-row:last-child{border-bottom:none;}
+.settings-icon-wrap{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.settings-label-wrap{flex:1;min-width:0;}
+.settings-label{font-size:14px;color:var(--text);}
+.settings-sub{font-size:11px;color:var(--text3);margin-top:1px;}
+.theme-toggle{width:44px;height:26px;border-radius:13px;background:var(--bg3);border:0.5px solid var(--border2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.theme-toggle.on{background:var(--gold);}
+.theme-knob{width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:3px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+.theme-toggle.on .theme-knob{transform:translateX(18px);}
 .toast{position:fixed;top:60px;left:50%;transform:translateX(-50%) translateY(-6px);background:var(--gold);color:#000;border-radius:var(--pill);padding:8px 18px;font-size:13px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;z-index:200;max-width:calc(100% - 32px);}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
@@ -224,8 +240,13 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
       <div style="height:16px;"></div>
     </div>
     <div id="s-missions" class="screen">
-      <div class="sec-label">進行中のミッション</div><div id="missions-active"></div>
-      <div class="sec-label">達成済み</div><div id="missions-done"></div>
+      <div id="week-challenge-header" style="padding:14px 18px 4px;display:flex;align-items:baseline;justify-content:space-between;">
+        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);">今週のチャレンジ</span>
+        <span style="font-size:11px;color:var(--text3);" id="week-label"></span>
+      </div>
+      <div id="challenges-weekly"></div>
+      <div class="sec-label">永続チャレンジ</div>
+      <div id="challenges-permanent"></div>
       <div style="height:20px;"></div>
     </div>
     <div id="s-calendar" class="screen">
@@ -251,17 +272,64 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
       <div style="height:20px;"></div>
     </div>
     <div id="s-settings" class="screen">
-      <div class="sec-label">目標一覧</div><div id="goals-mgr"></div>
+      <!-- プロフィール -->
+      <div class="sec-label">プロフィール</div>
+      <div class="settings-block">
+        <div class="settings-row" onclick="openProfileEdit()" style="cursor:pointer;">
+          <div class="settings-icon-wrap" style="background:var(--blue-bg);color:var(--blue);"><i class="ti ti-user"></i></div>
+          <div class="settings-label-wrap"><div class="settings-label">名前</div><div class="settings-sub" id="profile-name-disp">未設定</div></div>
+          <i class="ti ti-chevron-right" style="color:var(--text3);font-size:16px;"></i>
+        </div>
+      </div>
+      <!-- テーマ -->
+      <div class="sec-label">外観</div>
+      <div class="settings-block">
+        <div class="settings-row">
+          <div class="settings-icon-wrap" style="background:var(--gold-bg);color:var(--gold);"><i class="ti ti-palette"></i></div>
+          <div class="settings-label-wrap"><div class="settings-label">テーマ</div><div class="settings-sub">ライト / ダーク</div></div>
+          <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+            <div class="theme-knob" id="theme-knob"></div>
+          </div>
+        </div>
+      </div>
+      <!-- 通知 -->
+      <div class="sec-label">通知</div>
+      <div class="settings-block">
+        <div class="settings-row">
+          <div class="settings-icon-wrap" style="background:var(--red-bg);color:var(--red);"><i class="ti ti-bell"></i></div>
+          <div class="settings-label-wrap"><div class="settings-label">リマインダー</div><div class="settings-sub" id="notif-sub">オフ</div></div>
+          <div class="theme-toggle" id="notif-toggle" onclick="toggleNotif()">
+            <div class="theme-knob" id="notif-knob"></div>
+          </div>
+        </div>
+        <div class="settings-row" id="notif-time-row" style="display:none;">
+          <div class="settings-icon-wrap" style="background:var(--gold-bg);color:var(--gold);"><i class="ti ti-clock"></i></div>
+          <div class="settings-label-wrap"><div class="settings-label">通知時刻</div><div class="settings-sub">毎日この時刻に通知</div></div>
+          <input type="time" id="notif-time-input" value="21:00" onchange="saveNotifTime()" style="background:none;border:none;color:var(--text2);font-size:14px;font-family:inherit;cursor:pointer;">
+        </div>
+      </div>
+      <!-- 目標 -->
+      <div class="sec-label">目標一覧</div>
+      <div class="settings-block" id="goals-mgr"></div>
       <div class="add-row" onclick="openAddGoal()"><i class="ti ti-plus"></i><span>目標を追加</span></div>
+      <!-- データ -->
+      <div class="sec-label">データ</div>
+      <div class="settings-block">
+        <div class="settings-row" onclick="exportData()" style="cursor:pointer;">
+          <div class="settings-icon-wrap" style="background:var(--green-bg);color:var(--green);"><i class="ti ti-download"></i></div>
+          <div class="settings-label-wrap"><div class="settings-label">データをエクスポート</div><div class="settings-sub">JSONファイルで保存</div></div>
+          <i class="ti ti-chevron-right" style="color:var(--text3);font-size:16px;"></i>
+        </div>
+      </div>
       <div style="height:20px;"></div>
     </div>
   </div>
   <nav class="nav">
     <button class="nav-btn active" onclick="sw('today',this)"><i class="ti ti-home"></i><span>Today</span><span class="nav-dot"></span></button>
-    <button class="nav-btn" onclick="sw('missions',this)"><i class="ti ti-sword"></i><span>Missions</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('missions',this)"><i class="ti ti-sword"></i><span>Challenge</span><span class="nav-dot"></span></button>
     <button class="nav-btn" onclick="sw('calendar',this)"><i class="ti ti-calendar"></i><span>Log</span><span class="nav-dot"></span></button>
     <button class="nav-btn" onclick="sw('report',this)"><i class="ti ti-chart-bar"></i><span>Report</span><span class="nav-dot"></span></button>
-    <button class="nav-btn" onclick="sw('settings',this)"><i class="ti ti-sliders"></i><span>Settings</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('settings',this)"><i class="ti ti-adjustments-alt"></i><span>Settings</span><span class="nav-dot"></span></button>
   </nav>
 </div>
 <div class="overlay" id="log-ov">
@@ -306,26 +374,87 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
 <div class="toast" id="toast"></div>
 <script>
 const RANKS=[
-  {lv:1,name:'下忍',expNext:100},{lv:2,name:'海賊見習い',expNext:250},
-  {lv:3,name:'中忍',expNext:500},{lv:4,name:'剣士見習い',expNext:900},
-  {lv:5,name:'上忍',expNext:1400},{lv:6,name:'一航士',expNext:2000},
-  {lv:7,name:'水柱',expNext:2800},{lv:8,name:'七武海',expNext:3800},
-  {lv:9,name:'火影',expNext:5000},{lv:10,name:'海賊王',expNext:99999},
+  {lv:1, name:'種',     sub:'まだ土の中。でも可能性は無限だ。',       expNext:100},
+  {lv:2, name:'芽吹き', sub:'地面を割り、光を求め始めた。',           expNext:250},
+  {lv:3, name:'若葉',   sub:'緑の葉が空気を吸い込む。',               expNext:500},
+  {lv:4, name:'若木',   sub:'幹が太くなり、風にも揺れない。',         expNext:900},
+  {lv:5, name:'木',     sub:'根が深く張り、実をつけ始めた。',         expNext:1400},
+  {lv:6, name:'古木',   sub:'年輪が刻まれ、存在感が増してきた。',     expNext:2000},
+  {lv:7, name:'大樹',   sub:'多くの命が宿り、影をつくる。',           expNext:2800},
+  {lv:8, name:'御神木', sub:'畏敬の念を集める、特別な存在。',         expNext:3800},
+  {lv:9, name:'世界樹', sub:'天を貫き、根は大地の果てまで。',         expNext:5000},
+  {lv:10,name:'永久樹', sub:'時を超え、永遠に生き続ける伝説。',       expNext:99999},
 ];
-const MISSIONS=[
-  {id:'first',icon:'ti-flag',bg:'var(--green-bg)',col:'var(--green)',name:'First Step',desc:'初めて記録する',exp:30,check:s=>s.totalLogs>=1},
-  {id:'s3',icon:'ti-flame',bg:'var(--red-bg)',col:'var(--red)',name:'On Fire',desc:'3日連続で記録',exp:50,check:s=>s.streak>=3},
-  {id:'s7',icon:'ti-flame',bg:'var(--red-bg)',col:'var(--red)',name:'Week Warrior',desc:'7日連続で記録',exp:100,check:s=>s.streak>=7},
-  {id:'s30',icon:'ti-flame',bg:'var(--red-bg)',col:'var(--red)',name:'Unstoppable',desc:'30日連続で記録',exp:500,check:s=>s.streak>=30},
-  {id:'l10',icon:'ti-star',bg:'var(--gold-bg)',col:'var(--gold)',name:'Getting Serious',desc:'合計10回記録',exp:80,check:s=>s.totalLogs>=10},
-  {id:'l50',icon:'ti-star',bg:'var(--gold-bg)',col:'var(--gold)',name:'Dedicated',desc:'合計50回記録',exp:200,check:s=>s.totalLogs>=50},
-  {id:'l100',icon:'ti-star',bg:'var(--gold-bg)',col:'var(--gold)',name:'Century',desc:'合計100回記録',exp:500,check:s=>s.totalLogs>=100},
-  {id:'lv3',icon:'ti-bolt',bg:'var(--blue-bg)',col:'var(--blue)',name:'Rising Star',desc:'レベル3に到達',exp:100,check:s=>s.level>=3},
-  {id:'lv5',icon:'ti-bolt',bg:'var(--blue-bg)',col:'var(--blue)',name:'Mid Boss',desc:'レベル5に到達',exp:200,check:s=>s.level>=5},
-  {id:'lv8',icon:'ti-crown',bg:'var(--gold-bg)',col:'var(--gold)',name:'Elite Class',desc:'レベル8に到達',exp:500,check:s=>s.level>=8},
-  {id:'exp500',icon:'ti-trophy',bg:'var(--blue-bg)',col:'var(--blue)',name:'EXP Hunter',desc:'累計500 EXP獲得',exp:100,check:s=>s.exp>=500},
-  {id:'exp2000',icon:'ti-trophy',bg:'var(--blue-bg)',col:'var(--blue)',name:'Power Grinder',desc:'累計2000 EXP獲得',exp:300,check:s=>s.exp>=2000},
+// チャレンジは週ごとに自動リセット。week keyで管理
+function getWeekKey(){const d=new Date();const jan1=new Date(d.getFullYear(),0,1);return `${d.getFullYear()}-W${Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7)}`;}
+const CHALLENGE_POOL=[
+  // 継続系
+  {id:'w_7days',    icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red)',   name:'一週間の炎',     desc:'今週7日すべて記録する',        exp:150, type:'streak_week'},
+  {id:'w_5days',    icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red)',   name:'五木の精神',     desc:'今週5日以上記録する',          exp:80,  type:'days_week', target:5},
+  {id:'w_3days',    icon:'ti-seedling',bg:'var(--green-bg)', col:'var(--green)', name:'三日の芽',       desc:'今週3日以上記録する',          exp:40,  type:'days_week', target:3},
+  // 目標達成系
+  {id:'w_allgoals', icon:'ti-check',   bg:'var(--blue-bg)',  col:'var(--blue)',  name:'全開花',         desc:'1日ですべての目標を達成する',  exp:100, type:'all_goals_day'},
+  {id:'w_morning',  icon:'ti-sun',     bg:'var(--gold-bg)',  col:'var(--gold)',  name:'早起きの木',     desc:'午前中に3回記録する',          exp:60,  type:'morning_logs', target:3},
+  // EXP系
+  {id:'w_exp200',   icon:'ti-bolt',    bg:'var(--gold-bg)',  col:'var(--gold)',  name:'週の蓄積',       desc:'今週200 EXP以上獲得する',      exp:50,  type:'week_exp', target:200},
+  {id:'w_exp400',   icon:'ti-bolt',    bg:'var(--gold-bg)',  col:'var(--gold)',  name:'成長の加速',     desc:'今週400 EXP以上獲得する',      exp:120, type:'week_exp', target:400},
+  // 積み上げ系（累計）
+  {id:'t_first',    icon:'ti-flag',    bg:'var(--green-bg)', col:'var(--green)', name:'最初の一歩',     desc:'初めて記録する',               exp:30,  type:'total_logs', target:1,   once:true},
+  {id:'t_10',       icon:'ti-leaf',    bg:'var(--green-bg)', col:'var(--green)', name:'10の葉',         desc:'累計10回記録する',             exp:80,  type:'total_logs', target:10,  once:true},
+  {id:'t_50',       icon:'ti-tree',    bg:'var(--green-bg)', col:'var(--green)', name:'50の根',         desc:'累計50回記録する',             exp:200, type:'total_logs', target:50,  once:true},
+  {id:'t_100',      icon:'ti-trees',   bg:'var(--green-bg)', col:'var(--green)', name:'大樹の誕生',     desc:'累計100回記録する',            exp:500, type:'total_logs', target:100, once:true},
+  {id:'t_lv3',      icon:'ti-plant',   bg:'var(--blue-bg)',  col:'var(--blue)',  name:'若木への変貌',   desc:'レベル3「若葉」に到達する',    exp:100, type:'level', target:3, once:true},
+  {id:'t_lv5',      icon:'ti-mountain',bg:'var(--blue-bg)',  col:'var(--blue)',  name:'木になる日',     desc:'レベル5「木」に到達する',      exp:200, type:'level', target:5, once:true},
+  {id:'t_lv8',      icon:'ti-crown',   bg:'var(--gold-bg)',  col:'var(--gold)',  name:'御神木の覚醒',   desc:'レベル8「御神木」に到達する',  exp:500, type:'level', target:8, once:true},
+  {id:'t_streak7',  icon:'ti-flame',   bg:'var(--red-bg)',   col:'var(--red)',   name:'七日の炎',       desc:'7日連続で記録する',            exp:100, type:'streak', target:7,  once:true},
+  {id:'t_streak30', icon:'ti-campfire',bg:'var(--red-bg)',   col:'var(--red)',   name:'一ヶ月の火',     desc:'30日連続で記録する',           exp:500, type:'streak', target:30, once:true},
 ];
+function getChallengesForWeek(){
+  // 週ごとに週次チャレンジ3つ+永続チャレンジを表示
+  const wk=getWeekKey();
+  const seed=wk.split('').reduce((a,c)=>a+c.charCodeAt(0),0);
+  const weekly=CHALLENGE_POOL.filter(c=>!c.once);
+  const picked=[];
+  for(let i=0;i<3;i++){picked.push(weekly[(seed+i*7)%weekly.length]);}
+  const permanent=CHALLENGE_POOL.filter(c=>c.once);
+  return {weekly:picked, permanent};
+}
+function checkChallengeProgress(c, stats, logs){
+  const now=new Date();
+  if(c.type==='total_logs') return {done:stats.totalLogs>=c.target, progress:Math.min(stats.totalLogs,c.target), total:c.target};
+  if(c.type==='level') return {done:stats.level>=c.target, progress:Math.min(stats.level,c.target), total:c.target};
+  if(c.type==='streak') return {done:stats.streak>=c.target, progress:Math.min(stats.streak,c.target), total:c.target};
+  if(c.type==='streak_week'){
+    // 今週7日すべて
+    let cnt=0;
+    for(let i=0;i<7;i++){const d=new Date(now);d.setDate(d.getDate()-d.getDay()+i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k]&&Object.keys(logs[k]).length>0)cnt++;}
+    return {done:cnt>=7,progress:cnt,total:7};
+  }
+  if(c.type==='days_week'){
+    let cnt=0;
+    for(let i=0;i<7;i++){const d=new Date(now);d.setDate(d.getDate()-d.getDay()+i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k]&&Object.keys(logs[k]).length>0)cnt++;}
+    return {done:cnt>=c.target,progress:cnt,total:c.target};
+  }
+  if(c.type==='all_goals_day'){
+    let best=0;
+    for(let i=0;i<7;i++){const d=new Date(now);d.setDate(d.getDate()-i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k])best=Math.max(best,Object.keys(logs[k]).length);}
+    const t=Math.max(goals.length,1);
+    return {done:best>=t,progress:Math.min(best,t),total:t};
+  }
+  if(c.type==='week_exp'){
+    // 今週獲得EXP（簡易：今週の記録数×20）
+    let cnt=0;
+    for(let i=0;i<7;i++){const d=new Date(now);d.setDate(d.getDate()-d.getDay()+i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k])cnt+=Object.keys(logs[k]).length;}
+    const exp=cnt*20;
+    return {done:exp>=c.target,progress:Math.min(exp,c.target),total:c.target};
+  }
+  if(c.type==='morning_logs'){
+    let cnt=0;
+    for(let i=0;i<7;i++){const d=new Date(now);d.setDate(d.getDate()-d.getDay()+i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k])cnt+=Object.keys(logs[k]).length;}
+    return {done:cnt>=c.target,progress:Math.min(cnt,c.target),total:c.target};
+  }
+  return {done:false,progress:0,total:1};
+}
 const PEOPLE=[
   {name:'老子',years:'紀元前6世紀頃',bio:'中国の哲学者・道教の祖',quote:'千里の道も一歩から。',profile:'古代中国の哲学者で、道教の創始者とされる。著書「道徳経」は世界で最も読まれた書物のひとつ。「道（タオ）」という概念を中心に、自然の流れに従うことの大切さを説いた。',knowledge:'道徳経は81章から成り、わずか5000文字で宇宙の本質を表現しようとした。英語への翻訳数は聖書に次いで多いとされる。'},
   {name:'イチロー',years:'1973年生まれ',bio:'元プロ野球選手',quote:'小さなことを積み重ねることが、とんでもないところへ行くただ一つの道。',profile:'MLB通算3089安打。毎日のルーティンを徹底し、道具への愛着と感謝を大切にした。「45歳まで現役で少年たちに夢を見せたかった」と語った。',knowledge:'イチローは毎朝カレーを食べる習慣で有名。体のルーティンを徹底的に管理し、40歳を超えても現役を続けた。'},
@@ -462,22 +591,6 @@ function addEXP(amount){
   else showToast(`+${amount} EXP`);
   updateHeader();
 }
-function updateHeader(){
-  const rank=getRank(stats.level);
-  const expTL=stats.level>1?RANKS[stats.level-2].expNext:0;
-  const expNext=rank.expNext;
-  const pct=expNext>expTL?Math.min(100,Math.round((stats.exp-expTL)/(expNext-expTL)*100)):100;
-  const rem=Math.max(0,expNext-stats.exp);
-  document.getElementById('exp-disp').textContent=`${stats.exp} EXP`;
-  document.getElementById('rank-tag').textContent=`Lv.${stats.level} · ${rank.name}`;
-  document.getElementById('lv-badge').textContent=stats.level;
-  document.getElementById('lv-name-txt').textContent=rank.name;
-  document.getElementById('lv-sub-txt').textContent=rem>0?`次のレベルまで ${rem} EXP`:'最高レベル達成!';
-  document.getElementById('lv-pct-txt').textContent=`${pct}%`;
-  document.getElementById('lv-fill').style.width=pct+'%';
-  document.getElementById('streak-val').textContent=stats.streak;
-  document.getElementById('total-val').textContent=stats.totalLogs;
-}
 function calcStreak(){let s=0;const now=new Date();for(let i=0;i<365;i++){const d=new Date(now);d.setDate(d.getDate()-i);const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[k]&&Object.keys(logs[k]).length>0)s++;else break;}return s;}
 function checkMissions(){const n=[];for(const m of MISSIONS){if(!stats.earnedMissions.includes(m.id)&&m.check(stats)){stats.earnedMissions.push(m.id);n.push({name:m.name,exp:m.exp});}}if(n.length){saveS();n.forEach((m,i)=>setTimeout(()=>showToast(`Mission: ${m.name}  +${m.exp} EXP`),900+i*600));}}
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
@@ -544,11 +657,36 @@ function renderHome(){
   }).join('');updateHeader();
 }
 function renderMissions(){
-  const active=[],done=[];
-  for(const m of MISSIONS){if(stats.earnedMissions.includes(m.id))done.push(m);else active.push(m);}
-  const card=(m,isDone)=>`<div class="mission-card${isDone?' done':''}"><div class="mission-icon" style="background:${m.bg};color:${m.col}"><i class="ti ${m.icon}"></i></div><div class="mission-body"><div class="mission-name">${m.name}</div><div class="mission-cond">${m.desc}</div></div>${isDone?`<span class="mission-done-badge">達成</span>`:`<span class="mission-exp">+${m.exp} EXP</span>`}</div>`;
-  document.getElementById('missions-active').innerHTML=active.length?active.map(m=>card(m,false)).join(''):'<div style="padding:12px 18px;font-size:13px;color:var(--text3);">全ミッションクリア!</div>';
-  document.getElementById('missions-done').innerHTML=done.length?done.map(m=>card(m,true)).join(''):'<div style="padding:12px 18px;font-size:13px;color:var(--text3);">まだありません。</div>';
+  const wk=getWeekKey();
+  const now=new Date();
+  document.getElementById('week-label').textContent=`${now.getMonth()+1}月 第${Math.ceil(now.getDate()/7)}週`;
+  const {weekly,permanent}=getChallengesForWeek();
+  const earned=stats.earnedMissions||[];
+  const weekDone=JSON.parse(localStorage.getItem('hb_week_done')||'{}');
+  const card=(c,isDone,prog)=>{
+    const pct=prog?Math.round(prog.progress/prog.total*100):0;
+    return `<div class="challenge-card${isDone?' done':''}">
+      <div class="challenge-top">
+        <div class="challenge-icon" style="background:${c.bg};color:${c.col}"><i class="ti ${c.icon}"></i></div>
+        <div class="challenge-body"><div class="challenge-name">${c.name}</div><div class="challenge-desc">${c.desc}</div></div>
+        ${isDone?`<span class="challenge-done-badge">達成</span>`:`<span class="challenge-exp">+${c.exp} EXP</span>`}
+      </div>
+      ${!isDone?`<div class="challenge-prog"><div class="challenge-prog-fill" style="width:${pct}%;background:${c.col}"></div></div>`:''}
+    </div>`;
+  };
+  document.getElementById('challenges-weekly').innerHTML=weekly.map(c=>{
+    const wkey=`${wk}_${c.id}`;
+    const isDone=weekDone[wkey];
+    const prog=checkChallengeProgress(c,stats,logs);
+    if(prog.done&&!isDone){weekDone[wkey]=true;localStorage.setItem('hb_week_done',JSON.stringify(weekDone));if(!earned.includes(wkey)){addEXP(c.exp);}}
+    return card(c,prog.done||isDone,prog);
+  }).join('');
+  document.getElementById('challenges-permanent').innerHTML=permanent.map(c=>{
+    const isDone=earned.includes(c.id);
+    const prog=checkChallengeProgress(c,stats,logs);
+    if(prog.done&&!isDone){stats.earnedMissions.push(c.id);saveS();addEXP(c.exp);}
+    return card(c,prog.done,prog);
+  }).join('');
 }
 function chM(dir){calM+=dir;if(calM<0){calM=11;calY--;}if(calM>11){calM=0;calY++;}renderCal();}
 function renderCal(){
@@ -596,9 +734,150 @@ const openAddGoal=()=>openOv('add-ov');
 function selType(btn,t){gType=t;document.querySelectorAll('#type-chips .chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');document.getElementById('num-opt').style.display=t==='numeric'?'':' none';}
 function selCol(el,c){gCol=c;document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('on'));el.classList.add('on');}
 function saveGoal(){const name=document.getElementById('g-name').value.trim();if(!name)return;const g={id:Date.now(),name,type:gType,color:gCol};if(gType==='numeric'){g.target=parseFloat(document.getElementById('g-target').value)||0;g.unit=document.getElementById('g-unit').value||'';}goals.push(g);saveG();closeOv('add-ov');document.getElementById('g-name').value='';renderHome();renderMgr();}
-function renderMgr(){document.getElementById('goals-mgr').innerHTML=goals.map(g=>`<div class="goal-row"><div class="goal-dot" style="background:${g.color}"></div><div class="goal-body"><div class="goal-name">${g.name}</div><div class="goal-sub">${g.type==='numeric'?`${g.target} ${g.unit}`:g.type==='boolean'?'達成 / 未達成':'メモ'}</div></div><button class="rec-pill" onclick="delGoal(${g.id})" style="color:#c97b5a;border-color:#c97b5a;">削除</button></div>`).join('');}
+function renderMgr(){
+  document.getElementById('goals-mgr').innerHTML=goals.map(g=>`
+    <div class="settings-row">
+      <div class="settings-icon-wrap" style="background:${g.color}22;color:${g.color};"><i class="ti ${g.type==='numeric'?'ti-chart-line':g.type==='boolean'?'ti-check':'ti-pencil'}"></i></div>
+      <div class="settings-label-wrap"><div class="settings-label">${g.name}</div><div class="settings-sub">${g.type==='numeric'?`目標 ${g.target} ${g.unit}`:g.type==='boolean'?'達成 / 未達成':'メモ'}</div></div>
+      <button style="background:none;border:none;cursor:pointer;color:var(--red);font-size:13px;padding:4px 8px;font-family:inherit;" onclick="delGoal(${g.id})">削除</button>
+    </div>`).join('');
+  // profile
+  const prof=JSON.parse(localStorage.getItem('hb_profile')||'{}');
+  document.getElementById('profile-name-disp').textContent=prof.name||'未設定';
+  // theme
+  const dark=localStorage.getItem('hb_theme')!=='light';
+  document.getElementById('theme-toggle').classList.toggle('on',dark);
+  // notif
+  const notifOn=localStorage.getItem('hb_notif')==='on';
+  document.getElementById('notif-toggle').classList.toggle('on',notifOn);
+  document.getElementById('notif-knob');
+  document.getElementById('notif-time-row').style.display=notifOn?'flex':'none';
+  document.getElementById('notif-sub').textContent=notifOn?`毎日 ${localStorage.getItem('hb_notif_time')||'21:00'} に通知`:'オフ';
+}
 function delGoal(id){goals=goals.filter(g=>g.id!==id);saveG();renderMgr();renderHome();}
-stats.streak=calcStreak();renderHome();renderPerson();
+
+// ── THEME ──────────────────────────────────────────────────────
+function applyTheme(){
+  const light=localStorage.getItem('hb_theme')==='light';
+  if(light){
+    document.documentElement.style.setProperty('--bg','#ffffff');
+    document.documentElement.style.setProperty('--bg2','#f5f5f5');
+    document.documentElement.style.setProperty('--bg3','#ececec');
+    document.documentElement.style.setProperty('--text','#111111');
+    document.documentElement.style.setProperty('--text2','#444444');
+    document.documentElement.style.setProperty('--text3','#888888');
+    document.documentElement.style.setProperty('--border','rgba(0,0,0,0.09)');
+    document.documentElement.style.setProperty('--border2','rgba(0,0,0,0.16)');
+  } else {
+    document.documentElement.style.removeProperty('--bg');
+    document.documentElement.style.removeProperty('--bg2');
+    document.documentElement.style.removeProperty('--bg3');
+    document.documentElement.style.removeProperty('--text');
+    document.documentElement.style.removeProperty('--text2');
+    document.documentElement.style.removeProperty('--text3');
+    document.documentElement.style.removeProperty('--border');
+    document.documentElement.style.removeProperty('--border2');
+  }
+}
+function toggleTheme(){
+  const isLight=localStorage.getItem('hb_theme')==='light';
+  localStorage.setItem('hb_theme',isLight?'dark':'light');
+  applyTheme();renderMgr();
+  showToast(isLight?'ダークモードに切り替えました':'ライトモードに切り替えました');
+}
+
+// ── NOTIFICATION ───────────────────────────────────────────────
+function toggleNotif(){
+  const isOn=localStorage.getItem('hb_notif')==='on';
+  if(!isOn){
+    if('Notification' in window){
+      Notification.requestPermission().then(p=>{
+        if(p==='granted'){
+          localStorage.setItem('hb_notif','on');
+          scheduleNotif();
+          showToast('通知をオンにしました');
+        } else {
+          showToast('通知の許可が必要です（設定から変更してください）');
+        }
+        renderMgr();
+      });
+    } else {
+      showToast('このブラウザは通知に非対応です');
+    }
+  } else {
+    localStorage.setItem('hb_notif','off');
+    showToast('通知をオフにしました');
+    renderMgr();
+  }
+}
+function saveNotifTime(){
+  const t=document.getElementById('notif-time-input').value;
+  localStorage.setItem('hb_notif_time',t);
+  scheduleNotif();
+  showToast(`通知時刻を ${t} に設定しました`);
+  renderMgr();
+}
+function scheduleNotif(){
+  if(!('serviceWorker' in navigator))return;
+  const t=localStorage.getItem('hb_notif_time')||'21:00';
+  const [h,m]=t.split(':').map(Number);
+  const now=new Date();const next=new Date();
+  next.setHours(h,m,0,0);
+  if(next<=now)next.setDate(next.getDate()+1);
+  const ms=next-now;
+  // 簡易タイマー通知（PWAがフォアグラウンドの場合のみ動作）
+  clearTimeout(window._notifTimer);
+  window._notifTimer=setTimeout(()=>{
+    if(Notification.permission==='granted'&&localStorage.getItem('hb_notif')==='on'){
+      new Notification('Habitual 🌱',{body:'今日の習慣を記録しましょう！',icon:'/favicon.ico'});
+    }
+    scheduleNotif();// 次の日のためにスケジュール
+  },ms);
+}
+
+// ── PROFILE ────────────────────────────────────────────────────
+function openProfileEdit(){
+  const prof=JSON.parse(localStorage.getItem('hb_profile')||'{}');
+  const name=prompt('名前を入力してください',prof.name||'');
+  if(name===null)return;
+  localStorage.setItem('hb_profile',JSON.stringify({...prof,name:name.trim()||''}));
+  renderMgr();
+  if(name.trim())showToast(`こんにちは、${name.trim()}さん！`);
+}
+
+// ── EXPORT ─────────────────────────────────────────────────────
+function exportData(){
+  const data={goals,logs,stats,exported:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`habitual_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  showToast('データをエクスポートしました');
+}
+
+// ── RANK sub text update ────────────────────────────────────────
+function updateHeader(){
+  const rank=getRank(stats.level);
+  const expTL=stats.level>1?RANKS[stats.level-2].expNext:0;
+  const expNext=rank.expNext;
+  const pct=expNext>expTL?Math.min(100,Math.round((stats.exp-expTL)/(expNext-expTL)*100)):100;
+  const rem=Math.max(0,expNext-stats.exp);
+  document.getElementById('exp-disp').textContent=`${stats.exp} EXP`;
+  document.getElementById('rank-tag').textContent=`Lv.${stats.level} · ${rank.name}`;
+  document.getElementById('lv-badge').textContent=stats.level;
+  document.getElementById('lv-name-txt').textContent=rank.name;
+  document.getElementById('lv-sub-txt').textContent=rem>0?`次のレベルまで ${rem} EXP`:'最高レベル達成!';
+  document.getElementById('lv-pct-txt').textContent=`${pct}%`;
+  document.getElementById('lv-fill').style.width=pct+'%';
+  document.getElementById('streak-val').textContent=stats.streak;
+  document.getElementById('total-val').textContent=stats.totalLogs;
+}
+
+stats.streak=calcStreak();
+applyTheme();
+if(localStorage.getItem('hb_notif')==='on')scheduleNotif();
+renderHome();renderPerson();
 </script>
 </body>
 </html>
