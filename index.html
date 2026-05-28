@@ -24,7 +24,7 @@
   --nav-h:60px;--safe-b:env(safe-area-inset-bottom,0px);
 }
 html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
-#app{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+#app{max-width:430px;margin:0 auto;height:100dvh;height:var(--app-height);display:flex;flex-direction:column;overflow:hidden;position:relative;overflow:hidden;}
 .topbar{flex-shrink:0;background:rgba(13,13,13,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);padding:calc(env(safe-area-inset-top,0px) + 8px) 18px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .tb-left .tb-app{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1px;}
 .tb-left .tb-title{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
@@ -879,5 +879,20 @@ applyTheme();
 if(localStorage.getItem('hb_notif')==='on')scheduleNotif();
 renderHome();renderPerson();
 </script>
+
+  <script>
+function setAppHeight() {
+  document.documentElement.style.setProperty(
+    '--app-height',
+    `${window.innerHeight}px`
+  );
+}
+
+window.addEventListener('resize', setAppHeight);
+window.addEventListener('orientationchange', setAppHeight);
+
+setAppHeight();
+</script>
+  
 </body>
 </html>
