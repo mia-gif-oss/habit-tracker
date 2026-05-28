@@ -24,7 +24,8 @@
   --nav-h:60px;--safe-b:env(safe-area-inset-bottom,0px);
 }
 html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
-#app{max-width:430px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+#app{max-width:430px;margin:0 auto;height:100%;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+html,body{height:100%;overflow:hidden;}
 .topbar{flex-shrink:0;background:rgba(13,13,13,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);padding:calc(env(safe-area-inset-top,0px) + 8px) 18px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .tb-left .tb-app{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1px;}
 .tb-left .tb-title{font-size:18px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
@@ -93,6 +94,59 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
 .rec-pill{font-size:11px;font-weight:500;border:0.5px solid var(--border2);border-radius:var(--pill);padding:5px 12px;background:none;color:var(--text2);cursor:pointer;white-space:nowrap;font-family:inherit;}
 .rec-pill.done{background:var(--gold);color:#000;border-color:var(--gold);}
 .add-row{display:flex;align-items:center;gap:10px;padding:12px 18px;cursor:pointer;color:var(--text3);font-size:13px;}
+
+.explore-theme-card{margin:0 14px 10px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);overflow:hidden;}
+.explore-theme-head{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;}
+.explore-theme-icon{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.explore-theme-info{flex:1;min-width:0;}
+.explore-theme-name{font-size:14px;font-weight:600;color:var(--text);}
+.explore-theme-desc{font-size:11px;color:var(--text3);margin-top:1px;}
+.explore-theme-prog{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.explore-theme-frac{font-size:12px;font-weight:600;color:var(--text3);}
+.explore-theme-bar-wrap{width:48px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.explore-theme-bar{height:100%;border-radius:2px;transition:width .5s;}
+.explore-chevron{font-size:14px;color:var(--text3);transition:transform .2s;flex-shrink:0;}
+.explore-chevron.open{transform:rotate(90deg);}
+.explore-missions{display:none;border-top:0.5px solid var(--border);}
+.explore-missions.open{display:block;}
+.explore-mission-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:0.5px solid var(--border);}
+.explore-mission-row:last-child{border-bottom:none;}
+.explore-mission-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;}
+.explore-mission-check.done{border-color:transparent;}
+.explore-mission-body{flex:1;min-width:0;}
+.explore-mission-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:1px;}
+.explore-mission-desc{font-size:11px;color:var(--text3);}
+.explore-mission-exp{font-size:11px;font-weight:600;border-radius:var(--pill);padding:2px 8px;white-space:nowrap;flex-shrink:0;}
+.explore-column-btn{font-size:11px;border:0.5px solid;border-radius:var(--pill);padding:3px 10px;background:none;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+.column-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:flex-end;justify-content:center;}
+.column-overlay.open{display:flex;}
+.column-sheet{background:var(--bg2);border-radius:20px 20px 0 0;width:100%;max-width:430px;padding-bottom:calc(32px + var(--safe-b));max-height:85dvh;overflow-y:auto;border-top:0.5px solid var(--border);}
+.column-handle{width:36px;height:3px;background:var(--border2);border-radius:2px;margin:12px auto 0;}
+.column-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);padding:16px 22px 4px;}
+.column-title{font-size:20px;font-weight:600;color:var(--text);padding:0 22px 14px;line-height:1.3;}
+.column-divider{height:0.5px;background:var(--border);margin:0 22px 16px;}
+.column-body{font-size:15px;color:var(--text2);line-height:1.85;padding:0 22px;letter-spacing:0.01em;}
+.column-close{display:block;margin:24px 22px 0;text-align:center;background:none;border:0.5px solid var(--border2);border-radius:var(--r);padding:12px;font-size:14px;color:var(--text2);cursor:pointer;font-family:inherit;width:calc(100% - 44px);}
+
+.report-section{margin:10px 14px 0;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:16px;}
+.report-sec-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.person-log-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--border);}
+.person-log-row:last-child{border-bottom:none;}
+.person-log-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.person-log-name{font-size:13px;font-weight:500;color:var(--text);}
+.person-log-bio{font-size:11px;color:var(--text3);}
+.person-log-date{font-size:10px;color:var(--text3);margin-left:auto;white-space:nowrap;flex-shrink:0;}
+.track-grid{display:grid;grid-template-columns:repeat(15,1fr);gap:3px;margin-top:4px;}
+.track-cell{aspect-ratio:1;border-radius:2px;background:var(--bg3);}
+.track-cell.on{background:var(--gold);}
+.track-cell.mid{background:rgba(201,168,76,0.4);}
+.donut-wrap{display:flex;align-items:center;gap:16px;}
+.donut-labels{flex:1;}
+.donut-label-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.donut-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.donut-name{font-size:12px;color:var(--text2);flex:1;}
+.donut-pct{font-size:12px;font-weight:600;color:var(--text3);}
+
 .challenge-card{margin:0 14px 8px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--rl);padding:13px 14px;}
 .challenge-card.done{opacity:.45;}
 .challenge-top{display:flex;align-items:center;gap:11px;margin-bottom:8px;}
@@ -240,13 +294,11 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
       <div style="height:16px;"></div>
     </div>
     <div id="s-missions" class="screen">
-      <div id="week-challenge-header" style="padding:14px 18px 4px;display:flex;align-items:baseline;justify-content:space-between;">
-        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);">今週のチャレンジ</span>
-        <span style="font-size:11px;color:var(--text3);" id="week-label"></span>
+      <div style="padding:14px 18px 4px;display:flex;align-items:baseline;justify-content:space-between;">
+        <span style="font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);">探求テーマ</span>
+        <span style="font-size:11px;color:var(--text3);" id="explore-exp-total"></span>
       </div>
-      <div id="challenges-weekly"></div>
-      <div class="sec-label">永続チャレンジ</div>
-      <div id="challenges-permanent"></div>
+      <div id="explore-themes"></div>
       <div style="height:20px;"></div>
     </div>
     <div id="s-calendar" class="screen">
@@ -260,13 +312,26 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
       <div style="height:16px;"></div>
     </div>
     <div id="s-report" class="screen">
-      <div class="stats-grid">
+      <!-- 今月サマリー -->
+      <div class="stats-grid" style="margin-top:12px;">
         <div class="stat-box"><div class="stat-l">連続記録</div><div class="stat-v" id="st-streak">—</div></div>
-        <div class="stat-box"><div class="stat-l">今週</div><div class="stat-v" id="st-days">—</div></div>
+        <div class="stat-box"><div class="stat-l">今月の記録日数</div><div class="stat-v" id="st-month-days">—</div></div>
         <div class="stat-box"><div class="stat-l">平均達成率</div><div class="stat-v" id="st-rate">—</div></div>
         <div class="stat-box"><div class="stat-l">累計 EXP</div><div class="stat-v" id="st-exp">—</div></div>
       </div>
+      <!-- 継続の軌跡 -->
+      <div class="report-section" style="margin-top:10px;">
+        <div class="report-sec-label">継続の軌跡（過去90日）</div>
+        <div class="track-grid" id="track-grid"></div>
+      </div>
+      <!-- 今週のバーチャート -->
       <div class="week-report" id="week-report"></div>
+      <!-- 今月出会った人物 -->
+      <div class="report-section">
+        <div class="report-sec-label">今月出会った人物 <span id="person-count" style="color:var(--gold);"></span></div>
+        <div id="person-log-list"></div>
+      </div>
+      <!-- 目標別達成率 -->
       <div class="sec-label">目標別の達成率（過去30日）</div>
       <div id="goal-reports"></div>
       <div style="height:20px;"></div>
@@ -326,7 +391,7 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
   </div>
   <nav class="nav">
     <button class="nav-btn active" onclick="sw('today',this)"><i class="ti ti-home"></i><span>Today</span><span class="nav-dot"></span></button>
-    <button class="nav-btn" onclick="sw('missions',this)"><i class="ti ti-sword"></i><span>Challenge</span><span class="nav-dot"></span></button>
+    <button class="nav-btn" onclick="sw('missions',this)"><i class="ti ti-sword"></i><span>Explore</span><span class="nav-dot"></span></button>
     <button class="nav-btn" onclick="sw('calendar',this)"><i class="ti ti-calendar"></i><span>Log</span><span class="nav-dot"></span></button>
     <button class="nav-btn" onclick="sw('report',this)"><i class="ti ti-chart-bar"></i><span>Report</span><span class="nav-dot"></span></button>
     <button class="nav-btn" onclick="sw('settings',this)"><i class="ti ti-adjustments-alt"></i><span>Settings</span><span class="nav-dot"></span></button>
@@ -371,6 +436,16 @@ html,body{height:100%;font-family:-apple-system,'Hiragino Sans','Helvetica Neue'
     <div class="sh-actions"><button class="btn-ghost" onclick="closeOv('add-ov')">キャンセル</button><button class="btn-main" onclick="saveGoal()">追加</button></div>
   </div>
 </div>
+<div class="column-overlay" id="column-overlay">
+  <div class="column-sheet">
+    <div class="column-handle"></div>
+    <div class="column-label" id="col-label"></div>
+    <div class="column-title" id="col-title"></div>
+    <div class="column-divider"></div>
+    <div class="column-body" id="col-body"></div>
+    <button class="column-close" onclick="document.getElementById('column-overlay').classList.remove('open')">閉じる</button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <script>
 const RANKS=[
@@ -386,6 +461,165 @@ const RANKS=[
   {lv:10,name:'永久樹', sub:'時を超え、永遠に生き続ける伝説。',       expNext:99999},
 ];
 // チャレンジは週ごとに自動リセット。week keyで管理
+
+const EXPLORE_THEMES = [
+  {
+    id: 'science',
+    name: '科学と好奇心',
+    desc: '世界の仕組みを知り、問い続ける喜びを育てる',
+    icon: 'ti-telescope',
+    color: '#5b9bd5',
+    missions: [
+      { id: 'sc1',  name: '最初の記録',        desc: '1回記録する',              exp: 20,  type: 'total_logs',  target: 1   },
+      { id: 'sc2',  name: '3日の観察',          desc: '3日連続で記録する',        exp: 40,  type: 'streak',      target: 3   },
+      { id: 'sc3',  name: '仮説を立てる',       desc: '累計10回記録する',         exp: 60,  type: 'total_logs',  target: 10  },
+      { id: 'sc4',  name: '一週間の実験',       desc: '7日連続で記録する',        exp: 80,  type: 'streak',      target: 7   },
+      { id: 'sc5',  name: 'データを集める',     desc: '累計25回記録する',         exp: 100, type: 'total_logs',  target: 25  },
+      { id: 'sc6',  name: '繰り返す力',         desc: '14日連続で記録する',       exp: 120, type: 'streak',      target: 14  },
+      { id: 'sc7',  name: '検証する習慣',       desc: '累計50回記録する',         exp: 150, type: 'total_logs',  target: 50  },
+      { id: 'sc8',  name: '長期観測',           desc: '21日連続で記録する',       exp: 180, type: 'streak',      target: 21  },
+      { id: 'sc9',  name: '理論の完成',         desc: '累計80回記録する',         exp: 220, type: 'total_logs',  target: 80  },
+      { id: 'sc10', name: '科学者の眼',         desc: '30日連続で記録する',       exp: 300, type: 'streak',      target: 30  },
+    ],
+    columns: [
+      { title: '好奇心という才能',     body: 'アインシュタインはかつてこう言った。「私に特別な才能はない。ただ、激しく好奇心旺盛なだけだ」。科学の出発点は、難しい数式でも高価な機材でもなく、「なぜ？」という一つの問いだ。その問いを持ち続けることが、すべての発見の始まりになる。' },
+      { title: '観察することの深さ',  body: 'ダーウィンは20年以上、同じフジツボを観察し続けた。退屈に見えるその作業の中に、進化論の種が眠っていた。観察とは、物事をただ見ることではない。変化に気づき、差異を記録し、意味を問い続ける行為だ。毎日の記録も、同じ科学的行為だ。' },
+      { title: '失敗は情報である',     body: 'エジソンは白熱球の開発で1万回以上失敗した。しかし彼はそれを「失敗」と呼ばなかった。「うまくいかない方法を1万通り発見した」と言った。科学において失敗は終わりではなく、次の仮説を生む情報だ。続けること自体が、すでに科学的な態度だ。' },
+      { title: '習慣という実験室',     body: 'パスツールは「チャンスは準備ができている人のところにやってくる」と言った。準備とは、毎日続けることだ。習慣は、自分という人間を対象にした長期実験だ。記録は実験ノートであり、続けるほどデータは豊かになる。' },
+      { title: 'データが語ること',     body: 'ナイチンゲールは看護師である前に、優れた統計学者だった。戦場の死亡率をグラフ化することで、衛生環境の改善を実現した。数字は冷たくない。人間の命と変化を語る言葉だ。あなたが記録した数字も、確かに何かを語っている。' },
+      { title: '繰り返しの中の発見',   body: '科学実験は一度では成立しない。同じ条件で何度も繰り返し、再現性を確認することで初めて「事実」になる。日常の習慣も同じだ。一度やることより、繰り返すことに意味がある。その積み重ねの中に、あなただけのパターンが見えてくる。' },
+      { title: '複利という法則',       body: '1日1%の改善を365日続けると、1.01の365乗＝37.78倍になる。これは数学的な事実だ。才能でも運でもなく、小さな積み重ねが指数関数的に成長する。習慣を続けることは、複利という自然の法則に乗ることだ。' },
+      { title: '長く見ること',         body: 'ハッブル宇宙望遠鏡は、光が届くのに何億年もかかる銀河を観測する。そのスケールで見れば、人間の一生はほんの一瞬だ。しかしその一瞬に何をするかが、次の世代に繋がる。長期的な視点を持つことは、科学者が宇宙に学んだ知恵だ。' },
+      { title: '問い続ける理由',       body: 'キュリー夫人はノーベル賞を2度受賞した後も、実験室に通い続けた。名誉や評価のためではなく、ただ知ることへの純粋な欲求から。好奇心に終わりはない。答えを得るたびに、新しい問いが生まれる。それが科学の、そして人間の本質だ。' },
+      { title: '科学者として生きる',   body: '科学者とは職業ではなく、態度のことだ。証拠を求め、仮説を立て、検証し、修正する。その姿勢は実験室の外でも使える。あなたが30日間、毎日記録を続けたという事実は、科学的な誠実さの証明だ。その姿勢を持ち続けることが、豊かな人生の基盤になる。' },
+    ]
+  },
+  {
+    id: 'philosophy',
+    name: '哲学と内省',
+    desc: '自分の内側に向き合い、思考を深める時間をつくる',
+    icon: 'ti-brain',
+    color: '#9b7bc9',
+    missions: [
+      { id: 'ph1',  name: '内側を見る',         desc: '1回記録する',              exp: 20,  type: 'total_logs',  target: 1   },
+      { id: 'ph2',  name: '静かな時間',         desc: '3日連続で記録する',        exp: 40,  type: 'streak',      target: 3   },
+      { id: 'ph3',  name: '問いを持つ',         desc: '累計10回記録する',         exp: 60,  type: 'total_logs',  target: 10  },
+      { id: 'ph4',  name: '一週間の内省',       desc: '7日連続で記録する',        exp: 80,  type: 'streak',      target: 7   },
+      { id: 'ph5',  name: '思考の記録',         desc: '累計25回記録する',         exp: 100, type: 'total_logs',  target: 25  },
+      { id: 'ph6',  name: '深く考える',         desc: '14日連続で記録する',       exp: 120, type: 'streak',      target: 14  },
+      { id: 'ph7',  name: '自己との対話',       desc: '累計50回記録する',         exp: 150, type: 'total_logs',  target: 50  },
+      { id: 'ph8',  name: '静けさの中で',       desc: '21日連続で記録する',       exp: 180, type: 'streak',      target: 21  },
+      { id: 'ph9',  name: '言葉にする力',       desc: '累計80回記録する',         exp: 220, type: 'total_logs',  target: 80  },
+      { id: 'ph10', name: '哲学者の眼',         desc: '30日連続で記録する',       exp: 300, type: 'streak',      target: 30  },
+    ],
+    columns: [
+      { title: '吟味された人生',       body: 'ソクラテスは言った。「吟味されない人生は生きる価値がない」。これは厳しい言葉ではなく、招待状だ。自分の行動を振り返り、なぜそうするのかを問う。その習慣が、より深い自己理解を生む。記録することは、人生を吟味する最初の一歩だ。' },
+      { title: '無知の知',             body: 'ソクラテスは「自分が何も知らないことを知っている」と言った。これが知の出発点だ。わからないことを認めるとき、初めて本当の学びが始まる。自分の限界を知ることは弱さではない。それは正直さであり、成長への入口だ。' },
+      { title: '今この瞬間',           body: 'マルクス・アウレリウスは皇帝でありながら、毎朝自省録に書き続けた。彼が最も大切にしたのは「今日一日を十分に生きること」だ。過去は変えられず、未来はわからない。今ここに集中することが、哲学者たちが辿り着いた答えだった。' },
+      { title: '感情と距離を置く',     body: 'ストア哲学者たちは「感情を消せ」とは言わなかった。感情と自分の間に少しの距離を置けと説いた。怒り、不安、喜び——それを観察する自分がいる。その「観察者としての自己」を育てることが、内省の本質だ。' },
+      { title: '選択の積み重ね',       body: 'サルトルは「人間は自由の刑に処されている」と言った。すべての瞬間、私たちは選択している。何をするか、何をしないか。その小さな選択の集積が、自分という人間をつくる。記録することも選択だ。そしてその選択が、あなたを変えていく。' },
+      { title: '習慣が人格をつくる',   body: 'アリストテレスは「卓越性は行動ではなく習慣だ」と言った。一度の勇気ある行為より、毎日の小さな誠実さが人格を形成する。あなたが毎日記録を続けるとき、それは単なる数字の積み重ねではなく、自分という人格を彫刻する行為だ。' },
+      { title: '沈黙の価値',           body: '東洋の哲学では、沈黙は空虚ではなく、充実したものとして捉えられる。禅の「余白」、老子の「無為」。何もしないように見える時間の中に、深い思索が宿る。忙しい毎日の中で、立ち止まって内側を見る時間をつくることが、哲学的な実践だ。' },
+      { title: '他者という鏡',         body: 'ユングは「他者の中に自分の影を見る」と言った。自分が苛立つ相手、憧れる人物——それは自分の内側の何かを映している。人との出会いを内省の材料にするとき、日常は哲学の実験場になる。' },
+      { title: '意味を問う力',         body: 'フランクルは収容所の中で発見した。「なぜ生きるかを知っている者は、どんな状況にも耐えられる」。意味は与えられるものではなく、自分で見つけるものだ。あなたが習慣を続ける理由は何か。その問いを持ち続けることが、豊かな人生の核心だ。' },
+      { title: '哲学する日常',         body: '哲学は書斎の中だけにあるのではない。食事をしながら、歩きながら、記録をつけながら——日常の中に問いを持ち込むことが、哲学する生き方だ。30日間、自分と向き合い続けたあなたは、すでに哲学者の入口に立っている。' },
+    ]
+  },
+  {
+    id: 'discipline',
+    name: '鍛錬と継続',
+    desc: '毎日の積み重ねで、揺るぎない自分をつくる',
+    icon: 'ti-barbell',
+    color: '#c97b5a',
+    missions: [
+      { id: 'di1',  name: '第一歩',             desc: '1回記録する',              exp: 20,  type: 'total_logs',  target: 1   },
+      { id: 'di2',  name: '三日坊主を超える',   desc: '3日連続で記録する',        exp: 40,  type: 'streak',      target: 3   },
+      { id: 'di3',  name: '型をつくる',         desc: '累計10回記録する',         exp: 60,  type: 'total_logs',  target: 10  },
+      { id: 'di4',  name: '一週間の型',         desc: '7日連続で記録する',        exp: 80,  type: 'streak',      target: 7   },
+      { id: 'di5',  name: '身体で覚える',       desc: '累計25回記録する',         exp: 100, type: 'total_logs',  target: 25  },
+      { id: 'di6',  name: '二週間の鍛錬',       desc: '14日連続で記録する',       exp: 120, type: 'streak',      target: 14  },
+      { id: 'di7',  name: '折れない芯',         desc: '累計50回記録する',         exp: 150, type: 'total_logs',  target: 50  },
+      { id: 'di8',  name: '三週間の壁を越える', desc: '21日連続で記録する',       exp: 180, type: 'streak',      target: 21  },
+      { id: 'di9',  name: '揺るぎない習慣',     desc: '累計80回記録する',         exp: 220, type: 'total_logs',  target: 80  },
+      { id: 'di10', name: '一ヶ月の証明',       desc: '30日連続で記録する',       exp: 300, type: 'streak',      target: 30  },
+    ],
+    columns: [
+      { title: '千日の稽古',           body: '宮本武蔵は「千日の稽古をもって鍛とし、万日の稽古をもって錬とす」と記した。鍛えることと錬ることは違う。最初の千日は基礎をつくる。その先の万日で、真の力になる。三日坊主を超えた今日は、あなたの千日の始まりだ。' },
+      { title: '三日坊主の正体',       body: '三日坊主という言葉は、失敗を指すように使われる。しかし考えてみれば、三日続けられたなら、それは始められたということだ。問題は三日で終わることではなく、終わったあとに再び始めないことだ。何度でも始める者が、最終的に続く者になる。' },
+      { title: 'ルーティンの自由',     body: 'フローベールは「ルーティンの中にこそ、自由がある」と書いた。毎日同じことを繰り返す単調さは、実は深い自由を生む。考えずにできることが増えるほど、より高いことに意識を向けられる。習慣は思考のコストを下げる、人間の知恵だ。' },
+      { title: '苦しさの意味',         body: 'コービー・ブライアントは毎朝4時に練習を始めた。苦しいからやめるのではなく、苦しいからこそ続ける。その積み重ねが、他の誰も持てない何かを生む。鍛錬の本質は、苦痛を乗り越えることではなく、苦痛を当たり前にすることだ。' },
+      { title: 'プロの定義',           body: '羽生善治は言った。「プロとは、自分が好きだからではなく、誓ったからやる人間のことだ」。モチベーションは波がある。気分が乗らない日でも続けることができる人間だけが、本当の意味でプロになれる。続けることへの誓いが、あなたを次のステージに連れていく。' },
+      { title: '型の重要性',           body: '日本の武道や芸道には「型」という概念がある。最初は窮屈に見える型が、やがて身体に染み込み、無意識にできるようになる。その先に初めて、型を破る自由が生まれる。習慣という型をつくることは、本当の意味での自由への道だ。' },
+      { title: '折れることと折れないこと', body: 'どれだけ強い鉄も、叩き続ければ形が変わる。しかし叩かれることを恐れて避け続けた鉄は、ただの素材のままだ。挫折は弱さの証明ではない。叩かれた回数が、あなたの強さの証明だ。50回の記録は、50回叩かれた証だ。' },
+      { title: '身体が知っていること', body: '脳が「やめたい」と言っても、身体はまだ動ける。人間には、意識が諦めた後も動き続ける力がある。マラソン選手が「壁」を越えるように、鍛錬の途中には必ず壁がある。その壁を身体で越えた記憶が、次の壁への自信になる。' },
+      { title: '積み重ねの不可逆性',   body: '積み重ねたものは消えない。記憶は薄れても、身体は覚えている。一度身についた習慣は、少し離れても戻ってくる。80回の記録は、あなたの身体と心に刻まれた80の証拠だ。それは誰にも奪えない財産だ。' },
+      { title: '一ヶ月という証明',     body: '30日続けることは、小さいようで偉大だ。人間の脳が新しい習慣を「当たり前」として認識するまで、おおよそ66日かかるという研究がある。あなたは今、その半分を超えた。これはゴールではなく、本当の習慣が始まる起点だ。' },
+    ]
+  },
+  {
+    id: 'habit',
+    name: '習慣と学習',
+    desc: '小さな行動を積み重ね、理想の自分に近づく',
+    icon: 'ti-book',
+    color: '#4caf7d',
+    missions: [
+      { id: 'ha1',  name: '記録を始める',       desc: '1回記録する',              exp: 20,  type: 'total_logs',  target: 1   },
+      { id: 'ha2',  name: '小さく続ける',       desc: '3日連続で記録する',        exp: 40,  type: 'streak',      target: 3   },
+      { id: 'ha3',  name: '10の積み重ね',       desc: '累計10回記録する',         exp: 60,  type: 'total_logs',  target: 10  },
+      { id: 'ha4',  name: '一週間のリズム',     desc: '7日連続で記録する',        exp: 80,  type: 'streak',      target: 7   },
+      { id: 'ha5',  name: '学びの軌跡',         desc: '累計25回記録する',         exp: 100, type: 'total_logs',  target: 25  },
+      { id: 'ha6',  name: '二週間の変化',       desc: '14日連続で記録する',       exp: 120, type: 'streak',      target: 14  },
+      { id: 'ha7',  name: '習慣になる瞬間',     desc: '累計50回記録する',         exp: 150, type: 'total_logs',  target: 50  },
+      { id: 'ha8',  name: '三週間を越える',     desc: '21日連続で記録する',       exp: 180, type: 'streak',      target: 21  },
+      { id: 'ha9',  name: '80の学び',           desc: '累計80回記録する',         exp: 220, type: 'total_logs',  target: 80  },
+      { id: 'ha10', name: '習慣が人格になる',   desc: '30日連続で記録する',       exp: 300, type: 'streak',      target: 30  },
+    ],
+    columns: [
+      { title: '最小単位から始める',   body: 'ジェームズ・クリアは「習慣は小さすぎるくらい小さく始めよ」と言う。2分でできることから始める。なぜなら、始めることが最も難しいからだ。一度始まれば、続くことが多い。「記録する」という最小の行動が、すべての変化の入口になる。' },
+      { title: '環境が行動をつくる',   body: 'スタンフォードの研究によれば、人間の行動の40〜45%は習慣によるものだ。そして習慣の多くは、意志の力ではなく環境によって決まる。スマートフォンをすぐ手に取れる場所に置く。それだけで記録の頻度が変わる。環境を設計することが、習慣設計の本質だ。' },
+      { title: '学びとは繋げること',   body: 'スティーブ・ジョブズは「点と点はいつか繋がる」と言った。学びは孤立した知識の蓄積ではなく、様々なことが繋がっていく体験だ。今日読んだ本と昨日の経験が結びつく瞬間——それが本当の学びだ。記録はその点を残す行為だ。' },
+      { title: '1%の改善',             body: 'イギリスの自転車チームは「1%の改善」という哲学を採用した。シートの角度、選手の睡眠、機材の重量——あらゆる要素を1%改善した。5年後、彼らはツール・ド・フランスを制した。大きな変化は、小さな改善の積み重ねから生まれる。' },
+      { title: '学習の転移',           body: '一つの習慣を身につけると、他の習慣も身につきやすくなる。研究者はこれを「キーストーン習慣」と呼ぶ。運動を始めた人は食事も改善しやすくなる。記録する習慣は、自分の行動全体を意識的にする「鍵となる習慣」になり得る。' },
+      { title: 'アウトプットの力',     body: '学んだことを人に説明しようとするとき、最も深く理解できる。ファインマン・テクニックと呼ばれるこの方法は、複雑な概念を簡単な言葉で説明することで理解を確認する。記録することも同じだ。頭の中を言葉にする行為が、思考を明確にする。' },
+      { title: '50回の意味',           body: 'ある動作を50回繰り返すと、脳の神経回路が強化されるという。最初は意識して行っていたことが、次第に自動化される。50回の記録は、あなたの脳に「記録する」という回路を刻んだ証拠だ。この先は、努力よりも自然にできるようになる。' },
+      { title: 'フロー状態への入口',   body: 'チクセントミハイは「フロー」という概念を提唱した。挑戦と能力がちょうど合致したとき、人は時間を忘れて没頭する状態に入る。習慣化された行動は、フロー状態への入口になりやすい。毎日の記録が、深い集中の時間への準備運動になる。' },
+      { title: '知識は行動になって初めて価値を持つ', body: 'ゲーテは「行動だけが知識に価値を与える」と言った。何冊本を読んでも、一度も実践しなければ知識は眠ったままだ。80回の記録は、80回の実践だ。それはどんな知識よりも、あなたを変える力を持っている。' },
+      { title: '習慣という人格',       body: 'アリストテレスは「人は習慣によってつくられる」と言った。私たちが「自分の性格」と思っているものの多くは、長年の習慣の集積だ。30日間、自分と向き合い続けたあなたは、すでに以前とは少し違う人間になっている。それが習慣の、最も深い意味だ。' },
+    ]
+  },
+  {
+    id: 'resilience',
+    name: '逆境と再起',
+    desc: '困難を乗り越えた人々の言葉から、前に進む力を得る',
+    icon: 'ti-flame',
+    color: '#c9a84c',
+    missions: [
+      { id: 're1',  name: '立ち上がる',         desc: '1回記録する',              exp: 20,  type: 'total_logs',  target: 1   },
+      { id: 're2',  name: '再び始める',         desc: '3日連続で記録する',        exp: 40,  type: 'streak',      target: 3   },
+      { id: 're3',  name: '10回の挑戦',         desc: '累計10回記録する',         exp: 60,  type: 'total_logs',  target: 10  },
+      { id: 're4',  name: '折れない一週間',     desc: '7日連続で記録する',        exp: 80,  type: 'streak',      target: 7   },
+      { id: 're5',  name: '25の証明',           desc: '累計25回記録する',         exp: 100, type: 'total_logs',  target: 25  },
+      { id: 're6',  name: '炎を燃やし続ける',   desc: '14日連続で記録する',       exp: 120, type: 'streak',      target: 14  },
+      { id: 're7',  name: '壁の向こう側',       desc: '累計50回記録する',         exp: 150, type: 'total_logs',  target: 50  },
+      { id: 're8',  name: '三週間の意志',       desc: '21日連続で記録する',       exp: 180, type: 'streak',      target: 21  },
+      { id: 're9',  name: '80回の再起',         desc: '累計80回記録する',         exp: 220, type: 'total_logs',  target: 80  },
+      { id: 're10', name: '不屈の証明',         desc: '30日連続で記録する',       exp: 300, type: 'streak',      target: 30  },
+    ],
+    columns: [
+      { title: '諦めないことの定義',   body: 'エジソンは電球の開発に1万回以上失敗した。記者に「1万回も失敗して悔しくないか」と問われると、「私は失敗していない。うまくいかない方法を1万通り発見した」と答えた。諦めないとは、失敗を拒否することではない。失敗の意味を変える力だ。' },
+      { title: '再び始める勇気',       body: '三日坊主という言葉は、やめることを責める。しかし本当に責められるべきは、やめたままでいることだ。何度でも始められる人間が、最終的に続く人間になる。転んだ回数より、立ち上がった回数を数えよ。あなたが今日記録したことが、その証拠だ。' },
+      { title: '逆境の贈り物',         body: 'ヴィクトル・フランクルは強制収容所の中で発見した。「状況がどれほど過酷でも、それに対する態度を選ぶ自由だけは奪えない」。逆境は人から多くを奪うが、一つだけ奪えないものがある。どう応じるかを選ぶ自由だ。その選択が人格をつくる。' },
+      { title: '傷は強さになる',       body: '日本の金継ぎという技法では、割れた器を金で繋ぎ合わせる。傷を隠すのではなく、金で強調することで、より美しいものにする。人間も同じだ。傷つき、折れ、それでも続けてきた歴史が、あなたをより深い人間にする。' },
+      { title: '失敗の蓄積が財産になる', body: 'マイケル・ジョーダンは言った。「私はキャリアの中で9000回以上シュートを外した。試合に決定的なシュートを任されて外したことが26回ある。何度も何度も失敗した。それが成功の理由だ」。失敗は終わりではなく、成功の部品だ。' },
+      { title: '継続することの反逆',   body: '世の中は「すぐに結果を出せ」と言う。しかし本当に価値のあるものは、すぐには現れない。14日間続けることは、その圧力への静かな反逆だ。長い目で見ることができる人間だけが、本当の変化を手にする。' },
+      { title: '壁の向こうに何があるか', body: 'マラソンには「35キロの壁」がある。ほとんどのランナーがそこで限界を感じる。しかし壁を越えたランナーだけが知っている——その先には、苦しさを超えた静けさがある。50回という壁を越えたあなたは、その静けさを少しだけ知っているはずだ。' },
+      { title: '不屈の人たちに共通すること', body: 'マンデラは27年間投獄された。キング牧師は何度も命を狙われた。ガンジーは何度も収監された。彼らに共通するのは、恐れがなかったことではない。恐れがあっても、前に進み続けたことだ。勇気とは、恐れのなさではなく、恐れを超えることだ。' },
+      { title: '80回という数字',       body: '80という数字は、偶然に見えて重要だ。人間の脳が新しいパターンを「記憶」として定着させるには、66〜80回の繰り返しが必要とされている。80回の記録を積み重ねたあなたの脳は、この習慣を「自分の一部」として認識し始めている。' },
+      { title: '不屈であるとはどういうことか', body: 'チャーチルは「成功とは失敗を重ねても情熱を失わない能力のことだ」と言った。不屈とは、一度も倒れないことではない。倒れるたびに立ち上がること、そして立ち上がるたびに少しだけ強くなることだ。30日間のあなたの記録は、その証明書だ。' },
+    ]
+  }
+];
+
 function getWeekKey(){const d=new Date();const jan1=new Date(d.getFullYear(),0,1);return `${d.getFullYear()}-W${Math.ceil(((d-jan1)/86400000+jan1.getDay()+1)/7)}`;}
 const CHALLENGE_POOL=[
   // 継続系
@@ -657,7 +891,9 @@ function renderHome(){
   }).join('');updateHeader();
 }
 function renderMissions(){
-  const wk=getWeekKey();
+  renderExplore();
+}
+function renderExplore(){
   const now=new Date();
   document.getElementById('week-label').textContent=`${now.getMonth()+1}月 第${Math.ceil(now.getDate()/7)}週`;
   const {weekly,permanent}=getChallengesForWeek();
@@ -688,6 +924,87 @@ function renderMissions(){
     return card(c,prog.done,prog);
   }).join('');
 }
+
+function renderExplore(){
+  const earned = stats.earnedMissions || [];
+  let totalExpEarned = 0;
+  document.getElementById('explore-themes').innerHTML = EXPLORE_THEMES.map(theme => {
+    const doneMissions = theme.missions.filter(m => checkExploreMission(m));
+    const doneCount = doneMissions.length;
+    const pct = Math.round(doneCount / theme.missions.length * 100);
+    totalExpEarned += doneMissions.reduce((s,m)=>s+m.exp,0);
+    // auto-award EXP for newly completed missions
+    theme.missions.forEach(m => {
+      const key = `ex_${theme.id}_${m.id}`;
+      if(checkExploreMission(m) && !earned.includes(key)){
+        earned.push(key);
+        setTimeout(()=>{ addEXP(m.exp); showToast(`「${m.name}」達成！ +${m.exp} EXP`); }, 400);
+      }
+    });
+    stats.earnedMissions = earned; saveS();
+    const missionsHtml = theme.missions.map((m,idx) => {
+      const done = checkExploreMission(m);
+      const colUnlocked = done;
+      const col = theme.columns[idx];
+      return `<div class="explore-mission-row">
+        <div class="explore-mission-check${done?' done':''}" style="${done?`background:${theme.color};color:#000;`:''}">
+          ${done?'<i class="ti ti-check"></i>':''}
+        </div>
+        <div class="explore-mission-body">
+          <div class="explore-mission-name"${done?` style="color:var(--text3);text-decoration:line-through;"`:''}">${m.name}</div>
+          <div class="explore-mission-desc">${m.desc}</div>
+        </div>
+        <span class="explore-mission-exp" style="color:${done?'var(--text3)':theme.color};background:${done?'var(--bg3)':`${theme.color}22`};">${done?'達成':'+'+m.exp+' EXP'}</span>
+        ${colUnlocked ? `<button class="explore-column-btn" style="color:${theme.color};border-color:${theme.color};" onclick="openColumn('${theme.id}',${idx})">読む</button>` : `<span style="font-size:11px;color:var(--text3);padding:3px 6px;">解放待ち</span>`}
+      </div>`;
+    }).join('');
+    return `<div class="explore-theme-card">
+      <div class="explore-theme-head" onclick="toggleThemeOpen('${theme.id}')">
+        <div class="explore-theme-icon" style="background:${theme.color}22;color:${theme.color};"><i class="ti ${theme.icon}"></i></div>
+        <div class="explore-theme-info">
+          <div class="explore-theme-name">${theme.name}</div>
+          <div class="explore-theme-desc">${theme.desc}</div>
+        </div>
+        <div class="explore-theme-prog">
+          <span class="explore-theme-frac">${doneCount}/${theme.missions.length}</span>
+          <div class="explore-theme-bar-wrap"><div class="explore-theme-bar" style="width:${pct}%;background:${theme.color};"></div></div>
+        </div>
+        <i class="ti ti-chevron-right explore-chevron${exploredOpen[theme.id]?' open':''}" id="chev-${theme.id}"></i>
+      </div>
+      <div class="explore-missions${exploredOpen[theme.id]?' open':''}" id="missions-${theme.id}">
+        ${missionsHtml}
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('explore-exp-total').textContent = `獲得済み ${totalExpEarned} EXP`;
+}
+
+let exploredOpen = {};
+
+function toggleThemeOpen(id){
+  exploredOpen[id] = !exploredOpen[id];
+  const el = document.getElementById(`missions-${id}`);
+  const chev = document.getElementById(`chev-${id}`);
+  if(el){ el.classList.toggle('open', exploredOpen[id]); }
+  if(chev){ chev.classList.toggle('open', exploredOpen[id]); }
+}
+
+function checkExploreMission(m){
+  if(m.type==='total_logs') return stats.totalLogs >= m.target;
+  if(m.type==='streak')     return stats.streak    >= m.target;
+  return false;
+}
+
+function openColumn(themeId, idx){
+  const theme = EXPLORE_THEMES.find(t=>t.id===themeId);
+  if(!theme) return;
+  const col = theme.columns[idx];
+  document.getElementById('col-label').textContent = theme.name;
+  document.getElementById('col-title').textContent = col.title;
+  document.getElementById('col-body').textContent  = col.body;
+  document.getElementById('column-overlay').classList.add('open');
+}
+
 function chM(dir){calM+=dir;if(calM<0){calM=11;calY--;}if(calM>11){calM=0;calY++;}renderCal();}
 function renderCal(){
   const now=new Date();
@@ -719,16 +1036,74 @@ function renderDayLog(key){
   document.getElementById('day-log-section').innerHTML=html;
 }
 function renderReport(){
-  let days=0,total=0,cnt=0;const now=new Date();const weekRows=[];
-  for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;const c=logs[key]?Object.keys(logs[key]).length:0;if(c>0){days++;total+=c/Math.max(goals.length,1)*100;cnt++;}weekRows.push({label:'日月火水木金土'[d.getDay()],count:c});}
+  const now = new Date();
+  // ── 週次バー ──
+  let days=0,total=0,cnt=0; const weekRows=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+    const c=logs[key]?Object.keys(logs[key]).length:0;
+    if(c>0){days++;total+=c/Math.max(goals.length,1)*100;cnt++;}
+    weekRows.push({label:'日月火水木金土'[d.getDay()],count:c});
+  }
+  // ── 今月の記録日数 ──
+  const y=now.getFullYear(),mo=now.getMonth();
+  const dim=new Date(y,mo+1,0).getDate();
+  let monthDays=0;
+  for(let d=1;d<=dim;d++){const k=`${y}-${mo+1}-${d}`;if(logs[k]&&Object.keys(logs[k]).length>0)monthDays++;}
   document.getElementById('st-streak').textContent=`${stats.streak}日`;
-  document.getElementById('st-days').textContent=`${days}/7`;
+  document.getElementById('st-month-days').textContent=`${monthDays}日`;
   document.getElementById('st-rate').textContent=cnt?`${Math.round(total/cnt)}%`:'—';
   document.getElementById('st-exp').textContent=`${stats.exp}`;
+  // ── 継続の軌跡（過去90日） ──
+  const cells=[];
+  for(let i=89;i>=0;i--){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const k=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
+    const c=logs[k]?Object.keys(logs[k]).length:0;
+    cells.push(c);
+  }
+  const maxC2=Math.max(...cells,1);
+  document.getElementById('track-grid').innerHTML=cells.map(c=>{
+    let cls='track-cell';
+    if(c>0) cls+=c>=maxC2*0.7?' on':' mid';
+    return `<div class="${cls}"></div>`;
+  }).join('');
+  // ── 週次バーチャート ──
   const maxC=Math.max(...weekRows.map(r=>r.count),1);
   const period=`${now.getMonth()+1}月第${Math.ceil(now.getDate()/7)}週`;
   document.getElementById('week-report').innerHTML=`<div class="wr-head"><span class="wr-title">今週の記録</span><span class="wr-period">${period}</span></div><div class="wr-bars">${weekRows.map(r=>{const h=Math.max(3,Math.round((r.count/maxC)*48));return `<div class="wr-col"><div class="wr-bar${r.count>0?' on':''}" style="height:${h}px"></div><span class="wr-dl">${r.label}</span></div>`;}).join('')}</div>`;
-  document.getElementById('goal-reports').innerHTML=goals.map(g=>{let logged=0;for(let i=0;i<30;i++){const d=new Date(now);d.setDate(d.getDate()-i);const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[key]?.[g.id])logged++;}const pct=Math.round(logged/30*100);return `<div class="goal-report-card"><div class="gr-head"><div class="gr-dot" style="background:${g.color}"></div><div class="gr-name">${g.name}</div><div class="gr-days">${logged}/30日</div></div><div class="gr-track"><div class="gr-fill" style="width:${pct}%;background:${g.color}"></div></div></div>`;}).join('');
+  // ── 今月出会った人物 ──
+  const seenPeople = new Map();
+  for(let d=1;d<=dim;d++){
+    const k=`${y}-${mo+1}-${d}`;
+    if(logs[k]){
+      // 日付ベースでpersonIdxを計算（今日と同じロジック）
+      const dateIdx=(y*365+mo*30+d)%PEOPLE.length;
+      const p=PEOPLE[dateIdx];
+      if(!seenPeople.has(p.name)) seenPeople.set(p.name,{person:p,day:d});
+    }
+  }
+  const personEntries=[...seenPeople.values()].sort((a,b)=>b.day-a.day);
+  document.getElementById('person-count').textContent=personEntries.length?`${personEntries.length}人`:'';
+  document.getElementById('person-log-list').innerHTML=personEntries.length
+    ? personEntries.slice(0,6).map(e=>`
+      <div class="person-log-row">
+        <div class="person-log-avatar" style="background:var(--gold-bg);color:var(--gold);"><i class="ti ti-user" style="font-size:13px;"></i></div>
+        <div>
+          <div class="person-log-name">${e.person.name}</div>
+          <div class="person-log-bio">${e.person.bio}</div>
+        </div>
+        <div class="person-log-date">${mo+1}/${e.day}</div>
+      </div>`).join('')
+    : '<div style="font-size:13px;color:var(--text3);padding:8px 0;">記録した日の人物が表示されます</div>';
+  // ── 目標別達成率 ──
+  document.getElementById('goal-reports').innerHTML=goals.map(g=>{
+    let logged=0;
+    for(let i=0;i<30;i++){const d=new Date(now);d.setDate(d.getDate()-i);const key=`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;if(logs[key]?.[g.id])logged++;}
+    const pct=Math.round(logged/30*100);
+    return `<div class="goal-report-card"><div class="gr-head"><div class="gr-dot" style="background:${g.color}"></div><div class="gr-name">${g.name}</div><div class="gr-days">${logged}/30日</div></div><div class="gr-track"><div class="gr-fill" style="width:${pct}%;background:${g.color}"></div></div></div>`;
+  }).join('');
 }
 const openAddGoal=()=>openOv('add-ov');
 function selType(btn,t){gType=t;document.querySelectorAll('#type-chips .chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on');document.getElementById('num-opt').style.display=t==='numeric'?'':' none';}
